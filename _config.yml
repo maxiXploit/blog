@@ -16,7 +16,7 @@ minimal_mistakes_skin    : "haxor" # "air", "aqua", "contrast", "dark", "dirt", 
 
 # Site Settings
 locale                   : "en-US"
-title                    : "ecsploits.io"
+title                    : "ecsploit.io"
 title_separator          : "-"
 name                     : "blog"
 description              : "Blog Personal"
