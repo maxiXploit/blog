@@ -41,11 +41,15 @@ Basándonos en el informe de [MITRE ATT&CK](https://attack.mitre.org/campaigns/C
 ---
 ## **Durante la Operación Dream Job, había dos binarios de sistema utilizados para la ejecución proxy. Uno era Regsvr32, ¿cuál era el otro?**
 
-Durante esta campaña, además de Regsvr32.exe, el otro binario empleado fue Rundll32.exe. Ambos son utilidades legítimas de Windows, firmadas por Microsoft, que los atacantes abusan para ejecutar cargas maliciosas sin invocar procesos propios detectables. 
+Esto podemos verlos desde la sección de [ATT&CK Navigator Layers](https://mitre-attack.github.io/attack-navigator//#layerURL=https%3A%2F%2Fattack.mitre.org%2Fcampaigns%2FC0022%2FC0022-enterprise-layer.json), en la columna de Defense Evasion. 
 
 Regsvr32.exe es una utilidad de línea de comandos de Windows que se utiliza para registrar o desregistrar archivos DLL (Dynamic Link Library) y controles ActiveX en el Registro de Windows. En esencia, ayuda a que Windows sepa cómo encontrar y utilizar estos componentes.
+
+Ademas de Regsvr32.exe, el otro binario empleado fue Rundll32.exe. Ambos son utilidades legítimas de Windows, firmadas por Microsoft, que los atacantes abusan para ejecutar cargas maliciosas sin invocar procesos propios detectables. 
 
 Rundll32.exe es un ejecutable de Windows diseñado para cargar y ejecutar funciones exportadas por DLLs especificadas en línea de comandos; forma parte del sistema y está firmado por Microsoft. 
 
 ---
 ## **¿Qué técnica de movimiento lateral utilizó el adversario?**
+
+
