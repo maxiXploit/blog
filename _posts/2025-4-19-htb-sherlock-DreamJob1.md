@@ -102,3 +102,29 @@ Para esto copiamos el primer hash que viene en el comprimido que nos proporciona
 
 ---
 ## **¿Cuándo se creó por primera vez el archivo asociado el segundo hash del ICO?**
+
+Copiamos y pegamos el segundo hash en virustotal, en la sección de detalles podemos ver la fecha de la creacón de este fichro. 
+
+---
+## **¿Cuál es el nombre del archivo de ejecución principal asociado a la segunda almohadilla del COI?**
+
+Seguimos con el análisi del segundo hash proporcionado, en la sección de relations podemos ver la respuesta: BAE_HPC_SE.iso
+Que es el fichero que crear el fichero objeto de estudio al ejecutarse en un sandbox. 
+
+---
+## **Examina el tercer hash. ¿Cuál es el nombre de archivo probablemente utilizado en la campaña que se ajusta a las tácticas conocidas del adversario?**
+
+En la sección de `Details>Names` podemos ver varios nombres: 
+- z0OTN6TzKIO8HWOFvYH12h7mUJOIP2
+- malware_sample_003
+- lazarus.doc
+- 0160375e19e606d06f672be6e43f70fa70093d2a30031affd2929a5c446d07c1.doc
+- Salary_Lockheed_Martin_job_opportunities_confidential.doc
+
+El últimos es el que tiene más pinta de haber sido usado en esta campaña. 
+
+
+---
+## **¿Qué URL fue contactada en 2022-08-03 por el tercer hash porpocionado?**
+
+En la sección de `Relations` podemos ver varias URL, pero por la que nos preguntan es la siguiente: `https://markettrendingcenter.com/lk_job_oppor.docx`, que desde luego tiene mucho que ver con lo que se estudia en este laboratorio. 
