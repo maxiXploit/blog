@@ -4,13 +4,7 @@ Operation Dream Job es el nombre atribuido a una campaña de ciberespionaje iden
 Contactaban a las víctimas con supuestas ofertas laborales atractivas y les enviaban archivos maliciosos disfrazados de documentos relacionados con el proceso de selección. Al abrir estos archivos, se instalaba malware que permitía a los atacantes acceder a información confidencial y, en algunos casos, realizar movimientos laterales dentro de las redes comprometidas.
 
 ---
-
-
-¿Quién llevó a cabo la Operación Dream Job?
-
-Perfecto. Aquí tienes una sección de contexto histórico sobre **Lazarus Group**, redactada en un tono técnico y profesional, adecuada para incluirla en tu artículo:
-
----
+## **¿Quién llevó a cabo la Operación Dream Job?**
 
 ### Lazarus Group
 
@@ -28,3 +22,30 @@ La sofisticación técnica, junto con una fuerte motivación estratégica y econ
 
 ---
 
+## **¿Cuándo se observó esta operación por primera vez?**
+
+### Primera Observación
+
+Según la base de datos de MITRE ATT&CK, **Operation Dream Job** fue **observada por primera vez en septiembre de 2019**.
+
+Symantec, por su parte, documentó un subconjunto de esta operación —bajo el nombre **Pompilus**— **por primera vez en agosto de 2020**.
+
+Adicionalmente, ClearSky publicó en agosto de 2020 un informe en el que señalaba que había **revelado evidencia de ataques de Lazarus en 2019**, marcando el inicio de la campaña “Dream Job”, inforde del cual sacamos parte de la información presentada en este informe resumido. 
+
+---
+## **Hay 2 campañas asociadas a la Operación Dream Job. Una es la Operación Estrella del Norte, ¿cuál es la otra?**
+
+Basándonos en el informe de [MITRE ATT&CK](https://attack.mitre.org/campaigns/C0022/), la segunda campaña asociada a Operation Dream Job es conocida como Operation Interception (a veces estilizada como Operation In(ter)ception).
+
+
+---
+## **Durante la Operación Dream Job, había dos binarios de sistema utilizados para la ejecución proxy. Uno era Regsvr32, ¿cuál era el otro?**
+
+Durante esta campaña, además de Regsvr32.exe, el otro binario empleado fue Rundll32.exe. Ambos son utilidades legítimas de Windows, firmadas por Microsoft, que los atacantes abusan para ejecutar cargas maliciosas sin invocar procesos propios detectables. 
+
+Regsvr32.exe es una utilidad de línea de comandos de Windows que se utiliza para registrar o desregistrar archivos DLL (Dynamic Link Library) y controles ActiveX en el Registro de Windows. En esencia, ayuda a que Windows sepa cómo encontrar y utilizar estos componentes.
+
+Rundll32.exe es un ejecutable de Windows diseñado para cargar y ejecutar funciones exportadas por DLLs especificadas en línea de comandos; forma parte del sistema y está firmado por Microsoft. 
+
+---
+## **¿Qué técnica de movimiento lateral utilizó el adversario?**
