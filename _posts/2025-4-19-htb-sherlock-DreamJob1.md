@@ -28,8 +28,13 @@ El ataque, al ser áltamente dirigido, daba más probabilidad de que fuera efect
 
 Conocer la forma en la que lograban el acceso inicial debería hacer saltar las alarmas de todo aquel que haya logrado acceder a este blog. El uso de plataformas para buscar trabajo, y con el creciente uso de de internet, obliga a todo aquel que las use a tomar consciencia sobre las acciones que realiza en la red. 
 
+## **En la mira de Linkedin**
 
+El atacante creaba un perfil falso en esta plataforma, impersonando a un reclutador real o creando un perfil de una persona que no existe, y creando una red de contactos con las personas del sector en el que estaban interesados. 
 
+El atacante se ganaba la confianza del usuario, manteniendo una comunicación contínua lograba convencer a la víctima de al menor revisar la oferta de trabajo, oferta que era envíada a través de un fichero usando servicios de alamcenamiento como OneDrive o DropBox, estudiaban a la víctima, analizando sus rutinas y horarios para que la víctima abra el fichero en su lugar de trabajo, mandándolo a una hora cuidadosamente seleccionada. El fichero contenia el malware que permitía el acceso remoto a los sistemas de la empresa y el atacante trataba de que la persona recibiera el fichero fuera linkedin, trataban de enviarlo por correo electrónico, y evitando mandarlo por el correo empresarial. 
+
+Una vez que la víctima descargó el fichero, el atacante eliminaba el perfil falso.  
 
 ---
 
