@@ -1,6 +1,7 @@
 # **Sherlock Dream Job-1 - Hack The Box**
 
-Operation Dream Job es el nombre atribuido a una campaña de ciberespionaje identificada por múltiples firmas de ciberseguridad, en la que actores maliciosos emplean tácticas de spear-phishing altamente dirigidas, simulando ofertas laborales en compañías reconocidas como forma de atraer a profesionales del sector tecnológico, especialmente en áreas sensibles como defensa y el sector aeroespacial.
+Operation Dream Job es el nombre atribuido a una campaña de ciberespionaje identificada por múltiples firmas de ciberseguridad, en la que actores maliciosos emplean tácticas de spear-phishing altamente dirigidas, simulando ofertas laborales en compañías reconocidas como forma de atraer a profesionales del sector tecnológico, especialmente en áreas sensibles como defensa y el sector aeroespacial. 
+Contactaban a las víctimas con supuestas ofertas laborales atractivas y les enviaban archivos maliciosos disfrazados de documentos relacionados con el proceso de selección. Al abrir estos archivos, se instalaba malware que permitía a los atacantes acceder a información confidencial y, en algunos casos, realizar movimientos laterales dentro de las redes comprometidas.
 
 ---
 
