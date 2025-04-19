@@ -52,4 +52,53 @@ Rundll32.exe es un ejecutable de Windows diseñado para cargar y ejecutar funcio
 ---
 ## **¿Qué técnica de movimiento lateral utilizó el adversario?**
 
+En la columna de **Defense Evation** podemos ver la técnica asociada, que es **Internal Spearphishing** y se basa en utilizar el spearphishing interno para obtener acceso a información adicional o poner en peligro a otros usuarios de la misma organización
 
+---
+## **¿Cuál es la ID de la técnica para la respuesta anterior?**
+
+Cosultando la página de [MITRE ATT&CK](https://attack.mitre.org/techniques/T1534/) para esta técnica, vemos que el ID es el  T1534. 
+
+---
+## **¿Qué troyano de acceso remoto utilizó el Grupo Lazarus en la Operación Dream Job?**
+
+El Lazarus Group utilizó principalmente un troyano de acceso remoto (RAT) conocido como [DRATzarus](https://attack.mitre.org/software/S0694/)
+
+---
+## **¿Qué técnica utilizó el malware para su ejecución?**
+Cuando un malware utiliza la Native API para ejecución, en lugar de llamar a funciones estándar como CreateProcessA o WinExec, usa funciones internas como:
+- NtCreateSection
+- NtMapViewOfSection
+- NtCreateThreadEx
+- NtWriteVirtualMemory
+- Estas permiten, por ejemplo:
+- Crear una sección de memoria compartida (con NtCreateSection).
+- Mapear código malicioso en la memoria de otro proceso (NtMapViewOfSection).
+- Escribir payloads directamente en memoria (NtWriteVirtualMemory).
+- Ejecutar un hilo remoto (NtCreateThreadEx o NtResumeThread).
+
+Este tipo de ejecución es característico de técnicas como process injection, hollowing, o reflective DLL injection.
+
+
+---
+## **¿Qué técnica utilizó el malware para evitar ser detectado en un sandbox?**
+
+En la columna de **Defense Evasion** vemos la técnica **Time Based Evasion**, y consiste en que el malware modifica su comportamiento en función del tiempo, con el objetivo de:
+
+- Retrasar su ejecución hasta que haya pasado el período típico de análisis.
+- Ejecutar ciertas funciones solo en momentos específicos.
+- Detectar si está corriendo en un entorno de análisis automatizado (por ejemplo, que solo ejecuta el binario durante 2 minutos).
+
+¿Cómo se contrarresta esta técnica?
+- Instrumentación del API de tiempo: en sandboxes avanzadas se interceptan y modifican llamadas como Sleep, NtDelayExecution, etc., para simular el paso del tiempo.
+- Sleep patching: se modifican las instrucciones en tiempo real para que, por ejemplo, un Sleep(60000) se convierta en Sleep(1).
+- Análisis dinámico prolongado: extender el tiempo de ejecución en entornos de análisis para que estas técnicas no sean efectivas.
+- Análisis estático del binario: identificar llamadas sospechosas a funciones relacionadas con tiempo sin ejecutarlas.
+
+---
+## **Para responder a las preguntas restantes, utilice VirusTotal y consulte el archivo IOCs.txt. ¿Cuál es el nombre asociado al primer hash proporcionado en el archivo IOC?**
+
+Para esto copiamos el primer hash que viene en el comprimido que nos proporciona el laboratorio, lo pegamos en virus total y podremos ver que el nombre es **IEXPLORE.exe**
+
+---
+## **¿Cuándo se creó por primera vez el archivo asociado el segundo hash del ICO?**
