@@ -4,6 +4,9 @@ title: Dream Job1 - Sherlock Hack The Box
 excerpt: Una reporte bastante resumido sobre la Operación Dream Job dirigida por el Lazarus Group y que se llevó a cabo a través de la plataforma de Linkedin. Una campaña de phishing altamente diriga con la finalidad de espiar y exfiltrar datos de sectores como la tecnología y la aviación. 
 date: 2025-4-19
 classes: wide
+header: 
+   teaser: /assets/images/htb-sherlock-dreamjob1/dreamjob1.webp
+   teaser_home_page: true 
 categories: 
    - cyberdefenders
    - threat intelligence
