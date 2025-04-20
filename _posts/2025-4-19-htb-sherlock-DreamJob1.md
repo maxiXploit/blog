@@ -1,5 +1,7 @@
 ---
 layout: single
+tittle: Dream Job1 - Sherlock Hack The Box
+date: 2025-4-19
 classes: wide
 categories: 
    - cyberdefenders
