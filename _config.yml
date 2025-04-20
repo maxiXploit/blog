@@ -22,7 +22,7 @@ name                     : "maxiXploit"
 description              : "Blog Personal"
 url                      : "https://maxiXploit.io" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
-repository               : "maxiXploits/etsploics.github.io" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
+repository               : "maxiXploits/blog.github.io" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
 logo                     : "/assets/images/masthead.jpg"
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
 breadcrumbs              : true # true, false (default)
@@ -105,7 +105,7 @@ author:
   avatar           : "/assets/images/avatar.png"
   bio              : "Estudiante de ciberseguridad, Purple Team"
   location         : "CDMX"
-  email            : ""
+  email            : "maximodaniel_1@proton.me"
   uri              :
   home             : # null (default), "absolute or relative url to link to author home"
   bitbucket        :
@@ -117,7 +117,7 @@ author:
   github           : "Injuria23"
   gitlab           :
   google_plus      :
-  keybase          : "MaxiXploit"
+  keybase          : 
   instagram        :
   lastfm           :
   linkedin         :  "daniel-hernandez-8b8696353"
