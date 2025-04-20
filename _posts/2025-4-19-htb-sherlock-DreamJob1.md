@@ -4,7 +4,7 @@ Operation Dream Job es el nombre atribuido a una campaña de ciberespionaje iden
 Contactaban a las víctimas con supuestas ofertas laborales atractivas y les enviaban archivos maliciosos disfrazados de documentos relacionados con el proceso de selección. Al abrir estos archivos, se instalaba malware que permitía a los atacantes acceder a información confidencial y, en algunos casos, realizar movimientos laterales dentro de las redes comprometidas.
 
 ---
-## **¿Quién llevó a cabo la Operación Dream Job?**
+## **Antecedentes:**
 
 ### Lazarus Group
 
@@ -20,8 +20,29 @@ En años recientes, el grupo ha diversificado sus tácticas, incorporando ataque
 
 La sofisticación técnica, junto con una fuerte motivación estratégica y económica, convierten a Lazarus Group en uno de los actores más relevantes dentro del panorama global de amenazas persistentes avanzadas (APT).
 
+## **Acceso inicial**
+
+A diferencia de otros métodos de ataque conocidos, en los que la mayoría de los esfuerzos se concentran en el contacto inicial, en este escenario de ataque los recursos y esfuerzos se invierten tanto en la creación de la entidad (identidad falsa) como en la comunicación con las víctimas. Incluso si la víctima no está interesada en la posición ofrecida por el atacante, se le persuade para que revise detenidamente los detalles del puesto “exclusivo” antes de tomar una decisión definitiva. La oferta de empleo está personalizada y se presenta de forma discreta, lo que aumenta su credibilidad y reduce la sospecha de que se trata de un ataque dirigido. Esta discreción permite al atacante mantener una negociación prolongada con la víctima, ya que el proceso no pone en riesgo su posición laboral actual. — ClearSky Cyber Security, Dream Job Campaign, 2020.
+
+El ataque, al ser áltamente dirigido, daba más probabilidad de que fuera efectivo, piénsalo, si te muestran una oferta que incluya muchas de tus habilidades, es casi seguro que al menos aceptes revisar la oferta que viene adjunta al correo que recibiste: Salary_Lockheed_Martin_job_opportunities_confidential.doc. ☠️
+
+Conocer la forma en la que lograban el acceso inicial debería hacer saltar las alarmas de todo aquel que haya logrado acceder a este blog. El uso de plataformas para buscar trabajo, y con el creciente uso de de internet, obliga a todo aquel que las use a tomar consciencia sobre las acciones que realiza en la red. 
+
+## **En la mira de Linkedin**
+
+El atacante creaba un perfil falso en esta plataforma, impersonando a un reclutador real o creando un perfil de una persona que no existe, y creando una red de contactos con las personas del sector en el que estaban interesados. 
+
+El atacante se ganaba la confianza del usuario, manteniendo una comunicación contínua lograba convencer a la víctima de al menor revisar la oferta de trabajo, oferta que era envíada a través de un fichero usando servicios de alamcenamiento como OneDrive o DropBox, estudiaban a la víctima, analizando sus rutinas y horarios para que la víctima abra el fichero en su lugar de trabajo, mandándolo a una hora cuidadosamente seleccionada. El fichero contenia el malware que permitía el acceso remoto a los sistemas de la empresa y el atacante trataba de que la persona recibiera el fichero fuera linkedin, trataban de enviarlo por correo electrónico, y evitando mandarlo por el correo empresarial. 
+
+Una vez que la víctima descargó el fichero, el atacante eliminaba el perfil falso.  
+
 ---
 
+## **¿Quién llevó a cabo la Operación Dream Job?**
+
+Lazarous Group
+
+---
 ## **¿Cuándo se observó esta operación por primera vez?**
 
 ### Primera Observación
