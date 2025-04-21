@@ -8,7 +8,7 @@
 
 Bien, para responder a esto podemos revisar el pcap y si exploramos un poco vemos demasiado tráfico por el puerto http y https, 80 y 443 respectivamente. 
 
-![](/assets/images/sherlock-compromised/image1.png)
+![](../assets/images/sherlock-compromised/image1.png)
 
 Recordemos que la flag PSH sirve para indicar que los datos que se están transmitiendo en un segmento TCP deben ser entregados a la aplicación receptora tan pronto como se reciban, sin esperar a que se llene el búfer de recepción
 
@@ -70,7 +70,7 @@ Esto también podemos hacerlo desde `File>export objects>HTTP`, guardar el fiche
 
 ¿Cuál es la etiqueta de familia del malware? 
 
-![](/assets/images/sherlock-compromised/image3.png)
+![](../assets/images/sherlock-compromised/image3.png)
 
 El archivo resultó ser una **DLL maliciosa** de la familia **Pikabot**, definitivamente estás tratando con un malware real (o una réplica muy fiel). Te explico todo lo importante de Pikabot:
 
