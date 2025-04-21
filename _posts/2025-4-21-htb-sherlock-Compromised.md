@@ -1,8 +1,6 @@
 
 # **Sherlock - Compromised**
 
-
-
 ---
 **task 1**
 
@@ -72,4 +70,51 @@ Esto también podemos hacerlo desde `File>export objects>HTTP`, guardar el fiche
 
 ¿Cuál es la etiqueta de familia del malware? 
 
-![](/assets/images/sherlock-compromised/image1.png)
+![](/assets/images/sherlock-compromised/image3.png)
+
+El archivo resultó ser una **DLL maliciosa** de la familia **Pikabot**, definitivamente estás tratando con un malware real (o una réplica muy fiel). Te explico todo lo importante de Pikabot:
+
+**Pikabot** es un **troyano de acceso remoto (RAT)** moderno, diseñado para:
+
+- **Infectar sistemas Windows**
+- Ejecutar comandos arbitrarios del atacante
+- Descargar y ejecutar cargas adicionales (como ransomware o stealers)
+- Funcionar como parte de **botnets** (redes de máquinas infectadas)
+
+### Comportamento típico:
+
+1. **Fase inicial:**
+   - Llega usualmente a través de phishing o archivos maliciosos (como `.dll`, `.docm`, `.js`, etc.).
+   - A veces disfrazado de imágenes, instaladores, etc.
+   - Puede usar técnicas de **inyección en procesos legítimos** (`svchost.exe`, `explorer.exe`, etc.)
+
+2. **Persistencia y ejecución:**
+   - Se ejecuta como DLL inyectada
+   - Se comunica con un **C2 (Command and Control)** vía HTTP/S o TCP
+   - Puede descargar más malware (por ejemplo: **Cobalt Strike**, **RATs**, o **ransomware** como **BlackCat**)
+
+3. **Técnicas anti-análisis:**
+   - Obfuscación de código
+   - Cadenas cifradas
+   - Anti-debugging
+   - Evita entornos virtuales o sandboxes
+
+
+### Relevancia reciente
+
+Desde mediados de **2023 hasta 2024**, Pikabot fue **muy usado como loader alternativo** a Emotet, especialmente por grupos de ransomware como **Conti**, **BlackBasta**, y otros.
+Incluso reemplazó a **Qakbot** en algunas campañas luego de que ese fuera desmantelado.
+
+---
+**task 4** 
+
+¿Cuándo se vio el malware por primera vez en la naturaleza (UTC)?
+
+![](../assets/images/sherlock-compromised/image4.png)
+
+Si vemos, debajo del historial aparencen los nombres con el que lo encontramos en el pcap. 
+
+---
+**task 5**
+
+
