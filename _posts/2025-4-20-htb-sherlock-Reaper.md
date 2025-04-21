@@ -1,4 +1,21 @@
-# **Sherlock Reaper - Hack The Box**
+---
+layout: single
+title: Hack The Box Sherlock - Reaper
+excerpt: Anàlis forense de un ataque NTLM Relay en un entorno de Active Directory.  
+date: 2025-4-21
+classes: wide
+categories: 
+   - sherlock-htb
+   - DFIR
+tags: 
+   - smb
+   - wireshark
+   - thsark
+   - evtx
+--- 
+
+
+# **Reaper - Hack The Box**
 
 ---
 
@@ -176,3 +193,240 @@ Vemos múltiples peticiones al fileshare `\\DC01\Trip`, además de ver que la ip
 ---
 **task 6**
 ¿Cuál es el puerto de origen utilizado para iniciar sesión en la estación de trabajo de destino utilizando la cuenta comprometida?
+
+Para esto tenemos que navegar entro los logs que nos proporcionaron en el fichero `.evtx`, y hay que buscar un registro con las siguietes características: 
+
+- Con el Event ID 4624 en los logs de seguridad de Windows, que significa "An account was successfully logged on": 
+    O sea: inicio de sesión exitoso.
+
+- Security ID = NULL SID:
+    Significa que no hay un usuario local autenticado aún; probablemente una autenticación de red externa.
+
+- Logon Type = 3:
+    Es un logon de red (típico de SMB o conexiones remotas).
+
+- Logon Process = NtLmSsp y Authentication Package = NTLM:
+    Indica que el logon fue hecho usando NTLM, probablemente relayed o capturado.
+
+```plaintext
+Se inició sesión correctamente en una cuenta.
+
+Firmante:
+	Id. de seguridad:		NULL SID
+	Nombre de cuenta:		-
+	Dominio de cuenta:		-
+	Id. de inicio de sesión:		0x0
+
+Información de inicio de sesión:
+	Tipo de inicio de sesión:		3
+	Modo de administrador restringido:	-
+	Cuenta virtual:		No
+	Token elevado:		No
+
+Nivel de suplantación:		Suplantación
+
+Nuevo inicio de sesión:
+	Id. de seguridad:		S-1-5-21-3239415629-1862073780-2394361899-1601
+	Nombre de cuenta:		arthur.kyle
+	Dominio de cuenta:		FORELA
+	Id. de inicio de sesión:		0x64A799
+	Inicio de sesión vinculado:		0x0
+	Nombre de cuenta de red:	-
+	Dominio de cuenta de red:	-
+	GUID de inicio de sesión:		{00000000-0000-0000-0000-000000000000}
+
+Información de proceso:
+	Id. de proceso:		0x0
+	Nombre de proceso:		-
+
+Información de red:
+	Nombre de estación de trabajo:	FORELA-WKSTN002
+	Dirección de red de origen:	172.17.79.135
+	Puerto de origen:		40252
+
+Información de autenticación detallada:
+	Proceso de inicio de sesión:		NtLmSsp 
+	Paquete de autenticación:	NTLM
+	Servicios transitados:	-
+	Nombre de paquete (solo NTLM):	NTLM V2
+	Longitud de clave:		128
+``` 
+
+Vemos que la dirección ip de origen es la 172.17.79.135, la misma que detectamos como sospechaso y que realizó una consulta NBNS de tipo NBSTAT. También vemos el puerto de origen. 
+
+---
+**task 7**
+
+El campo "Logon ID" (en inglés) o "Id. de inicio de sesión" es un identificador único para una sesión de autenticación específica.
+Se representa como un valor hexadecimal (como 0x64A799) y permanece constante durante toda la sesión del usuario.
+Es como una huella digital de una sesión activa y es importante para correlacionar evetos e identificar movimiento lateral. 
+
+Esto podemos verlo en la información del registro que presentamos en la pregunta anterior: 
+```plaintext
+Nuevo inicio de sesión:
+    Id. de seguridad:       S-1-5-21-3239415629-1862073780-2394361899-1601
+    Nombre de cuenta:       arthur.kyle
+    Dominio de cuenta:      FORELA
+    Id. de inicio de sesión:        0x64A799
+    Inicio de sesión vinculado:     0x0
+    Nombre de cuenta de red:    -
+    Dominio de cuenta de red:   -
+    GUID de inicio de sesión:       {00000000-0000-0000-0000-000000000000}
+``` 
+
+---
+**task 8**
+
+La detección se basó en una incongruencia entre el nombre de host y la dirección IP asignada. ¿Cuál es el nombre de la estación de trabajo y la dirección IP de origen desde la que se produce el inicio de sesión malicioso?
+
+Bien, ya tenemos el registro que nos interesa, tenemos la ip sospechosai(la que no tenía un nombre otorgado por nbns) y la ip a la que en un principìo la víctima mandó su hash NTLM, así que prestemos más atención al registro que ahora estamos analizando, en específico, el siguiente campo: 
+
+```bash 
+Información de red:
+    Nombre de estación de trabajo:  FORELA-WKSTN002
+    Dirección de red de origen: 172.17.79.135
+    Puerto de origen:       40252
+``` 
+
+Pero enuestra captura de red(.pcapng) vimos que el host al que pertenecía el nombre `FORELA-WKSTN002` tenía la ip `172.17.79.135`, y es esta la incongruencia de la que se está hablando. 
+
+
+---
+**task 9**
+
+¿A qué hora UTC se produjo el inicio de sesión malicioso?
+
+
+Esto pedemos verlo en la sección de detalles en el explorador de eventos de windows: 
+```plaintext
+- System 
+
+  - Provider 
+
+   [ Name]  Microsoft-Windows-Security-Auditing 
+   [ Guid]  {54849625-5478-4994-a5ba-3e3b0328c30d} 
+ 
+   EventID 4624 
+ 
+   Version 2 
+ 
+   Level 0 
+ 
+   Task 12544 
+ 
+   Opcode 0 
+ 
+   Keywords 0x8020000000000000 
+ 
+  - TimeCreated 
+
+   [ SystemTime]  2024-07-31T04:55:16.2405897Z 
+ 
+   EventRecordID 14610 
+ 
+  - Correlation 
+
+   [ ActivityID]  {ffedc1a7-e2f8-0005-25c2-edfff8e2da01} 
+ 
+  - Execution 
+
+   [ ProcessID]  784 
+   [ ThreadID]  9120 
+ 
+   Channel Security 
+ 
+   Computer Forela-Wkstn001.forela.local 
+ 
+   Security
+```
+
+--- 
+**task 10**
+
+¿Cuál es el Nombre compartido al que se accede como parte del proceso de autenticación por parte de la herramienta maliciosa utilizada por el atacante?
+
+Para esto podemos buscar por el `Event ID 5140 – A network share object was accessed`
+Este evento se genera cuando alguien accede a un recurso compartido (una carpeta o archivo compartido por SMB) en el sistema.
+Es una forma clave de detectar actividad lateral o exfiltración de información.
+
+
+Pero no hay que irnos tan lejos, solo basta recordar que el recurso compartido `\\[host]\IPC$` (**Inter-Process Communication share**) es **accedido automáticamente como parte del proceso de autenticación SMB**, **especialmente en conexiones NTLM y sesiones remotas**.
+
+#### `IPC$`
+
+- Es un **recurso compartido especial** que no contiene archivos, sino que permite **comunicación entre procesos remotos**.
+- SMB lo utiliza para establecer **canales de control**, como por ejemplo:
+  - Enumerar recursos compartidos
+  - Ver usuarios y grupos
+  - Conectarse a servicios remotos (WMI, DCOM, etc.)
+  - Ejecutar comandos vía `psexec`, `wmiexec`, etc.
+
+Cuando un atacante usa NTLM relay para autenticarse en una máquina víctima, **uno de los primeros recursos que se toca es `IPC$`**. Esto se ve en los logs como acceso a:
+
+```
+Share Name: \\D\IPC$
+```
+
+Y genera un evento 5140 como el siguiente que podemos ver en el `.evtx` que se nos proporciona: 
+
+```plaintext
+¡Estás absolutamente en lo correcto! 👌
+
+### ✅ Tu afirmación es válida:
+
+El recurso compartido `\\[host]\IPC$` (**Inter-Process Communication share**) es **accedido automáticamente como parte del proceso de autenticación SMB**, **especialmente en conexiones NTLM y sesiones remotas**.
+
+---
+
+### 🔍 ¿Qué es `IPC$`?
+
+- Es un **recurso compartido especial** que no contiene archivos, sino que permite **comunicación entre procesos remotos**.
+- SMB lo utiliza para establecer **canales de control**, por ejemplo, para:
+  - Enumerar recursos compartidos
+  - Ver usuarios y grupos
+  - Conectarse a servicios remotos (WMI, DCOM, etc.)
+  - Ejecutar comandos vía `psexec`, `wmiexec`, etc.
+
+---
+
+### 💡 En contexto de NTLM relay o ataques SMB:
+
+Cuando un atacante usa NTLM relay para autenticarse en una máquina víctima, **uno de los primeros recursos que se toca es `IPC$`**. Esto se ve en los logs como acceso a:
+
+```
+Share Name: \\D\IPC$
+```
+
+Y genera un evento 5140 como el siguiente que podemos ver en el `.evtx` que se nos proporciona:
+
+```plaintext
+Se tuvo acceso a un objeto de recurso compartido de red.
+	
+Sujeto:
+	Id. de seguridad:		S-1-5-21-3239415629-1862073780-2394361899-1601
+	Nombre de cuenta:		arthur.kyle
+	Dominio de cuenta:		FORELA
+	Id. de inicio de sesión:		0x64A799
+
+Información de red:	
+	Tipo de objeto:		File
+	Dirección de origen:		172.17.79.135
+	Puerto de origen:		40252
+	
+Información de recurso compartido:
+	Nombre de recurso compartido:		\\*\IPC$
+	Ruta de acceso de recurso compartido:		
+
+Información de solicitud de acceso:
+	Máscara de acceso:		0x1
+	Accesos:		ReadData (o ListDirectory)
+``` 				
+
+El * en este contexto no es un wildcard real, sino que representa una referencia genérica o simbólica al host al que se está conectando.
+Es decir:
+  \\*\IPC$ simplemente significa:
+  “Estoy accediendo al recurso IPC$ de algún host remoto (cuyo nombre/IP está registrado en otro campo del log)”.
+
+Basicamente, algo que haría alguna herramienta como `netexec`. 
+
+
