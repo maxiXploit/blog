@@ -130,4 +130,49 @@ Bien, sigamos analizando el tráfico `nbns`:
   596 4.475016950 172.17.79.135 33988 172.17.79.4  137 NBNS 92 Name query NBSTAT *<00><00><00><00><00><00><00><00><00><00><00><00><00><00><00>
 ```
 
+Y fijémonos en la ip `172.17.79.135`, que está realizando una consulta NBNS de tipo NBSTAT, donde:
 
+- El atacante está preguntando por los nombre de NetBIOS registrados. 
+- El uso del nombre *<00><00>... es una consulta especial que pide el estado completo del NetBIOS del host, incluyendo:
+  - Nombre NetBIOS del equipo
+  - Lista de servicios NetBIOS
+  - Dirección MAC asociada
+
+Esto se usa comúnmente en ataques para reconocer qué dispositivos están activos y qué nombres NetBIOS tienen, lo cual es un paso típico antes de envenenar o interceptar tráfico.
+
+**Básicamente es la ip de nuestro atacante realizando reconocimiento de la red**
+
+---
+**task 5**
+¿Cuál era el fileshare navegado por la cuenta de usuario de la víctima?
+
+Bien, ahora filtremos por el protocolo smb,que es un protocolo de red que permite compartir archivos, impresoras y otros recursos entre computadoras en una red:
+```bash 
+─$ tshark -r ntlmrelay.pcapng -Y "smb2" | grep "Tree Connect Request"      
+  760 70.805532684 172.17.79.129 60538 172.17.79.4  445 SMB2 182 Tree Connect Request Tree: \\DC01.forela.local\SysVol
+ 1143 94.174057818 172.17.79.129 60538 172.17.79.4  445 SMB2 178 Tree Connect Request Tree: \\DC01.forela.local\IPC$
+ 1199 97.977977002 172.17.79.136 50145 172.17.79.135 445 SMB2 146 Tree Connect Request Tree: \\D\IPC$
+ 1231 97.993065158 172.17.79.136 50145 172.17.79.135 445 SMB2 146 Tree Connect Request Tree: \\D\IPC$
+ 1232 97.993990427 172.17.79.135 40252 172.17.79.129 445 SMB2 170 Tree Connect Request Tree: \\172.17.79.129\IPC$
+ 1411 112.556745492 172.17.79.136 50152 172.17.79.4  445 SMB2 152 Tree Connect Request Tree: \\DC01\IPC$
+ 1418 112.565901644 172.17.79.136 50152 172.17.79.4  445 SMB2 152 Tree Connect Request Tree: \\DC01\Trip
+ 1420 112.566315545 172.17.79.136 50152 172.17.79.4  445 SMB2 152 Tree Connect Request Tree: \\DC01\Trip
+ 1422 112.566608349 172.17.79.136 50152 172.17.79.4  445 SMB2 152 Tree Connect Request Tree: \\DC01\Trip
+ 1424 112.566899230 172.17.79.136 50152 172.17.79.4  445 SMB2 152 Tree Connect Request Tree: \\DC01\Trip
+ 1426 112.567344810 172.17.79.136 50152 172.17.79.4  445 SMB2 152 Tree Connect Request Tree: \\DC01\Trip
+ 1428 112.567600707 172.17.79.136 50152 172.17.79.4  445 SMB2 152 Tree Connect Request Tree: \\DC01\Trip
+ 1430 112.567878203 172.17.79.136 50152 172.17.79.4  445 SMB2 152 Tree Connect Request Tree: \\DC01\Trip
+ 1432 112.568175286 172.17.79.136 50152 172.17.79.4  445 SMB2 152 Tree Connect Request Tree: \\DC01\Trip
+ 1508 116.537648196 172.17.79.136 50157 172.17.79.135 445 SMB2 146 Tree Connect Request Tree: \\D\IPC$
+ 1546 128.099313531 172.17.79.136 50159 172.17.79.4  445 SMB2 152 Tree Connect Request Tree: \\DC01\IPC$
+ 1553 128.102532294 172.17.79.136 50159 172.17.79.4  445 SMB2 152 Tree Connect Request Tree: \\DC01\Trip
+ 1555 128.102795083 172.17.79.136 50159 172.17.79.4  445 SMB2 152 Tree Connect Request Tree: \\DC01\Trip
+ 1557 128.103108146 172.17.79.136 50159 172.17.79.4  445 SMB2 152 Tree Connect Request Tree: \\DC01\Trip
+ 1559 128.103369773 172.17.79.136 50159 172.17.79.4  445 SMB2 152 Tree Connect Request Tree: \\DC01\Trip
+```
+
+Vemos múltiples peticiones al fileshare `\\DC01\Trip`, además de ver que la ip de origen es la ip del atacante. 
+
+---
+**task 6**
+¿Cuál es el puerto de origen utilizado para iniciar sesión en la estación de trabajo de destino utilizando la cuenta comprometida?
