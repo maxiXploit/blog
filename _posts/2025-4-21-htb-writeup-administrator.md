@@ -309,6 +309,19 @@ Pero tampoco encontramos nada.
 
 Usemos ahora la herramienta `bloudhount`, usaremos docker para desplegar, [aqui](https://bloodhound.specterops.io/get-started/quickstart/community-edition-quickstart) las instrucciones de la página oficial. 
 
+También podemos iniciarlo de forma normal si se desea: 
+```bash 
 
+
+Ahora nos dumpemos la info del dominio con `bloodhound-python`: 
+```bash 
+└─$ bloodhound-python -u 'olivia' -p 'ichliebedich' -c ALL --zip -ns 10.10.11.42 -d administrator.htb
+``` 
+> si nos da error por la desicronización de relojes, podemos ajustar nuetra nuestro reloj con el server con el comando `ntpdate 10.10.11.42`
+
+Tambien podemos dumpear info extra con la herramietna `ldap`, una herramienta que automatiza el dump (extracción) de información del dominio de Active Directory desde un controlador de dominio vía LDAP. Extrae info como usuarios, grupos, relaciones de confianza, políticas de GPO, etc.
+```bash 
+ldapdomaindump -u 'administrator.htb\olivia' -p ichliebedich 10.10.11.42
+``` 
 
 
