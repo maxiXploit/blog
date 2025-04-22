@@ -1,3 +1,19 @@
+---
+layout: single
+title: Hack The Box Sherlock - Compromised
+excerpt: Anàlis forense de una exfiltración de datos mediante DNS tuneling
+date: 2025-4-21
+classes: wide
+categories:
+   - sherlock-htb
+   - SOC
+tags:
+   - DNS
+   - wireshark
+   - thsark
+   - netowrk miner
+   - virustotal 
+---
 
 # **Sherlock - Compromised**
 
