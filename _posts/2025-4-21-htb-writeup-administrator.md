@@ -1,15 +1,16 @@
 ---
 layout: single
 title: Hack The Box WriteUp - Administrator
-excerpt: Si
-date: 2025-4-19
+excerpt: Laboratori de active directory donde se practican técnicas de pivoting para finalmente poder ejecutar un DCSyn attack debido a una configuración débil en el domain controller.
+date: 2025-4-22
 classes: wide
 categories: 
    - writeup
    - hackthebox
 tags: 
    - active directory
-   - CTF 
+   - CTF
+   - DCSync attack 
 --- 
 
 # **Hack The Box - Administrator**
