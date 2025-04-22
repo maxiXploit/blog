@@ -311,7 +311,10 @@ Usemos ahora la herramienta `bloudhount`, usaremos docker para desplegar, [aqui]
 
 También podemos iniciarlo de forma normal si se desea: 
 ```bash 
+sudo neo4j console
 
+blooodhount
+```
 
 Ahora nos dumpemos la info del dominio con `bloodhound-python`: 
 ```bash 
@@ -319,9 +322,31 @@ Ahora nos dumpemos la info del dominio con `bloodhound-python`:
 ``` 
 > si nos da error por la desicronización de relojes, podemos ajustar nuetra nuestro reloj con el server con el comando `ntpdate 10.10.11.42`
 
-Tambien podemos dumpear info extra con la herramietna `ldap`, una herramienta que automatiza el dump (extracción) de información del dominio de Active Directory desde un controlador de dominio vía LDAP. Extrae info como usuarios, grupos, relaciones de confianza, políticas de GPO, etc.
+
+> Tambien podemos dumpear info extra con la herramietna `ldap`, una herramienta que automatiza el dump (extracción) de información del dominio de Active Directory desde un controlador de dominio vía LDAP. Extrae info como usuarios, grupos, relaciones de confianza, políticas de GPO, etc, usamos el siguiente comando para esto:`ldapdomaindump -u 'administrator.htb\olivia' -p ichliebedich 10.10.11.42` 
+
+
+Una vez que tenemos el `.zip` que nos da bloodhount-python, la sumbimos a blood hound, y explorando la información del dominio vemos que el usuario que tenemos, Olivia, tiene permisos `Generic All` sobre el usuario michael, lo que nos permite cambiar sus configuraciones de usuario, como nos explica bloodhount: 
+
+![](../assets/images/htb-administrator/imagen0.png)
+
+![](../assets/images/htb-administrator/imagen1.png)
+
+
+Así que vamos a cambiarle la contraseña al usuario: 
 ```bash 
-ldapdomaindump -u 'administrator.htb\olivia' -p ichliebedich 10.10.11.42
+└─$ net rpc password "michael" "newP@ssword2022" -U "administrator.htb"/"olivia"%"ichliebedich" -S 10.10.11.42
 ``` 
+
+Pero si seguis explorando, vemos que el usuario michael tiene permisos de **force change password** sobre el usuario benjamin: 
+
+![](../assets/images/htb-administrator/imagen3.png)
+
+Así que hacemos lo mismo con el usuario benjamin, para demostrar que funcionó el cambio anterior, usamos el usuario michael: 
+
+![](../assets/images/htb-administrator/imagen4.png) 
+
+
+
 
 
