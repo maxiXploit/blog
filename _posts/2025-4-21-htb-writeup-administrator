@@ -1,5 +1,16 @@
-
-
+---
+layout: single
+title: Hack The Box WriteUp - Administrator
+excerpt: Si
+date: 2025-4-19
+classes: wide
+categories: 
+   - writeup
+   - hackthebox
+tags: 
+   - active directory
+   - CTF 
+--- 
 
 # **Hack The Box - Administrator**
 
