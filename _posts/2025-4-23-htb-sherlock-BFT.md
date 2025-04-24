@@ -1,3 +1,19 @@
+---
+layout: single
+title: Sherlock BFT - Hack The Box
+excerpt: "Análisis forense de una Master File Table(MFT)"
+date: 2025-4-23
+classes: wide
+header:
+  teaser_home_page: true
+  icon: /assets/images/hackthebox.webp
+categories:
+  - hackthebox
+  - sherlock
+tags:  
+  - DFIR
+  - mft
+---
 
 # **Sherlock - BFT** 
 
@@ -140,7 +156,7 @@ Son considerados **más confiables** en algunos contextos forenses, ya que mucho
 | Verificar origen real de un archivo       | `$FILE_NAME` (más difícil de falsificar) |
 | Reconstrucción de actividad en el sistema | Ambos, comparados entre sí         |
 
-![](../assets/images/sherlock-bft/imagen1.png)
+![](../assets/images/sherlock-bft/imagen2.png)
 
 
 Vemos 3 ficheros, notemos que **invoices.zip** tiene como parent path a **Stage-20240213T093324Z-001.zip**, así que podemos decir que éste último fue el que se descargó. 
@@ -192,12 +208,12 @@ Para visualizar podemos usar herramientas como:
 
 Sabiendo esto ya podemos quitar el filtro que pusimos la columna de Extension, ahora filtramos por nombre de fichero, "stage" que ya sabemos que fue el que se descargó mediante el correo de phishin
 
-![](../assets/images/sherlock-btf/imagen3.png)
+![](../assets/images/sherlock-bft/imagen3.png)
 
 
 Y nos fijamos en el valor del *.Zone.Identifier*: 
 
-![](../assets/images/sherlock-btf/imagen4.png)
+![](../assets/images/sherlock-bft/imagen4.png)
 
 ---
 **task 3**
