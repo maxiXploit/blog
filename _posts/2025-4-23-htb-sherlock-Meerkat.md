@@ -17,7 +17,15 @@ tags:
   - tshark 
 ---
 
-# **Meerkat - Sherlock**
+<h2 style="
+  animation: fadeIn 1s ease-out;
+">Sherlock - Meerkat</h2>
+<style>
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
 
 <p style="color: red;">Para este laboratorio se nos proporcionan dos ficheros, un .pcap con capturas de tráfico de red y un fichero .json con logs, vamos a anlizar ambos y respònder las pregutas para saber qué fue lo que pasó.</p>
 
