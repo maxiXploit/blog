@@ -298,4 +298,7 @@ Aquí seguimos analizando el malware que aparece en la captura con el nombre `jv
  1175  20.380688  10.3.19.101 53628 103.124.105.78 80 HTTP 200 GET /ozkpfzju HTTP/1.1 
 ``` 
 
-
+<div class="mi-card">
+  <h2>Esta es una tarjeta personalizada</h2>
+  <p>Contenido con estilos definidos en SCSS.</p>
+</div>
