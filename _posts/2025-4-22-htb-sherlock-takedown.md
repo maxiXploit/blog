@@ -5,7 +5,7 @@ excerpt: "Análisis de paquetes de red de un ataque que inición por la descarga
 date: 2025-4-23
 classes: wide
 header:
-  teaser: 
+  teaser: ../images/assets/sherlock-takedown/takedown.webp
   teaser_home_page: true
   icon: ../assets/images/hackthebox.webp
 categories:
