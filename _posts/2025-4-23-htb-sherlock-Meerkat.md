@@ -1,4 +1,20 @@
-
+---
+layout: single
+title: Sherlock Meerkat - Hack The Box
+excerpt: "Análisis de logs de un fichero pcap y logs de Zeek para resovler lo que parece ser un ataque de fuerza bruta"
+date: 2025-4-23
+classes: wide
+header:
+  teaser_home_page: true
+  icon: ../assets/images/hackthebox.webp
+categories:
+  - hackthebox
+  - sherlock
+tags:  
+  - SOC
+  - wireshark
+  - tshark 
+---
 
 # **Meerkat - Sherlock**
 

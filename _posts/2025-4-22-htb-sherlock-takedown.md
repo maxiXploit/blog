@@ -1,4 +1,22 @@
+---
+layout: single
+title: Sherlock Takedown - Hack The Box
+excerpt: "Análisis de paquetes de red de un ataque que inición por la descarga de un fichero .vbs"
+date: 2025-4-23
+classes: wide
+header:
+  teaser: 
+  teaser_home_page: true
+  icon: ../assets/images/hackthebox.webp
+categories:
+  - hackthebox
+  - sherlock
+tags:  
+  - SOC
+  - wireshark
+  - tshark 
 
+---
 
 # **Sherlock - Takedown**
 
