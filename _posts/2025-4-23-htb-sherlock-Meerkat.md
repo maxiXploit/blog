@@ -19,7 +19,7 @@ tags:
 
 # **Meerkat - Sherlock**
 
-Para este laboratorio se nos proporcionan dos ficheros, un .pcap con capturas de tráfico de red y un fichero .json con logs, vamos a anlizar ambos y respònder las pregutas para saber qué fue lo que pasó.
+<p style="color: red;">Para este laboratorio se nos proporcionan dos ficheros, un .pcap con capturas de tráfico de red y un fichero .json con logs, vamos a anlizar ambos y respònder las pregutas para saber qué fue lo que pasó.</p>
 
 Los logs provienen de Zeek (anteriormente conocido como Bro), herramienta de código abierto para monitorear la seguridad de la red y analizar el tráfico de red. Permite detectar amenazas y anomalías, así como rastrear la actividad de DNS, HTTP, y FTP. Es utilizado para la detección de intrusiones en la red (NIDS) y el monitoreo de seguridad de red (NSM). 
 El funcionamiento de Zeek se basa en los siguientes componentes:
