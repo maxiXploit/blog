@@ -5,7 +5,7 @@ excerpt: "Análisis de logs de un fichero pcap y logs de Zeek para resovler lo q
 date: 2025-4-23
 classes: wide
 header:
-  teaser: ../assets/images/sherlock/sherlock-meerkat/meerkat.webp
+  teaser: (../assets/images/sherlock/sherlock-meerkat/meerkat.webp))
   teaser_home_page: true
   icon: ../assets/images/hackthebox.webp
 categories:
