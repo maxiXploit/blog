@@ -4,6 +4,8 @@ title: Hack The Box Sherlock - Compromised
 excerpt: Anàlis forense de una exfiltración de datos mediante DNS tuneling
 date: 2025-4-21
 classes: wide
+headers: 
+   - ../assets/images/sherlock-compromised/compromised.webp
 categories:
    - sherlock-htb
    - SOC

@@ -1,6 +1,6 @@
 ---
 layout: single
-title: Hack The Box Sherlock - Reaper
+title: Sherlock Reaper - Hack The Box
 excerpt: Anàlis forense de un ataque NTLM Relay en un entorno de Active Directory.  
 date: 2025-4-21
 classes: wide
