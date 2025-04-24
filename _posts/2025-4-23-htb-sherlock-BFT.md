@@ -6,7 +6,7 @@ date: 2025-4-23
 classes: wide
 header:
   teaser_home_page: true
-  icon: /assets/images/hackthebox.webp
+  icon: ../assets/images/hackthebox.webp
 categories:
   - hackthebox
   - sherlock
