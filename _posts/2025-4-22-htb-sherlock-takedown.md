@@ -18,7 +18,7 @@ tags:
 
 ---
 
-# **Sherlock - Takedown**
+<p class="color-text">Sherlock - Takedown</p>
 
 
 --- 
