@@ -331,4 +331,18 @@ Para esto tenemos que ir a la página de [MIITRE ATT&CK]() en la columna de *Per
 
 ![](../assets/images/sherlock-meerkat/imagen4.png)
 
-
+<div style="
+  background: #1a1a1a;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+  padding: 1rem;
+  margin: 2rem 0;
+">
+  <h3 style="margin-top: 0; color: #e91e63;">Título de la tarjeta</h3>
+  <p>Contenido descriptivo con un estilo más “elevado”.</p>
+  <a href="#" style="
+    color: #03a9f4;
+    text-decoration: none;
+    font-weight: bold;
+  ">Leer más →</a>
+</div>
