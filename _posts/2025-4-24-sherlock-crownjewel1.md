@@ -1,4 +1,19 @@
-
+---
+layout: single
+title: Hack The Box Sherlock - CrownJewel 1
+excerpt: Anàlis forense de ficheros .evtx después de un ataque NTDS.dit dump.
+date: 2025-4-24
+classes: wide
+categories:
+   - sherlock-htb
+   - DFRI
+tags:
+   - active directory
+   - chainsaw
+   - ntds.dit dump
+   - forensics
+   - bash
+---
 
 # **Sherlosck - CrownJewel1**
 

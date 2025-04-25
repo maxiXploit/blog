@@ -1,4 +1,20 @@
-
+---
+layout: single
+title: Hack The Box Sherlock - CrownJewel2
+excerpt: Una continuación del laboratorio CrownJewel1.
+date: 2025-4-24
+classes: wide
+headers: 
+   - ../assets/images/sherlock-compromised/compromised.webp
+categories:
+   - sherlock-htb
+   - dfri
+tags:
+   - active directory
+   - forensics
+   - bash
+   - chainsaw
+---
 
 **CrownJewel2 - Hack The Box**
 
