@@ -75,6 +75,8 @@ Un ejemplo simplificado de una entrada de alerta:
 Algunos campos comunes que se encuentran en logs de Zeek
 
 Depende del tipo de log (conn.log, dns.log, http.log, notice.log, etc), pero algunos campos que verán a menudo son:
+
+
 | Campo           | Descripción |
 |------------------|-------------|
 | `ts`             | Timestamp del evento |
