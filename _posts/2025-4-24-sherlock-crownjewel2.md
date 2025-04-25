@@ -4,8 +4,6 @@ title: Hack The Box Sherlock - CrownJewel2
 excerpt: Una continuación del laboratorio CrownJewel1.
 date: 2025-4-24
 classes: wide
-headers: 
-   - ../assets/images/sherlock-compromised/compromised.webp
 categories:
    - sherlock-htb
    - dfri
@@ -34,7 +32,7 @@ Al igual que en la primera parte, primero vamos a ejecutar el siguiente comando 
 └─$ /opt/chainsaw/target/release/chainsaw hunt *.evtx --sigma /opt/chainsaw/sigma --mapping /opt/chainsaw/mappings/sigma-event-logs-all.yml
 ``` 
 
-![](../images/assets/sherlock-cj2/imagen21.png)
+![](/images/assets/sherlock-cj2/imagen21.png)
 
 Vemos que Chainsaw ya nos reporta un `Volume Shadow Copy Mount`, que es de lo que trata este laboratorio, así que pasemos a fomato json los ficheros `.evtx`: 
 
