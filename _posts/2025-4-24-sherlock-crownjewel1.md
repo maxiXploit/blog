@@ -65,7 +65,7 @@ Así que aplicamos un filtro en Chainsaw para buscar por el `ParentProcessId` y 
 
 ![](../assets/images/sherlock-cj1/imagen2.png)
 
-<p style="#FFF59D">**Con esto podemos afirmar que se trata de un falso positivo**</p>
+<p style="color: #FFF59D;">Con esto podemos afirmar que se trata de un falso positivo</p>
 
 La razón: 
 <URI>\\CreateExplorerShellUnelevatedTask</URI> dentro de TaskContent, **este XML corresponde a una tarea programada “de fábrica” de Windows**, no a un payload malicioso que alguien haya subido.
