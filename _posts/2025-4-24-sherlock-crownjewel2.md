@@ -32,7 +32,7 @@ Al igual que en la primera parte, primero vamos a ejecutar el siguiente comando 
 └─$ /opt/chainsaw/target/release/chainsaw hunt *.evtx --sigma /opt/chainsaw/sigma --mapping /opt/chainsaw/mappings/sigma-event-logs-all.yml
 ``` 
 
-![](/images/assets/sherlock-cj2/imagen21.png)
+![](../assets/images/sherlock-cj2/imagen1.png)
 
 Vemos que Chainsaw ya nos reporta un `Volume Shadow Copy Mount`, que es de lo que trata este laboratorio, así que pasemos a fomato json los ficheros `.evtx`: 
 
