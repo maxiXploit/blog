@@ -15,6 +15,7 @@ tags:
    - bash
 ---
 
+
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
 
@@ -62,7 +63,9 @@ tags:
 </style>
 
 
+
 <div class="post-wrapper">
+
 
 <h1>Sherlock - LogJammer</h1>
 
@@ -537,5 +540,7 @@ Así que:
 
 **El usuario CyberJunkie limpió el log:**
 **Microsoft-Windows-Windows Firewall With Advanced Security/Firewall**
+
+
 
 </div>
