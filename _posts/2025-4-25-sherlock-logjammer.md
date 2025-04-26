@@ -63,10 +63,6 @@ tags:
 </style>
 
 
-
-<div class="post-wrapper">
-
-
 <h1>Sherlock - LogJammer</h1>
 
 <h2>En este laboratorio estaremos trabajando con ficheros de eventos de windows(.evtx) para investigar la intrusión del usuario CyberJunky en nuestra red, y determinar que acciones maliciosas realizó</h2>
@@ -541,6 +537,3 @@ Así que:
 **El usuario CyberJunkie limpió el log:**
 **Microsoft-Windows-Windows Firewall With Advanced Security/Firewall**
 
-
-
-</div>
