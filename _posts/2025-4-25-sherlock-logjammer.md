@@ -1,7 +1,7 @@
 ---
 layout: single
 title: Hack The Box Sherlock - LogJammer
-excerpt: Anàlis forense de ficheros .evtx después de un ataque NTDS.dit dump.
+excerpt: Anàlis forense de registros .evtx sobre lo que parece ser una intrusión a la red. 
 date: 2025-4-25
 classes: wide
 categories:
@@ -10,7 +10,6 @@ categories:
 tags:
    - active directory
    - chainsaw
-   - ntds.dit dump
    - forensics
    - bash
 ---
@@ -29,6 +28,10 @@ tags:
 
   .bold {
     font-weight: 700;
+  }
+    
+  .colorsito {
+    color: blue;
   }
 
   .highlight {
@@ -67,7 +70,7 @@ tags:
 
 <h3>En este laboratorio estaremos trabajando con ficheros de eventos de windows(.evtx) para investigar la intrusión del usuario CyberJunky en nuestra red, y determinar que acciones maliciosas realizó</h3>
 
-Se nos proporcionan 2 el siguiente contenido para este laboratorio: 
+<p style="colorsito">Se nos proporcionan 2 el siguiente contenido para este laboratorio: </p>
 
 ```bash 
 ┌──(kali㉿kali)-[~/blue-labs/DFIR/logjamer/Event-Logs]
