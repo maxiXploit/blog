@@ -63,7 +63,7 @@ tags:
 </style>
 
 
-<div clas="post.wrapper>
+<div class="post-wrapper">
 
 <h1>Sherlock - LogJammer</h1>
 
