@@ -2,7 +2,7 @@
 layout: single
 title: Hack The Box Sherlock - LogJammer
 excerpt: Anàlis forense de ficheros .evtx después de un ataque NTDS.dit dump.
-date: 2025-4-24
+date: 2025-4-25
 classes: wide
 categories:
    - sherlock-htb
