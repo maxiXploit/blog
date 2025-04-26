@@ -65,7 +65,7 @@ tags:
 
 <h1>Sherlock - LogJammer</h1>
 
-<h2>En este laboratorio estaremos trabajando con ficheros de eventos de windows(.evtx) para investigar la intrusión del usuario CyberJunky en nuestra red, y determinar que acciones maliciosas realizó</h2>
+<h3>En este laboratorio estaremos trabajando con ficheros de eventos de windows(.evtx) para investigar la intrusión del usuario CyberJunky en nuestra red, y determinar que acciones maliciosas realizó</h3>
 
 Se nos proporcionan 2 el siguiente contenido para este laboratorio: 
 
