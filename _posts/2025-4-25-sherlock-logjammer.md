@@ -21,7 +21,6 @@ tags:
   .post-wrapper {
     font-family: 'Roboto', sans-serif;
     color: #e0e0e0;
-    background-color: #000;
     padding: 1em;
     line-height: 1.7;
     font-size: 1rem;
