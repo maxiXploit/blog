@@ -230,7 +230,42 @@ La ruta la podemos encontrar en el campo File Loaded:
 ```json
 C:\USERS\ALONZO.SPIRE\DOWNLOADS\RUBEUS.EXE
 ```
- 
+**Rubeus** es una **herramienta para atacar Kerberos** en entornos Windows.
+- Escrito en **C#** por **@GhostPack** (el mismo grupo detrás de Seatbelt, SharpHound, etc.).
+- Funciona como un **"cuchillo suizo" de Kerberos** para pentesters y red teamers.
+
 ---
+
+### ¿Qué puede hacer Rubeus?
+
+➡️ **Kerberoasting**:  
+- Solicitar tickets de servicio (TGS) y extraer sus hashes para crackear contraseñas offline.
+
+➡️ **AS-REP Roasting**:  
+- Atacar cuentas que no requieren preautenticación Kerberos (`Do not require Kerberos preauthentication`).
+
+➡️ **Pass-the-Ticket**:  
+- Inyectar tickets Kerberos en memoria para autenticarse como otros usuarios (sin necesidad de contraseña).
+
+➡️ **Ticket Harvesting**:  
+- Enumerar y extraer tickets activos en una máquina comprometida.
+
+➡️ **S4U Attacks**:
+- Escalar privilegios con `S4U2Self` y `S4U2Proxy`.
+
+➡️ **Golden Ticket / Silver Ticket**:
+- Generar e inyectar tickets falsificados para moverse lateralmente.
+
+➡️ **Renewal / Overpass-the-Hash**:
+- Renovar tickets existentes o autenticarse usando NTLM hashes.
+
+--- 
 **task 7**
 
+
+¿Cuándo se ejecutó la herramienta para volcar las credenciales?
+
+En la captura mostrada en la pregunta pasada podemos ver que la herramienta se ejecutó 1 segundo antes de que soliitara el TGS para el servicio de MSSQLService.
+
+
+ 
