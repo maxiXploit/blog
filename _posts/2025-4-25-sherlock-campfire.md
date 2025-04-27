@@ -228,8 +228,9 @@ Para esto ya tenemos que pasar el Timeline Explorer, tenemos que aplicar un filt
 La ruta la podemos encontrar en el campo File Loaded: 
 
 ```json
-
-``` 
-
-
+C:\USERS\ALONZO.SPIRE\DOWNLOADS\RUBEUS.EXE
+```
+ 
+---
+**task 7**
 
