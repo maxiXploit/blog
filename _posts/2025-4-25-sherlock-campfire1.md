@@ -2,13 +2,14 @@
 layout: single
 title: Sherlock Campfire - Hack The Box 
 excerpt: Anális forense de un Kerberoasting attack en el que se nos proporcionan logs de eventos de windows y ficheros .pf(prefetch).
-date: 2025-4-21
+date: 2025-4-25
 classes: wide
 categories: 
    - sherlock-htb
    - DFIR
 tags: 
    - kerberos
+   - kerberoasting attack
    - prefetch
    - evtx
 --- 
