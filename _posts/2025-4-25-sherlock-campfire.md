@@ -1,12 +1,24 @@
-
+--
+layout: single
+title: Sherlock Campfire - Hack The Box 
+excerpt: Anális forense de un Kerberoasting attack en el que se nos proporcionan logs de eventos de windows y ficheros .pf(prefetch).
+date: 2025-4-21
+classes: wide
+categories: 
+   - sherlock-htb
+   - DFIR
+tags: 
+   - kerberos
+   - prefetch
+   - evtx
+--- 
 
 # **Sherlock - Campfire1**
 
-Para este laboratorio estaremos trabajando con un par de ficheros .evtx y un monton de ficheros .pf que son archivos de Prefetch de Windows.
 
-Estaremos investigando lo que parece ser un Kerberoasting attack: 
+En este laboratorio estaremos investigando lo que parece ser un Kerberoasting attack. 
 
-La carpeta que tienes (`prefetch`) contiene **archivos .pf** que son archivos de **Prefetch** de Windows.  
+Se nos proporcionan ficheros .evtx, que ya conocemos este formato, y ficheros **`.pf`**(`prefetch`), que son archivos de **Prefetch** de Windows.  
 Estos archivos los crea automáticamente Windows para **acelerar el arranque de programas**. Básicamente, cuando ejecutas un programa, Windows guarda un `.pf` para registrar **qué archivos usa ese programa y cuánto tarda**. Luego, en futuras ejecuciones, Windows puede cargar todo eso más rápido.
 
 Ahora, en **forense**. los Prefetch son muy útiles porque:  
