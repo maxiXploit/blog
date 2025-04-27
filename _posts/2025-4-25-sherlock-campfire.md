@@ -21,5 +21,7 @@ Para parsear estos ficheros usaremos la herramienta de Eric Zimmerman, PECmd, qu
 
 Una vez parseado el contenido correctamente, podemos usar el Timeline Explorer para tener una visualización más cómoda del cvs y pasar a responder las preguntas. 
 
+---
+**task 1**
 
-
+Analizando los registros de seguridad del controlador de dominio, ¿puede confirmar la fecha y hora en que se produjo la actividad de kerberoasting?
