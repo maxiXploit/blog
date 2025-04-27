@@ -30,7 +30,7 @@ Ahora, en **forense**. los Prefetch son muy útiles porque:
 
 Para parsear estos ficheros usaremos la herramienta de Eric Zimmerman, PECmd, que nos permite parsear ficheros .pf a un csv, podemos hacerlo con el siguiente comando
 
-![](../assets/images/sherlock-campfire1/imagen1.pg)
+![](../assets/images/sherlock-campfire1/imagen1.png)
 
 Una vez parseado el contenido correctamente, podemos usar el Timeline Explorer para tener una visualización más cómoda del cvs y pasar a responder las preguntas. 
 
