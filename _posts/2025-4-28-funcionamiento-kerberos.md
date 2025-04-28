@@ -8,13 +8,15 @@
     border-radius: 10px; 
     padding: 10px;     
     font-family: 'Courier New';
-    text-aling: center; 
+    text-alingn: center; 
 "> 
  Kerberos y los ataques AS-REP roast y Kerberoasting attack
 </h1>
 
 Entender el funcionamiento del protocolo de autenticación Kerberos puede resultar un poco abrumador, e incluso complejo por la cantidad de elementos involucrados para algo, desde el punto de vista de una persona no técnica, tan simple como acceder a las facturas del mes pasado, pero tan crìtico para un hacker que desea mantener o comprometer la integridad de esos datos.
-Así
+Así que expliquemos de forma sencilla y un poco esquemática usando colores para explicar el flujo de autenticación en Kerberos. 
+
+
 
 
 
