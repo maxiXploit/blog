@@ -1,4 +1,17 @@
+--
+layout: single
+title: Sherlock Unit42 - Hack The Box 
+excerpt: Anális forense sobre los logs generados por una versión maliciosa de la aplicació nde escritorio  remoto UltraVNC
+date: 2025-4-27
+classes: wide
+categories: 
+   - sherlock-htb
+   - DFIR
+tags:
+   - sysmon
+   - evtx
 
+--- 
 
 # **Unit 42** 
 
