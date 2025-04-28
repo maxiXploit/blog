@@ -3,8 +3,8 @@
 
 <h1 style="
     color: #00ff00;
-    background: #0b3f00; 
-    border: 2px solid #00ff00;
+    background: #031200; 
+    border-radius: 10px;
     border-radius: 10px; 
     padding: 10px;     
     font-family: 'Courier New';
