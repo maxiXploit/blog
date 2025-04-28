@@ -8,7 +8,7 @@
     border-radius: 10px; 
     padding: 10px;     
     font-family: 'Courier New';
-    text-alingn: center; 
+    text-align: center; 
 "> 
  Kerberos y los ataques AS-REP roast y Kerberoasting attack
 </h1>
