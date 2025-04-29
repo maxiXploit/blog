@@ -32,7 +32,8 @@ Con este hash cifra 2 mensajes
     {{{TGT}<llave secreta del TGS>}<clave derivada del usuario>}
    ``` 
 Estos mensajes son enviados al cliente, si la contraseña proporcionada por el usuario era la correcta, el cliente será capaz de crear la misma clave derivada del usuario que se usó para encriptar los mensajes, permitiendo desencriptar èstos mismos.
-3. 
+
+3. Si
 
 ">
 
