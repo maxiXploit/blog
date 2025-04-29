@@ -79,13 +79,8 @@ Esto podemos verlo en la parte del log que proporcionamo en la pregunta anterior
 
 Una búsqueda rápida en internet podemos encontrar facilmente que se trata del CVE-2025-29927. 
 
-Claro. Te explico bien:
 
----
-
-### 🛑 CVE-2025-29927 — Vulnerabilidad crítica en Next.js Middleware
-
-Descripción: Este CVE reporta una falla crítica en el manejo que hace Next.js de ciertos requests cuando usa middleware para controlar accesos.
+Este CVE reporta una falla crítica en el manejo que hace Next.js de ciertos requests cuando usa middleware para controlar accesos.
 - El problema ocurre porque **Next.js** no valida correctamente algunas peticiones específicas (generalmente manipuladas a nivel de path o cabeceras).
 - Esto puede permitir que un atacante **salte** o **evite** mecanismos de **autenticación** (**authentication bypass**) o **autorización** (**authorization bypass**) que estén implementados en el middleware.
 
@@ -159,7 +154,8 @@ Son cosas como:
 - CSS, imágenes, fuentes, íconos, etc.
 No son rutas "dinámicas" que corren lógica de servidor o base de datos. Son assets que se sirven tal cual están.
 
-El atacante intentó acceder a estas rutas primero, tal vez no encontró algo interesante. <p style="color: #00ff00; ">La primea a la que logró acceder fue a "/_next/static/chunks/main-app.js", pues recibió un código de estado 200.</p>
+El atacante intentó acceder a estas rutas primero, tal vez no encontró algo interesante, <p style="color: #00ff00;">La primera a la que logró acceder fue a "/_next/static/chunks/main-app.js", pues recibió un código de estado 200.</p>
+
 
 Esto se puede hacer con herramientas como wfuzz/gobuster, burpsuite, curl, etc. 
 
@@ -195,7 +191,7 @@ Si continuamos analizando los logs, podremos ver que se intentó acceder a la ru
 10.129.231.211 - - [01/Apr/2025:11:38:26 +0000] "PUT /api/bci/analytics HTTP/1.1" 200 90 "-" "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101 Firefox/45.0"
 ```
 
-Podemos ver que se intentó acceder varias veces a <p style="color: #00ff00;">"/api/bci/analytics"</p> con un código de error 401(indica que la solicitud web necesita autenticación para ser procesada), hasta que obtuvo un código 200. ya el propio nombre del recurso nos indica que puede ser una ruta crítica. 
+Podemos ver que se intentó acceder varias veces a <p style="color: #00ff00;">/api/bci/analytics</p> con un código de error 401(indica que la solicitud web necesita autenticación para ser procesada), hasta que obtuvo un código 200. ya el propio nombre del recurso nos indica que puede ser una ruta crítica. 
 
 Esto podemos confirmarlo en **interface.log**
 
