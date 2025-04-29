@@ -18,7 +18,7 @@ tags:
 En este laboratorio estaremos analizando logs de eventos registrados por Sysmon(System Monitor), que es una herramienta de Microsoft que forma parte del conjunto de Sysinternals. Funciona como un servicio y un driver en Windows y registra eventos detallados del sistema en los logs de eventos de Windows.
 Estaremos investigando la campaña maliciosa que involucró una versión comprometida de UltraVNC, investigada por el equipo Unit 42 de Palo Alto Networks, en dicha campaña los atacantes distribuyeron una versión de UltraVNC modificada con un backdoor para mantener acceso persistente a los sistemas comprometidos. 
 
-Se nos proporciona un único fichero .evtx para analizar, en mi caso usaré chainsaw para parsear los datos a un formato jsonl, que me resulta más cómodo de trabajar. 
+Se nos proporciona un único fichero .evtx para analizar, en mi caso usaré chainsaw para parsear los datos a un formato jsonl, que me resulta más cómodo de trabajar. sisis
 
 Usamos chainsaw de la siguiente manera para parsear todo: 
 
