@@ -25,7 +25,7 @@ Con este hash cifra 2 mensajes
   Mensaje B: Un Ticket-Granting-Ticket(TGT), este TGT no es más que un "paquete" que contiene <ID del cliente, dirección de red del cliente(ip), el tiempo en el que es válido el ticket, y el Client/TGS session key del mensaje A>, todo esto está cifrado, primero con la llave secreta del TGS, y después con la clave secreta del usuario. 
 
    ```bash 
-    {{{TGT}<llave secreta del TGS>}<clave derivada del usuario>}
+    (((TGT)<llave secreta del TGS>)<clave derivada del usuario>)
    ``` 
 Estos mensajes son enviados al cliente, si la contraseña proporcionada por el usuario era la correcta, el cliente será capaz de crear la misma clave derivada del usuario que se usó para encriptar los mensajes, permitiendo desencriptar èstos mismos.
 
