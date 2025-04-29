@@ -1,8 +1,21 @@
+---
+layout: single
+title: Sherlock NeuroSync-D - Hack The Box 
+excerpt: Anális forense sobre sobre un ataque de LFI en una aplicación escrita en Next.js
+date: 2025-4-29
+classes: wide
+categories: 
+   - sherlock-htb
+   - DFIR
+tags:
+   - sysmon
+   - evtx
 
+--- 
 
 **Sherlock - NeuroSync-D** 
 
-En este laboratorio estaremos analizando los logs de una aplicación creada con Node.js que fue atacada por un APT(amenaza persistente avanzada).
+En este laboratorio estaremos analizando los logs de una aplicación creada con Next.js que fue atacada por un APT(amenaza persistente avanzada).
 
 Se nos proporciona una un .zip que contiene lo siguiente: 
 
