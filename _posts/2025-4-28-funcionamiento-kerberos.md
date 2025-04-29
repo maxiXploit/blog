@@ -16,10 +16,6 @@
 
 Entender de forma clara este protocolo es esencial como funcionan los ataques más comunes en entornos de Active Directory. Hay muchas explicaciones por internet, algunas no tan detalladas, algunas erroneas, he hecho la página de wikipedia tiene una explicación en español con un par de errores y una explicación no tan extendida, por lo que nos basaremos en esta explicación agregando un esquema de colores para seguir de forma más sencilla el flujo y añadiendo más detalles en cada paso del proceso. 
 
----
-
-<div style="
-    background: #0b3f00; 
 
 1. El usuario accede al cliente Kerberos en su equipo con sus credenciales y el cliente manda una AS-REQ al AS, este AS-REQ consiste del ID del cliente en texto plano. 
 
@@ -34,11 +30,4 @@ Con este hash cifra 2 mensajes
 Estos mensajes son enviados al cliente, si la contraseña proporcionada por el usuario era la correcta, el cliente será capaz de crear la misma clave derivada del usuario que se usó para encriptar los mensajes, permitiendo desencriptar èstos mismos.
 
 3. Si
-
-">
-
-Hola
-
-</div>
-    
 
