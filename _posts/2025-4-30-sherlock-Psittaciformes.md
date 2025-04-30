@@ -371,7 +371,7 @@ index 4588988..0a97220 100644
 
 Bien, para esto no es tan díficil encontrar la técnica, se logra persistencia añadiendo una tarea progragama al `crontab` para que se ejecute en cada inicio del sisitema: 
 
-![](../assets/images/sherlock-psitta/imagen1.png)
+![](../assets/images/sherlock-pitta/imagen1.png)
 
 
 ---
@@ -382,7 +382,7 @@ Bien, para esto no es tan díficil encontrar la técnica, se logra persistencia 
 Para esto hay que analizar un poco más el binario `blob` descargado por el atacante, y podremos llegar a la conclusión de que se trata de la técnica: 
 
 
-![](../assets/images/sherlock-psitta/imagen2.png)
+![](../assets/images/sherlock-pitta/imagen2.png)
 
 1. El binario `blob` se ejecuta automáticamente en segundo plano y **se persiste con `cron`**, por lo tanto corre en **cada reinicio del sistema**.
    
