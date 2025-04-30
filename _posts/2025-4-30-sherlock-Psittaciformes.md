@@ -1,4 +1,18 @@
+---
+layout: single
+title: Sherlock Psittaciformes - Hack The Box 
+excerpt: Un ejercició de red team en el que se logra crar una tarea programada para que se ejecute un binario en cada inicio del sistema, nuestro trabajo es determinar cómo fue que el pentester logró esto. 
+date: 2025-4-30
+classes: wide
+categories: 
+   - sherlock-htb
+   - DFIR
+tags:
+   - MITTRE ATT&CK
+   - cronjob
+   - github
 
+--- 
 
 # **Sherlock - Psittaciformes**
 

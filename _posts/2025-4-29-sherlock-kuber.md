@@ -1,5 +1,16 @@
+---
+layout: single
+title: Sherlock Kuber - Hack The Box 
+excerpt: Anális forense sobre un entorno de producción con kubernetes, en un ataque de exfiltración de datos. 
+date: 2025-4-29
+classes: wide
+categories: 
+   - sherlock-htb
+   - DFIR
+tags:
+   - kubernetes
 
-
+--- 
 
 **Sherlock - Kuber**
 
