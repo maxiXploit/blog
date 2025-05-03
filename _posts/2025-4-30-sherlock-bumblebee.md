@@ -1,7 +1,7 @@
 ---
 layout: single
-title: Sherlock Pikaptcha - Hack The Box
-excerpt: Una reporte bastante resumido sobre la Operación Dream Job dirigida por el Lazarus Group y que se llevó a cabo a través de la plataforma de Linkedin. Una campaña de phishing altamente diriga con la finalidad de espiar y exfiltrar datos de sectores como la tecnología y la aviación. 
+title: Sherlock Bumblebee - Hack The Box
+excerpt: Análsamos una base de datos de una aplicación para determinar como fue que un tercero dentro de la organización logró hacerse con las credenciales de administrador usando una técnica algo creativa. 
 date: 2025-4-30
 classes: wide
 header: 
@@ -12,7 +12,7 @@ categories:
    - sherlock-htb
    - DFIR
 tags: 
-   - wireshark
+   - sqlite3
 --- 
 
 # **Sherlock - Bumblebe**

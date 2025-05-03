@@ -7,6 +7,7 @@ classes: wide
 header: 
    teaser: ../assets/images/htb-sherlock-dreamjob1/dreamjob1.webp
    teaser_home_page: true 
+   icon: ../assets/images/hackthebox.webp
 categories: 
    - threat intelligence
    - sherlock

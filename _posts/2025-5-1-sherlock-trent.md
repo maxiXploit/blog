@@ -1,8 +1,8 @@
 ---
 layout: single
-title: Sherlock Pikaptcha - Hack The Box
-excerpt: Una reporte bastante resumido sobre la Operación Dream Job dirigida por el Lazarus Group y que se llevó a cabo a través de la plataforma de Linkedin. Una campaña de phishing altamente diriga con la finalidad de espiar y exfiltrar datos de sectores como la tecnología y la aviación. 
-date: 2025-4-30
+title: Sherlock Trent - Hack The Box
+excerpt: Un equipo de red con una vulnerabilidad del tipo Command Injection, nuestro trabajo es determinar las acciones del atacante y su alcance.  
+date: 2025-5-1
 classes: wide
 header: 
   teaser: ../assets/images/sherlock-trent/logo.png
