@@ -26,7 +26,7 @@ Permite incluir metadatos forenses, como:
 - Hashes de verificación (MD5/SHA1)
 - Información del caso y del examinador
 - Notas o comentarios
-- Muy utilizado en entornos forenses por su capacidad de preservar la integridad de la evidencia. 
+- Muy utilizado en entornos forenses por su capacidad de preservar la integridad de la evidencia
 
 Suvimos la imagen a FTK imager el fichero y empezamos rapidamente con las preguntas. 
 
