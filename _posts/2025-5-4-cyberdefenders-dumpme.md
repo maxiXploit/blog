@@ -1,4 +1,13 @@
-
+---
+layout: single
+title: Cyberdefenders - DumpMe
+excerpt: Analisis de un volcado de memoria para anlizar un equipo comprometido.
+classes: wide
+categories: 
+   - cyberdefenders
+tags: 
+   - volatility
+--- 
 
 # **Cyberdefenders - DumpMe**
 
