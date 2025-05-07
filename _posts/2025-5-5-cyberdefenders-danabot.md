@@ -1,4 +1,18 @@
-
+---
+layout: single
+title: Cyberdefenders - Danabot
+excerpt: Analisis de un fichero pcap sobre un ataqué que inició con la descarga de un supuesto fichero '.php' que código para un login de usuarios en html. 
+date: 2025-5-5
+classes: wide
+categories:
+  - cyberdefenders
+  - SOC
+  - network forensics
+tags:  
+  - DFIR
+  - wireshark
+  - tshark
+---
 
 # **Cyberdefenders - DanaBot**
 

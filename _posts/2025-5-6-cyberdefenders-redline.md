@@ -1,4 +1,15 @@
-
+---
+layout: single
+title: Cyberdefenders - RedLine
+excerpt: Tráfico de red sospechoso detectado por el equipo de blue team nos lleva a analizar un volcado de memoria para avergiguar las técnicas usadas por los atacantes. 
+date: 2025-5-6
+classes: wide
+categories: 
+   - cyberdefenders
+   - endpoint forensics
+tags: 
+   - volatility
+--- 
 
 # **Cyberdefenders - RedLine**
 
