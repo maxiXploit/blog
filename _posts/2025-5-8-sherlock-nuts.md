@@ -60,12 +60,12 @@ ZoneId=3
 ReferrerUrl=https://ejemplo.com
 HostUrl=https://ejemplo.com/descarga/archivo.exe
 ```
-* `ZoneId=3` → significa que se descargó desde Internet (más abajo te doy la lista).
+* `ZoneId=3` → significa que se descargó desde Internet.
 * `HostUrl` → es la **URL exacta** desde donde se descargó el archivo.
 * `ReferrerUrl` → indica desde qué página fuiste redirigido (si aplica).
 
 
-### 🔢 Zonas comunes (ZoneId):
+### Zonas comunes (ZoneId):
 
 | ZoneId | Zona                     |
 | ------ | ------------------------ |
