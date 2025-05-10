@@ -1,12 +1,22 @@
-
+---
+layout: single
+title: Cyberdefender - SpottedInTheWild 
+excerpt: Una vulnerabilidad en el software WinRar ha dado lugar a comportamiento de red sospechoso dentro de la organización, nuestro trabajo como miembro del equipo de respuesta a incidentes es determinar qué y cómo fue que pasó.
+date: 2025-5-9
+classes: wide
+categories:
+   - cyberdefenders
+   - dfir
+tags:
+   - any.run
+   - vhd
+---
 
 # **Cyberdefenders - SpottedInTheWild**
 
+Para este laboratorio se nos da una imágen de disco virtual `.vhd`, que podemos facilemnte montar en linux.
 
-
-
-Para esto tenemos que ver las particiones disponibles.
-
+Primero averiguamos las particiones
 ```bash 
 ┌──(kali㉿kali)-[~/blue-labs/spotted-cyber/temp_extract_dir]
 └─$ virt-filesystems -a c125-SpottedInTheWild.vhd --long --parts            
@@ -15,7 +25,6 @@ Name       Type       MBR  Size        Parent
 ```
 
 Y ya podemos montar con: 
-
 ```bash 
 ┌──(kali㉿kali)-[/mnt]
 └─$ sudo guestmount -a c125-SpottedInTheWild.vhd -m /dev/sda1 --ro /mnt/spotted
@@ -35,7 +44,7 @@ diskmgmt.msc
 Con esto ya podemos continuar con las preguntas: 
 
 ---
-<h333tyle="color: #0d6efd;">1. En su investigación sobre la brecha del FinTrust Bank, encontró una aplicación que era el punto de entrada del ataque. ¿Qué aplicación se utilizó para descargar el archivo malicioso? </h3>
+<h2 style="color: #0d6efd;">1. En su investigación sobre la brecha del FinTrust Bank, encontró una aplicación que era el punto de entrada del ataque. ¿Qué aplicación se utilizó para descargar el archivo malicioso? </h2>
 
 Para esto lo primero que revisé fue las aplicaciones de los usuarios, el que nos interesa es el administrador, así que navegué a la siguiente ruta: 
 
@@ -46,7 +55,7 @@ C/Users/Administrator/AppData/Roaming/
 Aquí vemos la aplicación de telegram, así que lo primero que pensamos es esta es la aplicación, no es la primera vez que escuchamos cosas malas de telegram. 
 
 ---
-<h3 style="color: #0d6efd;">2. Averiguar cuándo comenzó el ataque es fundamental. Cuál es la fecha UTC en la que se descargó por primera vez el archivo sospechoso?</h3>
+<h2 style="color: #0d6efd;">2. Averiguar cuándo comenzó el ataque es fundamental. Cuál es la fecha UTC en la que se descargó por primera vez el archivo sospechoso?</h2>
 
 Para resolver esto lo primero en lo que pensé fue en la `$MFT` y en `$UsnJournal($J)`. Ya sabemos que la intrusión empezó con telegram, así que podemos buscar ficheros que tengan como `Paret Path` a telgram.
  primero parsee el `$J` con la herramienta `MFTECmd.exe`, pero no encontré nada aqui, depués parseé el `$MFT` con el siguiente comando: 
@@ -68,12 +77,12 @@ Vemos varios ficheros, lo que hizo que determinara cual fue el fichero malicioso
 Pero hay que recordar que todos los ficheros descargados de telegram como videos, fotos, pdf's tendrán este ZoneID, así que en un entorno más grande puede ser dificil determinar esto unicamente por este campo. 
 
 ---
-<h3 style="color: #0d6efd;">3. Saber qué vulnerabilidad fue explotada es clave para mejorar la seguridad. Cuál es el identificador CVE de la vulnerabilidad utilizada en este ataque?</h3>
+<h2 style="color: #0d6efd;">3. Saber qué vulnerabilidad fue explotada es clave para mejorar la seguridad. Cuál es el identificador CVE de la vulnerabilidad utilizada en este ataque?</h2>
 
 Para esto busqué en internet por el nombre del fichero malicioso, me encotré con el [siguiente análisis](https://any.run/report/d1a55bb98b750ce9b9d9610a857ddc408331b6ae6834c1cbccca4fd1c50c4fb8/fe007c98-c464-48dd-9c6b-867983eee22d)de `ANY.run` donde mencionan el CVE. 
 
 ---
-<h3 style="color: #0d6efd;">4. Al examinar el archivo descargado, se ha dado cuenta de que hay un archivo con una extensión extraña que indica que podría ser malicioso. ¿Cuál es el nombre de este archivo?</h3>
+<h2 style="color: #0d6efd;">4. Al examinar el archivo descargado, se ha dado cuenta de que hay un archivo con una extensión extraña que indica que podría ser malicioso. ¿Cuál es el nombre de este archivo?</h2>
 
 Esto lo pude ver fácilemte con el siguiente comando en la terminal de linux: 
 
@@ -104,14 +113,14 @@ Physical Size = 29729
 
 Hay un fichero con una extensión extraña, `.cmd` `.pdf`, ¿tal vez alguna técnica de evasión?
 ---
-<h3 style="color: #0d6efd;">5. Descubrir los métodos de entrega de la carga útil ayuda a comprender los vectores de ataque utilizados. Cuál es la URL utilizada por el atacante para descargar la segunda fase del malware?</h3>
+<h2 style="color: #0d6efd;">5. Descubrir los métodos de entrega de la carga útil ayuda a comprender los vectores de ataque utilizados. Cuál es la URL utilizada por el atacante para descargar la segunda fase del malware?</h2>
 
 Esto también podemos encontrarlo si nos detenemos a leer el reporte de `ANY.run`: 
 
 ![](../assets/images/cyber-spotted/imagen2.png)
 
 ---
-<h3 style="color: #0d6efd;">6. Para comprender mejor cómo los atacantes cubren sus huellas, identifique el script que utilizaron para manipular los registros de eventos. ¿Cuál es el nombre del script? </h3>
+<h2 style="color: #0d6efd;">6. Para comprender mejor cómo los atacantes cubren sus huellas, identifique el script que utilizaron para manipular los registros de eventos. ¿Cuál es el nombre del script? </h2>
 
 Para esto pensé que tal vez podría encontrarlo en el anterior reporte de ANY.run, intente ver si había algún eventID por el cual buscar pero no parecía haber algo interesante. 
 
@@ -120,7 +129,7 @@ Pero depués GPT mencionó el $MFT, rapidamente fui a buscar ficheros con extens
 ![](../assets/images/cyber-spotted/imagen3.png)
 
 ---
-<h3 style="color: #0d6efd;">7. Saber cuándo se produjeron las acciones no autorizadas ayuda a comprender el ataque. Cuál es la fecha UTC en la que se ejecutó el script que manipuló los registros de eventos?</h3>
+<h2 style="color: #0d6efd;">7. Saber cuándo se produjeron las acciones no autorizadas ayuda a comprender el ataque. Cuál es la fecha UTC en la que se ejecutó el script que manipuló los registros de eventos?</h2>
 
 Para esto primero busqué en la $MFT, luego en el $UsnJrnl, y el en prefetch pero no encontré nada. 
 Finalmente fui a la ruta `/mnt/spotted/C/Windows/System32/winevt/logs`, ahí vi un .evtx relacionado con powershell, asi que lo primero que pensé fue en `chainsaw`y `jq`:
@@ -195,14 +204,14 @@ Así que lo primero que hacemos es revisar el primer registro:
 Se ejecuta el `Eventlogs.ps1`, el timestamp de este log es el que buscamos. 
 
 ---
-<h3 style="color: #0d6efd;">8. Necesitamos identificar si el atacante mantuvo acceso a la máquina. Cuál es el comando utilizado por el atacante para la persistencia? </h3>
+<h2 style="color: #0d6efd;">8. Necesitamos identificar si el atacante mantuvo acceso a la máquina. Cuál es el comando utilizado por el atacante para la persistencia? </h2>
 
 Esto podemos verlo descargando el fichero malicioso en un entorno controlado y subiendolo a ANY.run 
 
 ![](../assets/images/cyber-spotted/imagen4.png)
 
 ---
-<h3 style="color: #0d6efd;">9. Para entender la estrategia de exfiltración de datos del atacante, necesitamos localizar dónde almacenó los datos recopilados. Cuál es la ruta completa del archivo que almacena los datos recopilados por una de las herramientas del atacante para preparar la exfiltración de datos?</h3>
+<h2 style="color: #0d6efd;">9. Para entender la estrategia de exfiltración de datos del atacante, necesitamos localizar dónde almacenó los datos recopilados. Cuál es la ruta completa del archivo que almacena los datos recopilados por una de las herramientas del atacante para preparar la exfiltración de datos?</h2>
 
 Esto podemos hacerlo analizando la siguiente ruta: 
 ```bash 
