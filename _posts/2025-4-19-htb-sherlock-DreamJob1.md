@@ -56,6 +56,10 @@ El atacante se ganaba la confianza del usuario, manteniendo una comunicación co
 
 Una vez que la víctima descargó el fichero, el atacante eliminaba el perfil falso.  
 
+Referencias:
+[clearskysec](https://www.clearskysec.com/operation-dream-job/)
+[MITRE ATT&CK](https://attack-mitre-org.translate.goog/campaigns/C0022/?_x_tr_sl=en&_x_tr_tl=es&_x_tr_hl=es&_x_tr_pto=tc)
+
 ---
 
 ## **¿Quién llevó a cabo la Operación Dream Job?**
