@@ -14,8 +14,6 @@ tags:
    - zeek
 ---
 
-# **Cyberdefenders - OpenWire**
-
 Vamos a estar analizando un fichero .pcap en este laboratorio, estaremos usando una herramietna diferente a wireshark que es con la que hemos venido trabajando. 
 
 Solo se nos proporciona un fichero .pcap que capturó tráfico de un servidor expuesto a internet, así que vamos a instalar zeek para iniciar. 

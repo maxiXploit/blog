@@ -15,9 +15,6 @@ tags:
    - apache 
 ---
 
-<h1 style="color: #0d6efd;"> Cyberdefenders - AzurePot</h1>
-
-
 En este laboratorio estaremos analizando las técnicas de ataque relacionadas con el CVE-2021-41773, los ficheros que se nos entrega en este laboratorio son de un honeypot en el que se puede explotar esta vulnerabilidad, se nos entrega lo siguiente: 
   
 ```bash 
@@ -34,7 +31,9 @@ Primeramente vamos usar el fichero .vhd, vamos a usar FTK imager para montar el 
 ![](../assets/images/cyber-azupot/imagen1.png)
 
 
-<h2 style="color: white;">Fichero : sdb.vhd</p>
+<h3 style="color: white;">Fichero : sdb.vhd</h3>
+
+
 ---
 <h3 style="color: #0d6efd;">Q1. Hay un script que se ejecuta cada minuto para hacer limpieza. ¿Cuál es el nombre del archivo?</h3>
 
@@ -303,7 +302,8 @@ wget.sh
 
 Vemos varios, posiblemente igual de maliciosos que aquellos que nos piden.
 
-<h2 style="color: white;">Fichero: UAC</h2>
+<h3 style="color: white;">Fichero: UAC</h3>
+
 ---
 <h3 style="color: #0d6efd;">Q10. Dos procesos sospechosos se estaban ejecutando desde un directorio eliminado. ¿Cuáles son sus PID?</h3>
 
@@ -448,6 +448,8 @@ running_processes_full_paths.txt:lrwxrwxrwx 1 daemon           daemon           
 Podemos ver dos procesos que corren directamente desde "/tmp", que es bastante sospechoso por sus característidas de poder ser escribibles por todos los usuarios en el sistema. 
 
 <h2 style="color: white;">Fichero: ubuntu.20211208.mem</h2>
+
+<h3 style="color: white;">Fichero: ubuntu.20211208</h3>
 
 ---
 <h3 style="color: #0d6efd;">Q14. ¿Cuál es la dirección MAC de la memoria capturada?</h3>
