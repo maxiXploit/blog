@@ -8,11 +8,11 @@ header:
    teaser_home_page: true 
    icon: ../assets/images/hackthebox.webp
 categories: 
-   - threat intelligence
-   - sherlock
+   - hack the box
+   - windows
 tags: 
-   - mittre att&ck
-   - virus total 
+   - ctf
+   - active directory
 --- 
 
 
