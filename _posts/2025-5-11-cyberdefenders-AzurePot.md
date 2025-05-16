@@ -124,7 +124,7 @@ Esto lo podemos ver en la imagen de la pregunta anterior, recordando que:
 Por lo que solo se le asignan permisos de lectura, ni escritura ni ejecución. 
 
 ---
-<h3 style="color: #0d6efd;"Q4. ¿Cuál es el SHA256 del archivo del agente de la botnet?</h3>
+<h3 style="color: #0d6efd;">Q4. ¿Cuál es el SHA256 del archivo del agente de la botnet?</h3>
 
 Bien, pues ya sabemos que estamos trabajando con un  CVE-2021-41773, que afecta a las versiones 2.4.49 y 2.4.50 de Apache HTTP Server, permitiendo ataques de path traversal y ejecución remota de código (RCE).
 
