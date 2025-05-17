@@ -11,10 +11,10 @@ header:
 categories:
    - cyberdefenders
    - DFIR
-   - netowork forensics
+   - network forensics
 tags:
    - wireshark
-   - tshar
+   - tshark
    - network miner
    - ghidra
 ---
