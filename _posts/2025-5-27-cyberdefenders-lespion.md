@@ -1,8 +1,8 @@
 ---
 layout: single
 title: Cyberdefenders - Lespion
-excertp: Ejercicio de inteligencia de amenazas bastante realista. 
-date: 2025-05-27
+excertp: Ejercicio de inteligencia de amenazas en el que simulan un entorno bastate realista.
+date: 2025-05-25
 classes: wide
 header:
   teaser: ../assets/images/sherlock-bumbleebe/
@@ -10,11 +10,13 @@ header:
   icon: ../assets/images/logo-icon.svg
 categories:
    - cyberdefenders
-   -  threat intelligence
+   - threat intelligence
 tags:
    - osint
-   - github history
+   - git hub history
    - social media
+   - threat intel
+
 ---
 
 Para este laboratorio se nos proporciona lo siguiente: 

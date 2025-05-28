@@ -1,8 +1,8 @@
 ---
 layout: single
 title: Cyberdefenders - IceID
-excertp: Ejercicio de threat intelligence con un hash de un malware dedicado para robo de credenciiales bancarias. 
-date: 2025-05-28
+excertp: Ejercicio de Inteligencia de amenazas sobre un malware dedicado al robo de datos bancarios. 
+date: 2025-05-25
 classes: wide
 header:
   teaser: ../assets/images/sherlock-bumbleebe/
@@ -10,12 +10,11 @@ header:
   icon: ../assets/images/logo-icon.svg
 categories:
    - cyberdefenders
-   -  threat intelligence
+   - threat intelligence
 tags:
    - virus total
-   - any.run
    - triage
-   - hash
+   - any.run 
    - threat intel
 ---
 
