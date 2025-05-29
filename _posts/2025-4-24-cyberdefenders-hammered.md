@@ -1,7 +1,7 @@
 ---
 layout: single
 title: Cyberdefenders - Hammered
-excertp: Laboratorio en el que se nos proporcionan un montón de logs de un honeypot. 
+excerpt: Laboratorio en el que se nos proporcionan un montón de logs de un honeypot. 
 date: 2025-05-24
 classes: wide
 header:

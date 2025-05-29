@@ -1,7 +1,7 @@
 ---
 layout: single
 title: Cyberdefenders - Eli
-excertp: Investigación forense enfocada en artefactos de usuario como datos de navegación, descargas y otros datos de navegación de internet. 
+excerpt: Investigación forense enfocada en artefactos de usuario como datos de navegación, descargas y otros datos de navegación de internet. 
 date: 2025-05-24
 classes: wide
 header:

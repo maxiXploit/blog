@@ -1,7 +1,7 @@
 ---
 layout: single
 title: Cyberdefenders - BRabbit 
-excertp: Ejercicio de Inteligencia de amenzas sobre un ransomware que nos llega mediandiante lo que parece ser una campaña de phishing por correo electrónico. 
+excerpt: Ejercicio de Inteligencia de amenzas sobre un ransomware que nos llega mediandiante lo que parece ser una campaña de phishing por correo electrónico. 
 date: 2025-05-28
 classes: wide
 header:

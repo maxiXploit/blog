@@ -1,7 +1,7 @@
 ---
 layout: single
 title: Cyberdefenders - Hunter
-excertp: Análisis forense en el que se exploran las hives mas conocidad de un sistema windows. 
+excerpt: Análisis forense en el que se exploran las hives mas conocidad de un sistema windows. 
 date: 2025-05-25
 classes: wide
 header:

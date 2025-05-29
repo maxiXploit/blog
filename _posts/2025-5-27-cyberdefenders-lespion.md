@@ -1,7 +1,7 @@
 ---
 layout: single
 title: Cyberdefenders - Lespion
-excertp: Ejercicio de inteligencia de amenazas en el que simulan un entorno bastate realista.
+excerpt: Ejercicio de inteligencia de amenazas en el que simulan un entorno bastate realista.
 date: 2025-05-25
 classes: wide
 header:

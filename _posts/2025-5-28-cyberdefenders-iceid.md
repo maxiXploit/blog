@@ -1,7 +1,7 @@
 ---
 layout: single
 title: Cyberdefenders - IceID
-excertp: Ejercicio de Inteligencia de amenazas sobre un malware dedicado al robo de datos bancarios. 
+excerpt: Ejercicio de Inteligencia de amenazas sobre un malware dedicado al robo de datos bancarios. 
 date: 2025-05-25
 classes: wide
 header:

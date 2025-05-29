@@ -1,7 +1,7 @@
 ---
 layout: single
 title: Cyberdefenders - Hacked
-excertp: Análisis forense en un entorno linux en el que se pone a prueba conocimientos básicos de este sistema operativo. 
+excerpt: Análisis forense en un entorno linux en el que se pone a prueba conocimientos básicos de este sistema operativo. 
 date: 2025-05-21
 classes: wide
 header:

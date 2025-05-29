@@ -1,7 +1,7 @@
 ---
 layout: single
 title: Cyberdefenders - TuskInfostealer
-excertp: Análisis de inteligencia de amenaza sobre una campaña en la que se engañaba a los usuarios mediante social media, imitando sitios web de videojuegos/educación para descargar malware en sus dispositivos. 
+excerpt: Análisis de inteligencia de amenaza sobre una campaña en la que se engañaba a los usuarios mediante social media, imitando sitios web de videojuegos/educación para descargar malware en sus dispositivos. 
 date: 2025-05-28
 classes: wide
 header:
@@ -20,6 +20,7 @@ tags:
 ---
 
 Para este laboratorio se nos proporcionan un unico fichero: 
+
 ```bash 
 ┌──(kali㉿kali)-[~/blue-labs/tusk]
 └─$ cat temp_extract_dir/hash.txt
