@@ -85,8 +85,6 @@ También podemos encontrarlo en otras rutas alternativas:
 
 /boot/grub/grub.cfg: A veces contiene detalles de la versión del SO, particularmente para configuraciones relacionadas con el gestor de arranque.
 
-
-
 ---
 
 <h3 style="color: #0d6efd;">Q3. What is the name of the compromised account? </h3>
