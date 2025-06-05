@@ -1,13 +1,13 @@
 ---
 layout: single
 title: Sherlock LogJammer - Splunk
-excerpt: Resolución del sherlock Brutus usando Splunk
+excerpt: Resolución del sherlock LogJammer usando Splunk
 date: 2025-6-5
 classes: wide
 header:
    teaser: ../assets/images/htb-sherlock-dreamjob1/dr
    teaser_home_page: true
-   icon: ../assets/images/splunk-logo.png
+   icon: ../assets/images/splunk-logo.jpg
 categories:
    - hack the box
    - sherlock

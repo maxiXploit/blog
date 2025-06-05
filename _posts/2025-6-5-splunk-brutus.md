@@ -7,7 +7,7 @@ classes: wide
 header:
    teaser: ../assets/images/htb-sherlock-dreamjob1/dr
    teaser_home_page: true
-   icon: ../assets/images/splunk-logo.png
+   icon: ../assets/images/splunk-logo.jpg
 categories:
    - hack the box
    - sherlock

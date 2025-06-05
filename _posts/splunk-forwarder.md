@@ -5,9 +5,9 @@ excerpt: Explicamos como instalamos el forwarder de splunk en un ubuntu server.
 date: 2025-6-5
 classes: wide
 header:
-   teaser: ../assets/images/htb-sherlock-dreamjob1/dr
+   teaser: ../assets/images/forwarder.png
    teaser_home_page: true
-   icon: ../assets/images/splunk-logo.png
+   icon: ../assets/images/splunk-logo.jpg
 categories:
    - splunk
    - linux
