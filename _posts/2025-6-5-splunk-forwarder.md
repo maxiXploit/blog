@@ -122,7 +122,7 @@ Podemos confirmar los logs que está envíando:
 
 `tail -f /opt/splunkforwarder/var/log/splunk/splunkd.log`
 
-<p style="color: #5abe5a "> Ahora que ya tenemos todo, si queremos que los logs vayan a un índice en específico para tenerlo más organizado, creamos el índice en el servidor de splunk, y en el forwarder añadimos lo siguiente: </h3>
+<p style="color: #5abe5a; "> Ahora que ya tenemos todo, si queremos que los logs vayan a un índice en específico para tenerlo más organizado, creamos el índice en el servidor de splunk, y en el forwarder añadimos lo siguiente: </h3>
 
     sudo nano /opt/splunkforwarder/etc/system/local/inputs.conf
 
