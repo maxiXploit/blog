@@ -1,7 +1,7 @@
 ---
 layout: single
-title: Sherlock CrownJewel2 resuelto con splunk
-excerpt: Continuación del sherlock CrownJewel1.
+title: Operation Blackout 2025 - Smoke and Mirrors.
+excerpt: Análisis de fichero .evtx en una intrusión en la que se aplican técnicas de evasión de antivirus. 
 date: 2025-6-7
 classes: wide
 header:
@@ -19,6 +19,7 @@ tags:
    - .evtx
    - evtxecmd
 ---
+
 
 Para este laboratorio se nos proprocionan ficheros `.evtx` que parseamos a formato json con `EvtxEcmd`  o con `Chainsaw`. Una vez parseados los introducimos en splunk, en un índice que ya hemos creado previemente, en mi caso lo llamé "smoke". 
 

@@ -1,6 +1,7 @@
 ---
 layout: single
-excerpt: Sherlock - Operation Blackout 2025: Phantom Check
+title: Sherlock - Operation Blackout 2025-Phantom Check
+excerpt: Análisis de ficheros evtx con splunk sobre un caso de intrusión en el que se aplican téctnicas de reconocimiento para comprobar si se está en una máquina virtual. 
 date: 2025-6-7
 classes: wide
 header:
@@ -18,7 +19,6 @@ tags:
    - .evtx
    - evtxecmd
    - virtualization
-   - 
 ---
 
 Para este laboratorio se nos proporcionan ficheros .evtx, que podemos parsear a formato json con `.evtx` o con `chainsaw`, en este laboratorio usaré ambas herramientas, para resolverlo con `splunk` y con `jq`. 
