@@ -146,7 +146,9 @@ Para esto no encontré nada en los eventid 4103 y 4104, así que filtré directa
 
 `index="phantom" "if"`
 
-Y encontré un registro, sin EventId u otro identificador de splunk, unicamente el script. Analizándolo, podemmos ver las comparaciones. 
+Y encontré un registro, sin EventId u otro identificador de splunk, unicamente el script. Analizándolo, podemmos ver las comparaciones.
+
+![](../assets/images/sherlock-phantom/2.png) 
 
 - vboxservice.exe: Es el servicio principal de las Guest Additions de VirtualBox.
 _____
