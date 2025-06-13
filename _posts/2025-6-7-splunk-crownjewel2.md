@@ -18,6 +18,7 @@ categories:
 tags:
    - .evtx
    - evtxecmd
+   - splunk
 ---
 
 

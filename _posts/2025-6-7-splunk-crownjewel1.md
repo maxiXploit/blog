@@ -18,6 +18,7 @@ categories:
 tags:
    - .evtx
    - evtxecmd
+   - splunk
 ---
 
 Primeramente parseamos los datos a un formato json usando `evtxcmd`:
