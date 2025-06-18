@@ -7,7 +7,7 @@ classes: wide
 header:
    teaser: ../assets/images/socs/intro-phishing.webp
    teaser_home_page: true
-   icon: ../assets/images/thm.png
+   icon: ../assets/images/thmlogo.png
 categories:
    - try hack me
    - soc 
