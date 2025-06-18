@@ -1,8 +1,28 @@
-Introduction to Phishing: TryHackMe Laboratory Report
+---
+layout: single
+title: TryHackMe SOC simulator - Introduction to Phishing
+excerpt: A SOC simulator for phishing identification training.
+date: 2025-6-17
+classes: wide
+header:
+   teaser: ../assets/images/socs/intro-phishing.webp
+   teaser_home_page: true
+   icon: ../assets/images/thm.png
+categories:
+   - try hack me
+   - soc 
+   - blue team
+tags:
+   - try hack me
+   - soc training
+   - identifying alerts
+---
+
+<h1 style="color: #b70f0f"> Introduction to Phishing: TryHackMe Laboratory Report </h3>
 
 By Daniel Hernandez
 
-15 June 2025
+17 June 2025
 
 This report examines five phishing-related alerts to assess phishing awareness and accuracy in alert classification. Our objective was to determine whether each alert represented a true positive or a false positive. Upon review, we identified three true positives and two false positives.
 
