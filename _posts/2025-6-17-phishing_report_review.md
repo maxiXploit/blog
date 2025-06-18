@@ -18,7 +18,7 @@ tags:
    - identifying alerts
 ---
 
-<h1 style="color: #b70f0f"> Introduction to Phishing: TryHackMe Laboratory Report </h3>
+<h1 style="color: #b70f0f"> Introduction to Phishing: TryHackMe Laboratory Report </h1>
 
 By Daniel Hernandez
 
