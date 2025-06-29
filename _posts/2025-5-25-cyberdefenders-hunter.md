@@ -360,8 +360,6 @@ Explorando el directorio de imágines nos encontramos la imagen:
 
 <h3 style="color: #0d6efd;">Q29. Provide the name of the directory where information about jump lists items (created automatically by the system) is stored? </h3>
 
-En Windows, las Jump Lists son esas listas de “elementos recientes” o “más usados” que aparecen al hacer clic derecho sobre un icono en la barra de tareas o en el menú Inicio. Se generan automáticamente para acelerar el acceso a archivos, carpetas o tareas frecuentes asociadas a cada aplicación.
-
 En Windows, las **Jump Lists** son esas listas de “elementos recientes” o “más usados” que aparecen al hacer clic derecho sobre un icono en la barra de tareas o en el menú Inicio. Se generan **automáticamente** para acelerar el acceso a archivos, carpetas o tareas frecuentes asociadas a cada aplicación.
 
 Windows guarda la información de las Jump Lists en tu perfil de usuario, concretamente en dos carpetas dentro de:
