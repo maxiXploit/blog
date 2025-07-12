@@ -74,6 +74,8 @@ Esto nos marcará que en efecto, es malicioso.
 
 En este análisis en [`any.run`](https://app.any.run/tasks/f0008a11-7683-4d14-bb9a-5b90eae8178c?p=68719e34f0439adf009c2fbb) podemos ver el *command line*
 
+![](../assets/images/htb-emo/1.png)
+
 Copiamos la cadena en base64, la convertimos en ascii con `base64 -d` y el código que nos da lo podemos poner en un fichero, podemos quitar los bytes nulos de UTF-16 LE con: 
 
 - `iconv -f UTF-16LE -t UTF-8 script > script_utf8.ps1` 
