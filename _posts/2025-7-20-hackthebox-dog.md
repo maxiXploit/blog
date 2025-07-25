@@ -1,6 +1,6 @@
 ---
 layout: single
-title: Hack the box Challenge - Emo
+title: Hack the box - Dog
 excerpt: Máquina fácil linux en la que se escala privilegios con un gestor de CMS
 date: 2025-07-20
 classes: wide
