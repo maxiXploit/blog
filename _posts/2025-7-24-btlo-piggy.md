@@ -1,7 +1,7 @@
 ---
 layout: single
 title: BTLO Investigation - Piggy
-excerpt: Un reto relacionado con RedisCache
+excerpt: Análisis forense de red. 
 date: 2025-07-24
 classes: wide
 header:
