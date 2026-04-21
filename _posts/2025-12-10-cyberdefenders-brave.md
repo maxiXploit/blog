@@ -1,3 +1,24 @@
+---
+layout: single
+title: Cyberdefenders - Brave
+excerpt: Análisis forense de memoria RAM de Windows 10 con volatility3
+classes: wide
+header:
+   teaser: ../assets/images/m
+   teaser_home_page: true
+   icon: ../assets/images/cyberdefenders.png
+categories:
+   - cyberdefenders
+   - windows
+tags:
+   - volatility3
+   - NTUSER.dat
+   - HKCU
+   - HxD
+   - DFIR
+   - blue team
+   - memory forensics
+---
 
 1.- What time was the RAM image acquired according to the suspect system?
 
