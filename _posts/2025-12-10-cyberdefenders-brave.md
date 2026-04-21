@@ -142,7 +142,7 @@ PID     PPID    ImageFileName   Offset(V)       Threads Handles SessionId       
 
 7.- Para esto podemos usar la herramienta HxD, con `control + g` buscamos el offset que nos interesa, contamos 6 bytes y encontramos la palabra buscada. 
 
-
+![](../assets/images/cyber-brave/1.png)
 
 8.- What is the creation date and time of the parent process of powershell.exe?
 
