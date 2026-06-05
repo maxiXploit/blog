@@ -1,7 +1,38 @@
+---
+layout: single
+title: Hack The Box - Holmes 2025 The Enduring Echo
+excerpt: Investigación DFIR sobre un compromiso de Windows donde se analizan eventos EVTX, persistencia mediante tareas programadas, creación de usuarios privilegiados, exfiltración de credenciales y pivoting interno mediante port forwarding. El análisis permite reconstruir la cadena completa de ataque desde el acceso inicial hasta las acciones posteriores del atacante.
+classes: wide
+header:
+   teaser: ../assets/images/m
+   teaser_home_page: true
+   icon: ../assets/images/hackthebox.webp
+categories:
+   - hackthebox
+   - windows
+tags:
+   - windows-forensics
+   - evtx
+   - chainsaw
+   - jq
+   - powershell
+   - psreadline
+   - wmiexec
+   - impacket
+   - secretsdump
+   - sam
+   - security-hive
+   - system-hive
+   - eventid-4624
+   - eventid-4672
+   - eventid-4688
+   - eventid-4720
+   - scheduled-tasks
+   - registry
+   - netsh
+   - sherlock
+---
 
-- chainsaw
-- .evtx
-- WmiPrvSE.exe
 
 En este laboratorio se nos entrega una imagen de disco con una estructura típica:
 
