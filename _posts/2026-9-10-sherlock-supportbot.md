@@ -91,7 +91,7 @@ Las evidencias son claras, esta IP interactúa entre las `2026-04-17 15:28:35` y
 
 --------
 
-2. What trigger phrase sits at the start of the hostile request? 
+2. **What trigger phrase sits at the start of the hostile request?**
 
 Con los logs anteriores vemos que se lanza el siguiente mensaje cuando empiezan los intentos de inyección de comandos:
 
@@ -103,7 +103,7 @@ Con los logs anteriores vemos que se lanza el siguiente mensaje cuando empiezan 
 
 ----------
 
-3. Under wich local account were the injected commands executed?
+3. **Under wich local account were the injected commands executed?**
 
 Revisando las respuestas que se dieron a los comandos como `id` o `whoami` podemos conocer al usuario:
 
@@ -132,7 +132,7 @@ bin:x:2:2:bin:/bin:/usr/sbin/nologin
 
 -------
 
-4. At what UTC timestamp did code execution on the host first occur?
+4. **At what UTC timestamp did code execution on the host first occur?**
 
 En los logs anteriores vimos la siguiente línea:
 
@@ -142,7 +142,7 @@ En los logs anteriores vimos la siguiente línea:
 
 --------------
 
-5. Where on the disk the second-stage payload land?
+5. **Where on the disk the second-stage payload land?**
 
 Para esto tenemos que revisar los registros de `auditd`.
 
@@ -188,7 +188,7 @@ El comando visto anteriormente, y registrado en auditd, confirman la inyección 
 
 -----------
 
-6. What is the SHA-256 hash of the malicious script recovered from /tmp?
+6. **What is the SHA-256 hash of the malicious script recovered from /tmp?**
 
 Buscando el script en la ruta indicada:
 
@@ -200,7 +200,7 @@ Buscando el script en la ruta indicada:
 
 ------------
 
-7. On which TCP port is the reverse-shell callback listening?
+7. **On which TCP port is the reverse-shell callback listening?**
 
 Leyendo el script:
 
@@ -225,7 +225,7 @@ echo "[$(date)] backdoor installed from ${ATTACKER_IP}" >> /tmp/.syslog_cache
 
 -----------
 
-8. What line did the attacker add to establish persistence?
+8. **What line did the attacker add to establish persistence?**
 
 En el script mostrado en la pregunta anterior vemos la siguiente línea: 
 
@@ -237,7 +237,7 @@ Una cron job para ejecutar el script de forma automática cada 5 minutos.
 
 ---------
 
-9. According to he payload's own self-long, how many times has it run?
+9. **According to he payload's own self-long, how many times has it run?**
 
 El final del script vemos la sigiente línea: 
 
@@ -261,7 +261,7 @@ Contamos 5 registros.
 
 --------------
 
-10. How many active backdoor sessions are visible at the moment of capture?
+10. **How many active backdoor sessions are visible at the moment of capture?**
 
 Para esto tenemos que revisar los archivos en `live_response/network`:
 
@@ -305,7 +305,7 @@ Vemos 3 conexiones establecidas con `ESTAB` relacionadas con la IP que vimos en 
 
 -------------
 
-11. How many seconds elapsed between the first successful command execution and the first automated re-execution of the payload?
+11. **How many seconds elapsed between the first successful command execution and the first automated re-execution of the payload?**
 
 Para esto ya tenemos la hora a la que inicia el ataque, registrado en la pregunta anterior: `2026-04-17 15:28:35,882`.
 
