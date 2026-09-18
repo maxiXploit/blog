@@ -129,7 +129,39 @@ El atacante priorizó CPU dedicada sobre otros recursos y el uso de múltiples i
 
 -----------
 
-What IP CIDR Range did the malicious security group allow for inbound access?
+**5\.What IP CIDR Range did the malicious security group allow for inbound access?**
+
+Para esto buscamos en el siguiente evento: 
+
+```bash
+┌──(kali㉿kali)-[~/…/us-east-1/2023/06/01]
+└─$ jq '.Records[] | select(.eventName == "AuthorizeSecurityGroupIngress") ' *.json
+<SNIP>
+ "requestParameters": {
+    "groupId": "sg-02b01de056a809eda",
+    "ipPermissions": {
+      "items": [
+        {
+          "ipProtocol": "tcp",
+          "fromPort": 22,
+          "toPort": 22,
+          "groups": {},
+          "ipRanges": {
+            "items": [
+              {
+                "cidrIp": "31.187.69.0/24"
+              }
+            ]
+          },
+          "ipv6Ranges": {},
+          "prefixListIds": {}
+        }
+      ]
+    }
+  },
+``` 
+
+---------
 
 
 What port was allowed for inbound access?
