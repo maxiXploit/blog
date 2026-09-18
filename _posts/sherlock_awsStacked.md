@@ -118,6 +118,16 @@ Usamos el siguiente comando:
 
 ```
 
+Esta es una familia de instancias optimizadas para cómputo(Compute-optimized) de AWS, basada en procesadores Intel Xeon Scalable. La `c5.large`
+
+- 2vCPUs
+- 4 GB de RAM
+- Red hasta 10 Gbps(compartida)
+
+Esta familia prioriza poder de CPU por dólar sobre memoria o storage, esto combinado con `CryptoBaby` es una combinación clásica de **cryptojacking**.
+El atacante priorizó CPU dedicada sobre otros recursos y el uso de múltiples instancias de tamaño moderado en vez de una sola instancia grande sugiere un intento de evadir detección basada en anomalías de costo.
+
+-----------
 
 What IP CIDR Range did the malicious security group allow for inbound access?
 
