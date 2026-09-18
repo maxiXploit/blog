@@ -64,3 +64,26 @@ Y segundos después de ese CreateStack, aparecen en cascada: creación de usuari
 Por lo que la respuesta es: AWS CloudFormation, un servicio que es básicamente Infrastructure as Code (IaC) de AWS, donde le das una plantilla (JSON o YAML) que describe qué recursos se quiere, y el servicio se encarga de crear, actualizar o borrar todo eso por el usuario, en el orden correcto y respetando las dependencias entre recursos.
 
 --------
+
+**3\. How many malicious compute resources were deployed?**
+
+Esto ya lo vimos en los evenentos anteriores:
+
+```bash
+01:11:18Z  RunInstances  ec2.amazonaws.com
+01:11:18Z  RunInstances  ec2.amazonaws.com
+01:11:19Z  RunInstances  ec2.amazonaws.com
+```
+
+Tres eventos `RunInstances` dentro de la misma ventana de 1 segundo disparado por el mismo `CreateStack` de CloudFormation.
+
+Pero el conteo de eventos no siempre es 1:1 con el conteo de instancias, para confirmar el número real necesitamos ver el `responseElements.instancesSet.items[]` de cada evento RunInstances (ahí lista cada `instanceId` individual creado por esa llamada).
+
+Usamos el siguiente comando: 
+
+```bash
+jq -r '.Records[] | select(.eventName=="RunInstances") | .responseElements.instancesSet.items[]?.instanceId' cloudtrail.json
+
+"i-0126a710605884935"
+"i-0df2ed2942dfdd11b"  
+```
