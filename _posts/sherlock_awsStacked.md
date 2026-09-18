@@ -35,6 +35,8 @@ tags:
 
 Scenario:
 
+An unsuspecting cloud intern at MechZone clicks on an AWS phishing link, inadvertently deploying malicious resources into his company's cloud environment. Your task is to investigate the source of the compromise and the malicious resources that were staged within the environment by the attacker.
+
 Para este lab se nos proporcionan logs de aws que analizaré desde la línea de comandos con `jq`
 
 ------
