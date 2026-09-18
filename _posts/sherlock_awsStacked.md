@@ -2,6 +2,24 @@
 
 Scenario:
 
+cloud
+aws
+cloudtrail
+iam
+cloudformation
+ec2
+iac
+dfir
+incident-response
+cryptojacking
+jq
+security-groups
+cidr
+privilege-escalation
+threat-hunting
+blue-team
+cloud-security
+
 Para este lab se nos proporcionan logs de aws que analizaré desde la línea de comandos con `jq`
 
 ------
