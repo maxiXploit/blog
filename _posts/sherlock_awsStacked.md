@@ -161,13 +161,42 @@ Para esto buscamos en el siguiente evento:
   },
 ``` 
 
+Anteriormente vimos en `"sourceIPAddress": "31.187.69.154"`, que cae en este rango, el atacante configuró este rango para para permitir SSH solo desde su propio rango IP(probablemente una VPN, proveedor de hosting, o su propio IPS con IP dinámica dentro de ese `/24`).
+Así evita que otros atacantes que escanean internet le robaran su instancia que el ya comprometió.
+Y así también se reduce/alertas obvias que generarían un `0.0.0.0/0:22`(una de las primeras cosas que detectan herramientas como AWS Security Hub o GuardDuty).
+
 ---------
 
+**6\. What port was allowed for inbound access?**
 
-What port was allowed for inbound access?
+En el evento anterior vemos: 
+
+```bash
+  "fromPort": 22,
+  "toPort": 22,
+```
+
+Acceso por SSH.
+
+--------
+
+**7\. What protocol was allowed for inbound access?**
+
+Por requisito de protocolo, SSH usa TCP para garantizar una entrega ordenada de los bytes.
+
+-----------
+
+**8\. What is the user name given to the malicious identity that was deployed?**
+
+Revisando el siguiente evento:
+
+---------
+
+**9\. What IP address did the attack originate from?**
+
+Con el siguiente filtro podemos verlo:
 
 
-What protocol was allowed for inbound access?
-
+Y, como ya mencioné antes, cae en el rango configurado para el acceso posterior.
 
 
