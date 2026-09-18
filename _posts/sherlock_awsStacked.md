@@ -40,7 +40,7 @@ Una vez identificada la cuenta comprometida podemos ver el `ARN` con el siguient
 
 ---------
 
-**2\. How many malicious compute resources were deployed?**
+**2\.What AWS service was used to deploy malicious resources into the environment?**
 
 Con el filtro `jq '.Records[] | select(.userIdentity.userName == "cloud-ops-intern") | "\(.userIdentity.arn)"' *.json | uniq -c` veremos la sigiente secuencia de eventos:
 
@@ -63,6 +63,14 @@ Y segundos después de ese CreateStack, aparecen en cascada: creación de usuari
 
 Por lo que la respuesta es: AWS CloudFormation, un servicio que es básicamente Infrastructure as Code (IaC) de AWS, donde le das una plantilla (JSON o YAML) que describe qué recursos se quiere, y el servicio se encarga de crear, actualizar o borrar todo eso por el usuario, en el orden correcto y respetando las dependencias entre recursos.
 
+**Revisando el evento de CreateStack:**
+
+```txt
+ "requestParameters": {                                                                                                    "stackName": "CryptoBaby",                                                                                              "parameters": [],                                                                                                       "disableRollback": false,                                                                                               "notificationARNs": [],                                                                                                 "capabilities": [                                                                                                         "CAPABILITY_NAMED_IAM"                                                                                                ],                                                                                                                      "tags": [] 
+```
+
+El nombre del stack es bastante descriptivo, el patrón que ya vimmos de `CreateUser, `SecurityGroup` abierto, 3x `RunInstances` huele bastante a Cryptojacking. El atacante desplegó intancias EC2(probablmente tipos grandes/GPU) para minar criptomonedas a costa de las cuentas de la víctima. Es uno de los abusos más comunes cuando se comprometen credenciales AWS.
+ 
 --------
 
 **3\. How many malicious compute resources were deployed?**
@@ -82,8 +90,42 @@ Pero el conteo de eventos no siempre es 1:1 con el conteo de instancias, para co
 Usamos el siguiente comando: 
 
 ```bash
-jq -r '.Records[] | select(.eventName=="RunInstances") | .responseElements.instancesSet.items[]?.instanceId' cloudtrail.json
+jq -r '.Records[] | select(.eventName=="RunInstances") | .responseElements.instancesSet.items[]?.instanceId' *.json
 
 "i-0126a710605884935"
 "i-0df2ed2942dfdd11b"  
 ```
+
+Ahora solo vemos 2 instancias, para confirmar que hubo un error hacemos: 
+
+```bash
+ jq -r '.Records[] | select(.eventName=="RunInstances") | {time: .eventTime, error: .errorCode, errorMsg: .errorMessage, count: ((.responseElements.instancesSet.items // [])|length)}'
+
+{                                                                                                                         "time": "2023-06-01T01:11:19Z",                                                                                         "error": null,                                                                                                          "errorMsg": null,                                                                                                       "count": 1                                                                                                            }
+{                                                                                                                         "time": "2023-06-01T01:11:18Z",                                                                                         "error": "Server.InternalError",                                                                                        "errorMsg": "An internal error has occurred",                                                                           "count": 0                                                                                                            }
+{                                                                                                                         "time": "2023-06-01T01:11:18Z",                                                                                         "error": null,                                                                                                          "errorMsg": null,                                                                                                       "count": 1                                                                                                            }
+```
+
+Confirmando el error del servidor.
+
+-----------------
+
+**4\. What is the instance type observed for these resources?**
+
+Usamos el siguiente comando: 
+
+```bash
+
+```
+
+
+What IP CIDR Range did the malicious security group allow for inbound access?
+
+
+What port was allowed for inbound access?
+
+
+What protocol was allowed for inbound access?
+
+
+
