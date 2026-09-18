@@ -190,13 +190,25 @@ Por requisito de protocolo, SSH usa TCP para garantizar una entrega ordenada de 
 
 Revisando el siguiente evento:
 
+```bash
+                                                                                                                                                                                            
+┌──(kali㉿kali)-[~/…/us-east-1/2023/06/01]
+└─$ jq '.Records[] | select(.eventName == "CreateUser") | "\(.requestParameters.userName)"' *.json 
+"devops-admin"
+```
+
 ---------
 
 **9\. What IP address did the attack originate from?**
 
 Con el siguiente filtro podemos verlo:
 
+```bash
+┌──(kali㉿kali)-[~/…/us-east-1/2023/06/01]
+└─$ jq '.Records[] | select(.userIdentity.userName == "cloud-ops-intern") | "\(.sourceIPAddress)"' *.json | sort | uniq -c 
+     26 "31.187.69.154"
+     15 "cloudformation.amazonaws.com"
+      2 "health.amazonaws.com"
+```
 
 Y, como ya mencioné antes, cae en el rango configurado para el acceso posterior.
-
-
