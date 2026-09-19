@@ -9,35 +9,56 @@ Para este laboratorio nos dan una captura de red, por lo que podemos pasar rápi
 
 **1\. What is the IP address of the web server?**
 
+Podemos filtrar por http:
 
+```bash
+┌──(kali㉿kali)-[~/Documents/nueva_era_sherlocks/maliciouswebtrafficanalysis]
+└─$ tshark -r capture.pcap -Y "http and ip.addr == 197.32.212.121" -T fields -e ip.src -e ip.dst | sort | uniq -c | sort -rn 
+    221 197.32.212.121  10.1.0.4
+    206 10.1.0.4        197.32.212.121
+```
 
-10.1.0.4
+Vemos comunicación con una IP privada `197.32.212.121 -> 10.1.0.4` 
+
+-----------------
+
+**2\. What is the IP address of the attacker?**
+
+Podemos revisar primeramente un intento de escaneo:
+
+```bash
+┌──(kali㉿kali)-[~/Documents/nueva_era_sherlocks/maliciouswebtrafficanalysis]
+└─$ tshark -r capture.pcap -Y "tcp.flags.syn == 1 and tcp.flags.ack == 0" -T fields -e ip.src -e ip.dst | sort | uniq -c | sort -rn 
+    814 10.1.0.4        168.63.129.16
+    176 197.32.212.121  10.1.0.4
+     40 196.129.183.118 10.1.0.4
+     29 62.114.220.119  10.1.0.4
+     24 51.77.116.35    10.1.0.4
+     18 10.1.0.4        169.254.169.254
+      2 5.135.90.165    10.1.0.4
+      1 78.153.140.178  10.1.0.4
+```
+
+Las IPs `168.63.129.16` y `169.254.169.254` son de microsoft(azure), el mejor candidato sería `197.32.212.121`, podemos confirmarlo viendo el protocolo HTTP como hicimos en la pregunta anterior:
+
+```bash
+┌──(kali㉿kali)-[~/Documents/nueva_era_sherlocks/maliciouswebtrafficanalysis]
+└─$ tshark -r capture.pcap -Y "http and ip.addr == 197.32.212.121" | awk -F' ' '{print $9, $10}'| sort | uniq -c | sort -rn 
+    206 POST /login.php
+    201 HTTP/1.1 200
+<SNIP>
+```
+
+Vemos una cantidad considerable de peticiones `POST` al sitio web, lo que sugiere un intento de ataque de fuerza bruta.
 
 --------
 
+**3\. The attacker first tried to sign up on the website, however, he found a vulnerability that he could read the source code with. What is the name of the vulnerability?**
 
 
-Submit Task
-Task 2
 
-Hint
-What is the IP address of the attacker?
+----------
 
-197.32.212.121
-
-Submit Task
-Task 3
-
-Hint
-The attacker first tried to sign up on the website, however, he found a vulnerability that he could read the source code with. What is the name of the vulnerability?
-
-***
-Required
-
-Submit Task
-Task 4
-
-Hint
 There was a note in the source code, what is it?
 
 ********
