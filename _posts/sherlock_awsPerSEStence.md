@@ -38,18 +38,18 @@ Viendo los eventos:
 "2023-04-04T07:18:37Z CreateLoginProfile iam.amazonaws.com"
 ```
 
+Viendo la secuencia de eventos vemos `GetAccountSendingEnabledGet` y `SendQuota`, que son eventos de reconocimiento de SES(Simple Email Services), ya que son de sololectura y no modifican nada:
 
-
+- `GetAccountSendingEnabled` revisa si la cuenta tiene el envío de correos habilitado.
+- `GetSendQuota` devuelve el límite de envío en 24 h, la tasa máxima por segundo y cuántos correos se han enviado. Sirve para saber cuánto spam o phishing se puede mandar.
 
 -----------
 
-************************ & ************
+**3\. What API call did the attacker use to activate this service?**
 
-Submit Task
-Task 3
 
-Hint
-What API call did the attacker use to activate this service?
+
+----------
 
 ***************************
 
@@ -95,7 +95,15 @@ Submit Task
 Task 9
 
 Hint
+
+----------------
+
 How did the attacker prevent the compromised user from regaining programmatic access to AWS?
+
+
+Con esta llamada el atacante borró las access key del usuario comprometido. Las access key son las credenciales para acceso programático(CLI, SDKs, API). Sin ellas, el dueño legítimo ya no puede autenticarse por esa vía, y sin poder llamar a la API, tampocopuederevisar CloudTrail, revocar lo que creó el atacante ni limpiar nada. Están negando acceso a la víctima.
+
+--------
 
 ***************
 
