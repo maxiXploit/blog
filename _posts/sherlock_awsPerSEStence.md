@@ -3,16 +3,27 @@ Scenario:
 
 ----------
 
-**1\. 
-What is the name of the compromised identity?
+**1\. What is the name of the compromised identity?**
 
-Bob
+Empezamos viendo los  usuarios: 
 
-Submit Task
-Task 2
+```bash
+┌──(kali㉿kali)-[~/Documents/nueva_era_sherlocks/awspersestence/04]
+└─$ jq '.Records[] | .userIdentity.userName' *.json | sort | uniq -c | sort -rn
+     98 "iamadmin"
+     10 "Bob"
+      6 null
+```
 
-Hint
-What were the enumeration API calls the attacker made against this service?
+Vemos la cuenta administrativa de `iamadmin` y al usuario `Bob`, con pocos eventos que indican eventos dirigidos de un ataque.
+
+-------
+
+**2\. What were the enumeration API calls the attacker made against this service?**
+
+
+
+-----------
 
 ************************ & ************
 
