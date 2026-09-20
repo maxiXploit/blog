@@ -1,3 +1,28 @@
+   - cloud
+   - gcp
+   - google-cloud
+   - cloud-audit-logs
+   - cloud-forensics
+   - dfir
+   - sherlock
+   - htb
+   - blue-team
+   - soc
+   - log-analysis
+   - json
+   - jq
+   - iam
+   - service-account
+   - compromised-credentials
+   - gcloud
+   - gce
+   - firewall
+   - egress
+   - cryptojacking
+   - quota-exceeded
+   - threat-hunting
+   - timeline-analysis
+   - aws-vs-gcp
 
 Scenario:
 
