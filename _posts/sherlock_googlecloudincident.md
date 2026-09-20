@@ -129,5 +129,9 @@ Viendo las zonas:
 
 **8\. Were any of the instances created? (Yes/No)**
 
-
+```bash
+jq -r '.[] | select(.protoPayload.methodName=="v1.compute.instances.insert"
+                    and .operation.last==true)
+       | [.timestamp, .severity, .protoPayload.status.code,
+          .protoPayload.status.message] | @tsv' gcp.json
 
