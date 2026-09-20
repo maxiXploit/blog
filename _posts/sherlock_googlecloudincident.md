@@ -90,23 +90,44 @@ Como ya explicamos en la pregunta anterior, la regla tiene la pioridad `0`
 
 **6\. How many times did the attacker attempt to create GCE instances?**
 
+Podemos usar el siguiente comando para ver los eventos de creaciones de instancias:
 
+```bash
+┌──(kali㉿kali)-[~/Documents/nueva_era_sherlocks/googlecloudincident]
+└─$ jq '.[] | select(.protoPayload.methodName == "v1.compute.instances.insert") | "\(.operation.id)"' gcp.json | sort | uniq -c 
+      2 "operation-1688110046883-5ff53bfafaddb-2cd1c7a5-8dc78956"
+      2 "operation-1688110085588-5ff53c1fe44a3-fb89c288-83d40ab4"
+      2 "operation-1688110241119-5ff53cb437c9b-db4ce97e-e9d505d8"
+
+# O con: 
+
+┌──(kali㉿kali)-[~/Documents/nueva_era_sherlocks/googlecloudincident]
+└─$ jq '[.[] | select(.protoPayload.methodName == "v1.compute.instances.insert") | .operation.id] | unique | length' gcp.json 
+3
+
+```
 
 ----------
 
-*
+**7\. What was the first region the attacker attempted to create the instances in?**
 
-Submit Task
-Task 6
+Viendo las zonas:
 
-Hint
-What was the first region the attacker attempted to create the instances in?
+```bash
+                                                                                                                                                                                            
+┌──(kali㉿kali)-[~/Documents/nueva_era_sherlocks/googlecloudincident]
+└─$ jq '.[] | select(.protoPayload.methodName == "v1.compute.instances.insert") | "\(.resource.labels.zone)"' *.json       
+"europe-west1-b"
+"europe-west1-b"
+"europe-west1-b"
+"europe-west1-b"
+"us-east1-b"
+"us-east1-b"
+```
 
-******-*****-*
+------------
 
-Submit Task
-Task 7
+**8\. Were any of the instances created? (Yes/No)**
 
-Hint
-Were any of the instances created? (Yes/No)
+
 
