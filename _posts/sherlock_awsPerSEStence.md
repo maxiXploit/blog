@@ -172,3 +172,6 @@ Revisando el siguiente campo:
 "185.209.221.97"
 ```
 
+En resumen:
+
+> Un actor con credenciales comprometidas realizó reconocimiento sobre Amazon SES (GetAccountSendingEnabled, GetSendQuota) y habilitó el envío de correo de la cuenta mediante UpdateAccountSendingEnabled, probablemente para campañas de spam o phishing. Posteriormente estableció persistencia creando un usuario con acceso a consola (CreateUser, CreateLoginProfile), un grupo con la política AdministratorAccess (CreateGroup, AttachGroupPolicy) y vinculó ambos con AddUserToGroup. Finalmente eliminó las access keys del usuario comprometido (DeleteAccessKey) para impedirle recuperar el acceso programático. El laboratorio cubre reconstrucción de la línea de tiempo, identificación de la fase de cada evento, mapeo a MITRE ATT&CK (T1526, T1136.003, T1098.003, T1531) y lógica de detección por correlación.
