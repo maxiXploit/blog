@@ -1,4 +1,17 @@
-
+aws
+cloud
+cloudtrail
+ses
+iam
+dfir
+incident-response
+threat-hunting
+log-analysis
+persistence
+privilege-escalation
+mitre-attack
+awk
+jq
 Scenario: 
 
 ----------
@@ -47,17 +60,20 @@ Viendo la secuencia de eventos vemos `GetAccountSendingEnabledGet` y `SendQuota`
 
 **3\. What API call did the attacker use to activate this service?**
 
+Aquí estamos hablando de `UpdateAccountSendingEnabled`: "2023-04-04T07:16:37Z UpdateAccountSendingEnabled ses.amazonaws.com"
 
+Esto activa o desactiva el envío de correo de toda la cuenta de SES en esa región. Recibe un solo parámetro, `Enabled`(true/false), que en cloudtrail aparece como `requestParameters.enables`.
+
+Las cuentas pueden tener el envió pausado(por un admin o por AWS cuado la reputación cae por bounces o quejas). Reactivarlo es el paso previo para mandar phishing o spam desde infraestructura legítima con buena reputación de dominio.
 
 ----------
 
-***************************
+**4\. What was the initial activity that the attacker performed to establish persistence within the cloud environment?**
 
-Submit Task
-Task 4
 
-Hint
-What was the initial activity that the attacker performed to establish persistence within the cloud environment?
+
+
+---------
 
 **********
 
