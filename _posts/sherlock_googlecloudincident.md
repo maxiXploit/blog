@@ -1,3 +1,19 @@
+---
+layout: single
+title: Sherlock - Google_Cloud_Incident
+excerpt: Análisis de logs de GoogleCLoud sobre un ataque de cryptojacking a causa de unas credenciales robadas.
+date: 2026-9-20
+classes: wide
+header:
+   teaser: ../assets/images/socs/logoletsdefend.png
+   teaser_home_page: true
+   icon: ../assets/images/hacktheweb.webp
+categories:
+   - hackthebox
+   - soc 
+   - blue team
+   - cloud
+tags:
    - cloud
    - gcp
    - google-cloud
@@ -23,6 +39,7 @@
    - threat-hunting
    - timeline-analysis
    - aws-vs-gcp
+---
 
 Scenario:
 
