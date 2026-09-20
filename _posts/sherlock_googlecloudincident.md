@@ -107,6 +107,17 @@ Podemos usar el siguiente comando para ver los eventos de creaciones de instanci
 
 ```
 
+Una cosa interesante a notar es el nombre de la instancia:
+
+```bash
+┌──(kali㉿kali)-[~/Documents/nueva_era_sherlocks/googlecloudincident]
+└─$ jq '.[] | select(.protoPayload.methodName == "v1.compute.instances.insert") | "\(.protoPayload.request.name)"' *.json | sort | uniq -c  
+      3 "crypto-instance"
+      3 "null"
+```
+
+Sugiriendo un ataque de cryptojacking, con el egress abierto sirve para que las VM se comuniquen con un pool de minado.
+
 ----------
 
 **7\. What was the first region the attacker attempted to create the instances in?**
@@ -130,8 +141,17 @@ Viendo las zonas:
 **8\. Were any of the instances created? (Yes/No)**
 
 ```bash
-jq -r '.[] | select(.protoPayload.methodName=="v1.compute.instances.insert"
+┌──(kali㉿kali)-[~/Documents/nueva_era_sherlocks/googlecloudincident]
+└─$ jq -r '.[] | select(.protoPayload.methodName=="v1.compute.instances.insert"
                     and .operation.last==true)
        | [.timestamp, .severity, .protoPayload.status.code,
           .protoPayload.status.message] | @tsv' gcp.json
+
+2023-06-30T07:27:36.256986Z     ERROR   8       QUOTA_EXCEEDED
+2023-06-30T07:28:12.847224Z     ERROR   8       QUOTA_EXCEEDED
+2023-06-30T07:30:49.443219Z     ERROR   8       QUOTA_EXCEEDED
+```
+
+Un `statuscode` diferente de `0` indica error, ademas no vemos eventos posteriores como `instances.start`, `instances.get` sobre `crypto-instance`, lo que indica que no se crearon las intancias y por ende no se iniciaron.
+
 
