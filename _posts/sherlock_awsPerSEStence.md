@@ -1,20 +1,36 @@
-aws
-cloud
-cloudtrail
-ses
-iam
-dfir
-incident-response
-threat-hunting
-log-analysis
-persistence
-privilege-escalation
-mitre-attack
-awk
-jq
-Scenario: 
+---
+layout: single
+title: Sherlock - AWS_PerSEStence
+excerpt: Análisis de logs de AWS para la reconstrucción forense de un ataque en un entorno Cloud.
+date: 2026-9-20
+classes: wide
+header:
+   teaser: ../assets/images/socs/logoletsdefend.png
+   teaser_home_page: true
+   icon: ../assets/images/hacktheweb.webp
+categories:
+   - hackthebox
+   - soc 
+   - blue team
+   - cloud
+tags:
+   - aws
+   - cloud
+   - cloudtrail
+   - ses
+   - iam
+   - dfir
+   - incident-response
+   - threat-hunting
+   - log-analysis
+   - persistence
+   - privilege-escalation
+   - mitre-attack
+   - awk
+   - jq
+   - Scenario: 
+---
 
-----------
 
 **1\. What is the name of the compromised identity?**
 
@@ -70,64 +86,89 @@ Las cuentas pueden tener el envió pausado(por un admin o por AWS cuado la reput
 
 **4\. What was the initial activity that the attacker performed to establish persistence within the cloud environment?**
 
-
-
+Se trata del evento `CreateUser`.
 
 ---------
 
-**********
+**5\. What was the name of the new identity?** 
 
-Submit Task
-Task 5
+Revisando el evento de `CreateUser`:
 
-Hint
-What was the name of the new identity?
+```bash
+┌──(kali㉿kali)-[~/Documents/nueva_era_sherlocks/aws]
+└─$ jq '.Records[] | select(.eventName == "CreateUser")' *.json
+<SNIP>
+  "responseElements": {
+    "user": {
+      "createDate": "Apr 4, 2023 7:18:02 AM",
+      "userName": "ses_catxzy",
+      "arn": "arn:aws:iam::670756667180:user/ses_catxzy",
+      "path": "/",
+      "userId": "AIDAZYLBWP4WAJ3T7FVMS"
+    }
+  },
+```
 
-***_******
+-----
 
-Submit Task
-Task 6
-What was the name of the new group?
+**6\. What was the name of the new group?**
 
-**************
+Revisando el evento de `CreateGroup` vemos que se crea el grupo ` AdminsDDefault`:
 
-Submit Task
-Task 7
+```bash
+┌──(kali㉿kali)-[~/Documents/nueva_era_sherlocks/aws]
+└─$ jq '.Records[] | select(.eventName == "CreateGroup")' *.json 
+<SNIP>
+  "responseElements": {
+    "group": {
+      "arn": "arn:aws:iam::670756667180:group/AdminsDDefault",
+      "createDate": "Apr 4, 2023 7:20:12 AM",
+      "groupId": "AGPAZYLBWP4WE3TG6M727",
+      "path": "/",
+      "groupName": "AdminsDDefault"
+    }
+  },
+```
 
-Hint
-What policy was added to this group?
+----------
 
-***:***:***::***:******/*******************
+**7\. What policy was added to this group?**
 
-Submit Task
-Task 8
+Revisando el siguiente evento: 
 
-Hint
-How was the new user added to this group?
+```bash
+┌──(kali㉿kali)-[~/Documents/nueva_era_sherlocks/aws]
+└─$ jq '.Records[] | select(.eventName == "AttachGroupPolicy")' *.json
+  "requestParameters": {
+    "groupName": "AdminsDDefault",
+    "policyArn": "arn:aws:iam::aws:policy/AdministratorAccess"
+  },
+```
 
-**************
+--------
 
-Submit Task
-Task 9
+**8\. How was the new user added to this group?**
 
-Hint
+Se hizo con el siguiente evento: `"2023-04-04T07:21:14Z AddUserToGroup iam.amazonaws.com"`
 
-----------------
 
-How did the attacker prevent the compromised user from regaining programmatic access to AWS?
+--------------
 
+**9\. How did the attacker prevent the compromised user from regaining programmatic access to AWS?**
+
+Esto se hizo con el siguiente evento: `"2023-04-04T07:22:03Z DeleteAccessKey iam.amazonaws.com"`.
 
 Con esta llamada el atacante borró las access key del usuario comprometido. Las access key son las credenciales para acceso programático(CLI, SDKs, API). Sin ellas, el dueño legítimo ya no puede autenticarse por esa vía, y sin poder llamar a la API, tampocopuederevisar CloudTrail, revocar lo que creó el atacante ni limpiar nada. Están negando acceso a la víctima.
 
 --------
 
-***************
+**10\. What was the IP address of the attacker?**
 
-Submit Task
-Task 10
+Revisando el siguiente campo:
 
-Hint
-What was the IP address of the attacker?
-
-
+```bash
+┌──(kali㉿kali)-[~/Documents/nueva_era_sherlocks/aws]
+└─$ jq '.Records[] | select(.eventName == "GetSendQuota") | "\(.sourceIPAddress)"' *.json 
+"185.209.221.97"
+```
 
