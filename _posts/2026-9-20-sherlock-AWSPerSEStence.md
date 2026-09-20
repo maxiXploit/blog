@@ -28,7 +28,6 @@ tags:
    - mitre-attack
    - awk
    - jq
-   - Scenario: 
 ---
 
 
