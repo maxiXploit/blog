@@ -1,3 +1,19 @@
+---
+layout: single
+title: Sherlock - RegistryHive
+excerpt: Laboratorio donde interactuamos con el registro de windows para un análisis forense.
+date: 2026-9-21
+classes: wide
+header:
+   teaser: ../assets/images/socs/logoletsdefend.png
+   teaser_home_page: true
+   icon: ../assets/images/hacktheweb.webp
+categories:
+   - hackthebox
+   - soc 
+   - blue team
+   - dfir
+tags:
    - windows
    - dfir
    - registry-forensics
@@ -153,5 +169,6 @@ print(f"S-1-5-21-{x}-{y}-{z}")
 Ejecutando:
 
 ```powershell
-PS C:\Users\User\tmp> python .\script.py                                                                              S-1-5-21-1957816478-2793074591-1041990146 
+PS C:\Users\User\tmp> python .\script.py                                                     
+S-1-5-21-1957816478-2793074591-1041990146 
 ```
