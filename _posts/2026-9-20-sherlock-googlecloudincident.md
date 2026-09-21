@@ -45,9 +45,7 @@ Scenario:
 
 **A developer accidentally committed a Google Cloud identity’s key to a public repository. You’ve been tasked with investigating an attacker using the compromised identity attached to the exposed key to perform some nefarious activities.**
 
-Para este laboratorio se nos da un unico fichero en formato ´.json´ con los logs del servicio cloud:
-
-
+Para este laboratorio se nos da un unico fichero en formato ´.json´ con los logs del servicio cloud, por lo que avanzaoms rápido con las preguntas.
 
 -------
 
