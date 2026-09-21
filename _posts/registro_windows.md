@@ -1,35 +1,37 @@
+   - windows
+   - dfir
+   - registry-forensics
+   - offline-hives
+   - registry-explorer
+   - regripper
+   - system-hive
+   - software-hive
+   - sam-hive
+   - controlset
+   - computer-name
+   - shutdown-time
+   - filetime
+   - little-endian
+   - timezone
+   - network-interfaces
+   - default-gateway
+   - networklist
+   - user-accounts
+   - last-login
+   - os-version
+   - autostart
+   - run-keys
+   - persistence
+   - installed-software
+   - machine-sid
+   - sid-parsing
+   - python
+   - htb
+---
 
+**Scenario: You're a forensics analyst and have a registry dump. Try to analyze the evidence and answer the questions.**
 
-
-   _ windows
-   _ dfir
-   _ registry-forensics
-   _ offline-hives
-   _ registry-explorer
-   _ regripper
-   _ system-hive
-   _ software-hive
-   _ sam-hive
-   _ controlset
-   _ computer-name
-   _ shutdown-time
-   _ filetime
-   _ little-endian
-   _ timezone
-   _ network-interfaces
-   _ default-gateway
-   _ networklist
-   _ user-accounts
-   _ last-login
-   _ os-version
-   _ autostart
-   _ run-keys
-   _ persistence
-   _ installed-software
-   _ machine-sid
-   _ sid-parsing
-   _ python
-   _ htb
+-----
 
 **1\. What is the Computer name of this machine?**
 
