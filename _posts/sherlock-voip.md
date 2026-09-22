@@ -1,7 +1,23 @@
 
+   - voip
+   - sip
+   - rtp/rtcp
+   - sdp
+   - wireshark
+   - tshark
+   - sip forking
+   - vishing
+   - spoofing
+   - call correlation (call-id)
+   - rtp stream reconstruction
+   - codecs (g.711/pcmu/pcma)
+   - pcap timestamp analysis (utc)
+   - asterisk/pbx logs
+   - sipvicious/sip enumeration
+
 **Scenario: Your close friend James recently received a suspicious phone call from someone claiming to be his bank. The caller asked for sensitive information, making James uneasy. Suspecting a potential Vishing (Voice Phishing) attack, you decide to investigate by capturing and analyzing the VoIP traffic.**
 
-Para estelab senos da un solo archivo `.pcapng`, así que pasamos rápido a las preguntas
+Para este lab se nos da un solo archivo `.pcapng`, así que pasamos rápido a las preguntas
 
 ----------
 
