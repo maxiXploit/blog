@@ -1,4 +1,19 @@
-
+---
+layout: single
+title: Sherlock - Linux_Forensics
+excerpt: Laboratorio para analizar el protocolode VoIP.
+date: 2026-9-18
+classes: wide
+header:
+   teaser: ../assets/images/socs/logoletsdefend.png
+   teaser_home_page: true
+   icon: ../assets/images/hacktheweb.webp
+categories:
+   - hackthebox
+   - soc 
+   - blue team
+   - dfir
+tags:
    - voip
    - sip
    - rtp/rtcp
@@ -26,12 +41,6 @@ Para este lab se nos da un solo archivo `.pcapng`, así que pasamos rápido a la
 Podemos verlo en la sección de `statistics`:
 
 ![](../assets/images/sherlock-voip/1.png)
-
-o con el siguiente comando: 
-
-```bash
-
-```
 
 -------------
 
