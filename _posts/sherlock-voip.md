@@ -66,3 +66,12 @@ En el mismo paquete podemos verlo:
 
 Para este caso vamos a `Telephony → VoIP Calls`, seleccionamos la llamada, y desde ahí "Play Streams" suele encontrarlo igual porque usa el SDP para saber los puertos.
 
+![](../assets/images/sherlock-voip/5.png)
+
+Podremos escuchar que mencionan al `Bank of Wealth`
+
+--------
+
+**7\. What is James's Social Number?**
+
+Escuchando el audio, a James se le solicita su dirección y númer de seguridad social, el cual es `5678`.
