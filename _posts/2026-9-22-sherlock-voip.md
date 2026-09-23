@@ -29,6 +29,7 @@ tags:
    - pcap timestamp analysis (utc)
    - asterisk/pbx logs
    - sipvicious/sip enumeration
+---
 
 **Scenario: Your close friend James recently received a suspicious phone call from someone claiming to be his bank. The caller asked for sensitive information, making James uneasy. Suspecting a potential Vishing (Voice Phishing) attack, you decide to investigate by capturing and analyzing the VoIP traffic.**
 
