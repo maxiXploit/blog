@@ -10,7 +10,7 @@ header:
    icon: ../assets/images/hacktheweb.webp
 categories:
    - hackthebox
-   - soc 
+   - soc
    - blue team
    - dfir
 tags:
