@@ -1,8 +1,8 @@
 ---
 layout: single
-title: Sherlock - Linux_Forensics
+title: Sherlock - VoIP
 excerpt: Laboratorio para analizar el protocolode VoIP.
-date: 2026-9-18
+date: 2026-9-22
 classes: wide
 header:
    teaser: ../assets/images/socs/logoletsdefend.png
