@@ -133,4 +133,83 @@ En la pregunta anterior vimos que `explorer.exe` tenía configurado `C:\Users\Cy
 
 **7\. The attacker logged in via RDP and then performed lateral Movement. Attacker accessed an Internal network-connected Device via RDP. What command was run on cmd after successful RDP into Other Windows machine?**
 
+Cuando uno se conecta por RDP con `mstsc.exe`, el cliente no descarga la pantalla completa en cada frame. Para ahorrar ancho de banda, el servidor manda pequeños fragmentos de imagen (tiles) y el cliente los guarda en caché en disco para reutilizarlos si esa parte de la pantalla se repite (un icono, una barra de título, un trozo de texto).
 
+Esa caché queda en la máquina desde la que se origina la conexión:
+
+```bash
+C:\Users\<usuario>\AppData\Local\Microsoft\Terminal Server Client\Cache\
+```
+
+Los formatos son:
+
+    - `Cache0000.bin`, `Cache0001.bin...` en Windows 7 y posteriores
+    - `bcache24.bmc` en versiones antiguas
+
+Para analizar estas evidencias forenses usaremos `bmc-tools`, los `.bin` y `.bmc` son contenedores binarios con muchos tiles concatenados, no se pueden abrir como imagen. bmc-tools los parsea y extrae cada tile como un archivo .bmp individual.
+
+Obtenemos la herramienta de "https://github.com/ANSSI-FR/bmc-tools", es un script de python, lo ejecutamos y podremos navegar entre los `.bmp`, y entre todos podremos ver el comando:
+
+![](../assets/images/sherlock-windowsforensics/6.png)
+
+---------
+
+**8\. The attacker tried to download a tool from the user's browser in that second machine. What's the tool name? (name.ext)**
+
+Al igual que la pregunta anterior, navegando entre los `.bmp` veremos los siguiente:
+
+![](../assets/images/sherlock-windowsforensics/7.png)
+
+`PowerView.ps1` es una script de reconocimiento y enumeración para entornos de Active directory.
+
+---------------
+
+**9\. What command was executed which resulted in privilege escalation?**
+
+Para esto usaremos `DeepBlue.ps1`, un script de PowerShell de Eric Conrad (SANS, repo sans-blue-team/DeepBlueCLI) para threat hunting sobre logs de eventos de Windows. Le pasas un .evtx (o le dices que lea el log en vivo) y aplica reglas de detección para marcar eventos sospechosos, así no revisas miles de eventos a mano en el Event Viewer. 
+
+Ejecutando:
+
+![](../assets/images/sherlock-windowsforensics/7.png)
+
+**Expliquemos esto.**
+
+Cada proceso e hilo en Windows lleva un token de acceso, que es su "credencial": dice quién eres (usuario/SID), a qué grupos perteneces y qué privilegios tienes. Cuando intentas abrir un archivo o un proceso, Windows revisa tu token, no tu nombre.
+
+El truco es que Windows permite que un servidor de named pipe "suplante" temporalmente a su cliente con `ImpersonateNamedPipeClient()`. Es una función legítima: si un servicio de impresión recibe un pedido de un usuario, debe acceder a archivos con los permisos de ese usuario, no con los suyos.
+
+Entonces el atacante no necesita "hackear" nada. **Solo necesita conseguir que un proceso SYSTEM se conecte como cliente a un pipe que él controla.**
+
+```txt
+Atacante (admin, Meterpreter)          Windows (SCM)
+─────────────────────────────          ─────────────────────
+1. Crea pipe \\.\pipe\kyvckn
+   y espera (es el SERVIDOR)
+2. Crea el servicio con ImagePath
+   "cmd /c echo kyvckn > \\.\pipe\kyvckn"
+3. Inicia el servicio ───────────────► 4. SCM lanza cmd.exe como SYSTEM
+                                       5. cmd intenta escribir al pipe
+                                          (es el CLIENTE, con token SYSTEM)
+6. Recibe la conexión
+7. Llama ImpersonateNamedPipeClient
+   → su hilo ahora tiene token SYSTEM
+8. Duplica el token y lo usa para
+   lanzar procesos como SYSTEM
+9. Borra el servicio
+```
+
+El `echo` no importa. Sirve como excusa para que un proceso SYSTEM toque el pipe. Podría escribir cualquier cosa.
+
+Ojo, el atacante pone el servidor y Windows pone al cliente SYSTEM sin darse cuenta. Por eso funciona: nadie explota una vulnerabilidad, se abusa del diseño.
+
+#### **Y Dónde entra Active Directory?**
+
+Cuando un proceso SYSTEM se autentica en la red, lo hace como la cuenta de máquina (`NOMBREPC$`). En un dominio, esa cuenta es un principal más de AD con sus propios permisos. Por eso tener SYSTEM en un equipo unido al dominio te da una identidad válida en AD para enumerar, y es un paso previo típico al movimiento lateral. Pero la escalada en sí sigue siendo local.
+
+Algo a considerar es que esta escalada es de Administrador → SYSTEM, no de usuario normal a admin. Para crear el servicio hace falta ser admin, y por eso la técnica exige que el atacante ya tenga esa cuenta.
+
+----------
+
+**10\. What framework was used by the attacker?**
+
+En la imagen de la pregunta anterior vemos que se trata del bien conocido `Metasploit`.
