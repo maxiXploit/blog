@@ -69,6 +69,25 @@ Esto lo verificamos en la MFT, parseamos a .csv y filtramos por nombre:
 
 ----------
 
+**4\. The attacker set up persistence by manipulating registry keys. All we know is that GlobalFlags image file technique was used to set up persistence. When exiting a certain process, the attacker persistence executable is executed. What's the name of that process?**
+
+Esto lo encontraremos en la hive de `SOFTWARE` -> `HKLM\SOFTWARE` -> Config de software y del SO válida para todo el sistema.
+
+Tanto IFEO (Image File Execution Options) como SilentProcessExit son mecanismos del sistema operativo. Los lee Windows sin importar qué usuario ejecute el proceso, así que están en `C:\Windows\System32\config\SOFTWARE`. Esto también nos dice algo del atacante: para escribir en HKLM necesitó privilegios de administrador.
+
+**Es una función de depuración. Sirve para investigar por qué un proceso termina inesperadamente y sin crash, por ejemplo cuando un servicio "se muere solo" sin dejar rastros.**
+
+Las configuraciones involucradas:
+
+- `Image File Execution Options\<proceso.exe>`: aquí se activa el monitoreo con el valor `GlobalFlag`. Ese valor es un bitmask del NT Global Flag (lo que manipula la herramienta `gflags.exe`). El bit `0x200` (`FLG_MONITOR_SILENT_PROCESS_EXIT`) significa "vigila cuando este proceso salga".
+
+b) SilentProcessExit\<proceso.exe>: aquí se configura qué hacer cuando ese proceso termina. Los valores principales son:
+
+ReportingMode: bitmask. 0x1 lanza un proceso monitor, 0x2 genera un dump local, 0x4 manda una notificación.
+MonitorProcess: ruta del ejecutable que se lanza al salir el proceso.
+LocalDumpFolder y DumpType: dónde y cómo guardar el dump.
+
+"Silent exit" significa que el proceso terminó por ExitProcess o TerminateProcess, es decir, sin crash. Windows lo detecta, y el que orquesta la reacción es WerFault.exe (Windows Error Reporting).
 
 
 
