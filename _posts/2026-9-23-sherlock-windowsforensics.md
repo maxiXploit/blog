@@ -1,6 +1,52 @@
-
-
-----------
+---
+layout: single
+title: Sherlock - Windows_Forensics
+excerpt: Laboratorio sobre temas avanzados de investigaciones forenses en Windows.
+date: 2026-9-17
+classes: wide
+header:
+   teaser: ../assets/images/socs/logoletsdefend.png
+   teaser_home_page: true
+   icon: ../assets/images/hacktheweb.webp
+categories:
+   - hackthebox
+   - soc 
+   - blue team
+   - dfir
+tags:
+   - dfir
+   - windows
+   - windows registry
+   - registry hives (SOFTWARE, SYSTEM, NTUSER.DAT)
+   - persistence
+   - ifeo (image file execution options)
+   - globalflag
+   - silentprocessexit
+   - werfault
+   - mitre att&ck
+   - t1546.012
+   - t1134.001
+   - t1543.003
+   - rdp
+   - lateral movement
+   - rdp bitmap cache
+   - bmc-tools
+   - privilege escalation
+   - named pipe impersonation
+   - access tokens
+   - meterpreter getsystem
+   - windows services
+   - windows event logs (evtx)
+   - event id 7045 / 4697
+   - deepbluecli
+   - threat hunting
+   - sysmon
+   - sigma rules
+   - detection engineering
+   - hayabusa / chainsaw
+   - eric zimmerman tools
+   - blue team / soc
+---
 
 **Scenario: A targeted phishing campaign is carried out against our organization, and so far the phishing mail has been opened by 3 systems in our network. A quick triage image was collected from one of the infected systems and Provided to you for identification of TTP being used by attackers. Identify the Techniques and tactics used by the attacker so our incident response team can respond and mitigate any further compromises across the network.**
 
