@@ -2,7 +2,7 @@
 layout: single
 title: Sherlock - Windows_Forensics
 excerpt: Laboratorio sobre temas avanzados de investigaciones forenses en Windows.
-date: 2026-9-17
+date: 2026-9-24
 classes: wide
 header:
    teaser: ../assets/images/socs/logoletsdefend.png
@@ -216,7 +216,7 @@ Para esto usaremos `DeepBlue.ps1`, un script de PowerShell de Eric Conrad (SANS,
 
 Ejecutando:
 
-![](../assets/images/sherlock-windowsforensics/7.png)
+![](../assets/images/sherlock-windowsforensics/8.png)
 
 **Expliquemos esto.**
 
