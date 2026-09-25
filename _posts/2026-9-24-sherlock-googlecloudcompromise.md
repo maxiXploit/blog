@@ -1,4 +1,41 @@
-
+---
+layout: single
+title: Sherlock - Google_Cloud_Incident
+excerpt: Ejercicio de análisis de logs en google cloud sobre una exfiltración de datos
+date: 2026-9-4
+classes: wide
+header:
+   teaser: ../assets/images/socs/logoletsdefend.png
+   teaser_home_page: true
+   icon: ../assets/images/hacktheweb.webp
+categories:
+   - hackthebox
+   - soc 
+   - blue team
+   - cloud
+tags:
+   _ googlecloud
+   _ gcp
+   _ cloud
+   _ cloudsecurity
+   _ cloudauditlogs
+   _ auditlogs
+   _ cloudstorage
+   _ gcs
+   _ storage
+   _ iam
+   _ api
+   _ apis
+   _ jq
+   _ json
+   _ dfir
+   _ forensics
+   _ loganalysis
+   _ timeline
+   _ incidentresponse
+   _ threatdetection
+   _ reconnaissance
+   _ enumeration
 ---
 
 ----------
@@ -79,32 +116,68 @@ Vemos la presencia de `Macintosh`, la lìnea de computadoras personales diseñad
 
 **6\. What was the first failed API call made by this identity?**
 
+Para esto primero vemos los eventos registrados:
 
+```bash
+┌──(kali㉿kali)-[~/Documents/nueva_era_sherlocks/google]
+└─$ jq -r '.[] | "\(.timestamp) - \(.protoPayload.methodName)"' gcp.json | sort
+2023-07-27T00:16:24.221685Z - google.api.serviceusage.v1.ServiceUsage.EnableService
+2023-07-27T00:16:43.371638Z - google.api.serviceusage.v1.ServiceUsage.EnableService
+2023-07-27T00:17:03.154420Z - google.api.serviceusage.v1.ServiceUsage.EnableService
+2023-07-27T00:17:11.553357353Z - storage.buckets.list
+2023-07-27T00:17:18.314855805Z - storage.objects.list
+2023-07-27T00:17:36.194200418Z - storage.objects.get
+```
+
+Con esto ya podemos filtrar por el campo de `.code`, uno distinto de `0` indica error:
+
+```bash
+                                                                                                                                                                                            
+┌──(kali㉿kali)-[~/Documents/nueva_era_sherlocks/google]
+└─$ jq -r '.[] |  select((.protoPayload.status.code // 0) != 0) | "\(.protoPayload.methodName)"' gcp.json  
+google.api.serviceusage.v1.ServiceUsage.EnableService
+google.api.serviceusage.v1.ServiceUsage.EnableService
+google.api.serviceusage.v1.ServiceUsage.EnableService
+```
 
 -----------
 
-What storage bucket was enumerated?
+**7\. What storage bucket was enumerated?**
 
-***************
+Lo encontramos en el siguiente evento: 
 
-Submit Task
-Task 7
+```bash
+┌──(kali㉿kali)-[~/Documents/nueva_era_sherlocks/google]
+└─$ jq '.[] | select(.protoPayload.methodName == "storage.objects.list") | "\(.resource.labels.bucket_name)"' gcp.json 
+"importantbucket"
+```
 
-Hint
-What API call was used to exfiltrate an item from this bucket?
+--------
 
-*******.*******.***
+**8\. What API call was used to exfiltrate an item from this bucket?**
 
-Submit Task
-Task 8
+Esto se ve en el siguiente evento: `2023-07-27T00:17:36.194200418Z - storage.objects.get`
 
-Hint
-Which Google Cloud command-line tool was used during the exfiltration attempt?
+-----------
 
-******
+**9\. Which Google Cloud command-line tool was used during the exfiltration attempt?**
 
-Submit Task
-Task 9
+Viendo el useragent:
 
-Hint
-What is the name of the file that was exfiltrated from the storage bucket?
+```bash
+┌──(kali㉿kali)-[~/Documents/nueva_era_sherlocks/google]
+└─$ jq '.[] | select(.protoPayload.methodName == "storage.objects.list") | "\(.protoPayload.requestMetadata.callerSuppliedUserAgent)"' gcp.json 
+"apitools Python/3.11.3 gsutil/5.10 (darwin) analytics/disabled interactive/True command/ls google-cloud-sdk/390.0.0,gzip(gfe)"
+```
+
+`gsutil` es una aplicación escrita en python que permite acceder y administrar **Cloud Storage**
+
+------
+
+**10\. What is the name of the file that was exfiltrated from the storage bucket?**
+
+```bash
+┌──(kali㉿kali)-[~/Documents/nueva_era_sherlocks/google]
+└─$ jq '.[] | select(.protoPayload.methodName == "storage.objects.get") | "\(.protoPayload.resourceName)"' gcp.json       
+"projects/_/buckets/importantbucket/objects/secretcode.java"
+```
