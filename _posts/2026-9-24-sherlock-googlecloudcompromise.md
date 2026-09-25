@@ -14,28 +14,28 @@ categories:
    - blue team
    - cloud
 tags:
-   _ googlecloud
-   _ gcp
-   _ cloud
-   _ cloudsecurity
-   _ cloudauditlogs
-   _ auditlogs
-   _ cloudstorage
-   _ gcs
-   _ storage
-   _ iam
-   _ api
-   _ apis
-   _ jq
-   _ json
-   _ dfir
-   _ forensics
-   _ loganalysis
-   _ timeline
-   _ incidentresponse
-   _ threatdetection
-   _ reconnaissance
-   _ enumeration
+   - googlecloud
+   - gcp
+   - cloud
+   - cloudsecurity
+   - cloudauditlogs
+   - auditlogs
+   - cloudstorage
+   - gcs
+   - storage
+   - iam
+   - api
+   - apis
+   - jq
+   - json
+   - dfir
+   - forensics
+   - loganalysis
+   - timeline
+   - incidentresponse
+   - threatdetection
+   - reconnaissance
+   - enumeration
 ---
 
 ----------
