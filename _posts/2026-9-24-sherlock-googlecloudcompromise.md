@@ -1,8 +1,8 @@
 ---
 layout: single
-title: Sherlock - Google_Cloud_Incident
+title: Sherlock - Google_Cloud_Compromise
 excerpt: Ejercicio de análisis de logs en google cloud sobre una exfiltración de datos
-date: 2026-9-4
+date: 2026-9-24
 classes: wide
 header:
    teaser: ../assets/images/socs/logoletsdefend.png
