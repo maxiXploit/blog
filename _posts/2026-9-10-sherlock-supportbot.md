@@ -5,9 +5,10 @@ excerpt: Investigación sobre una inyección de comandos en un botchat.
 date: 2026-9-10
 classes: wide
 header:
-   teaser: ../assets/images/socs/logoletsdefend.png
+   teaser: ../assets/images/logoletsdefend.png
    teaser_home_page: true
-   icon: ../assets/images/hacktheweb.webp
+   icon: ../assets/images/hackthebox.webp
+
 categories:
    - hackthebox
    - soc 
