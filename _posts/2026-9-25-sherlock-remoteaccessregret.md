@@ -37,6 +37,20 @@ tags:
    - log-analysis
 ---
 
+**Sherlock Scenario**
+
+On February 18, 2025, Margaret was browsing the web looking for Thanksgiving recipes when her browser suddenly displayed a full-screen warning. The page claimed her computer was infected with viruses and locked her browser.
+
+Frightened, Margaret called the phone number displayed on the screen. A man answered and claimed to be from Microsoft Support. He convinced her that hackers were actively stealing her information and she needed to act immediately.
+
+The man instructed her to download a program that would let him "fix" the problem remotely. Once connected, he spent over an hour "cleaning" her computer while showing her scary-looking windows and error messages.
+
+At the end, he demanded $500 for a "protection plan" and insisted payment be made with gift cards for "security reasons." Margaret drove to Target, purchased the cards, and read the numbers over the phone.
+
+As a DFIR analyst your job is to analyze Chrome browser data and AnyDesk application data.
+
+-----------
+
 Para esto lab se nos da el siguiente fichero:
 
 ```bash
