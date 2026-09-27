@@ -1,4 +1,30 @@
-
+---
+layout: single
+title: Sherlock - LockBit
+excerpt: Laboratorio de análisis de memoria RAM de un equipo infectado con ransomware.
+date: 2026-9-27
+classes: wide
+header:
+   teaser: ../assets/images/logoletsdefend.png
+   teaser_home_page: true
+   icon: ../assets/images/hackthebox.webp
+categories:
+   - hackthebox
+   - soc 
+   - blue team
+   - dfir
+tags:
+   - volatility2
+   - volatility3
+   - virustotal
+   - windows
+   - memory dump
+   - ransomware
+   - persistense
+   - mitre
+   - python
+   - tlsh
+   - windows registry
 ---
 
 **Scenario: You are a Digital Forensics and Incident Response (DFIR) analyst tasked with investigating a ransomware attack that has affected a company's system. The attack has resulted in file encryption, and the attackers are demanding payment for the decryption of the affected files. You have been given a memory dump of the affected system to analyze and provide answers to specific questions related to the attack.**
@@ -228,7 +254,11 @@ Volatility Foundation Volatility Framework 2.6.1
 Esto es un comportamiento típico, se editan las claves:
 
 ```bash
+HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run
+HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\RunOnce
 
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\RunOnce
 ```
 
 Buscando en el reporte de VirusTotal confirmamos esto:
