@@ -8,7 +8,6 @@ header:
    teaser: ../assets/images/logoletsdefend.png
    teaser_home_page: true
    icon: ../assets/images/hackthebox.webp
-
 categories:
    - hackthebox
    - soc 

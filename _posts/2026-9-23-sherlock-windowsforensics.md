@@ -5,9 +5,9 @@ excerpt: Laboratorio sobre temas avanzados de investigaciones forenses en Window
 date: 2026-9-24
 classes: wide
 header:
-   teaser: ../assets/images/socs/logoletsdefend.png
+   teaser: ../assets/images/logoletsdefend.png
    teaser_home_page: true
-   icon: ../assets/images/hacktheweb.webp
+   icon: ../assets/images/hackthebox.webp
 categories:
    - hackthebox
    - soc 
