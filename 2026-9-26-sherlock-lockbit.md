@@ -5,7 +5,7 @@
 
 --------
 
-Can you determine the date and time that the device was infected with the malware? (UTC, format: YYYY-MM-DD hh:mm:ss)
+**1\. Can you determine the date and time that the device was infected with the malware? (UTC, format: YYYY-MM-DD hh:mm:ss)**
 
 ****-**-** **:**:**
 
