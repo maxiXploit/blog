@@ -144,8 +144,8 @@ Si intentamos poner el hash del ejecutable que extrajimos con ´volatility3´ ve
 
 Cuando Windows carga un ejecutable (.exe/.dll) en memoria, no lo mapea igual que como está en disco. Hay dos conceptos clave en el header de un PE:
 
-FileAlignment: cómo están alineadas las secciones en el archivo en disco (normalmente 512 bytes).
-SectionAlignment: cómo están alineadas esas mismas secciones una vez cargadas en memoria (normalmente 4096 bytes, el tamaño de una página).
+`FileAlignment`: cómo están alineadas las secciones en el archivo en disco (normalmente 512 bytes).
+`SectionAlignment`: cómo están alineadas esas mismas secciones una vez cargadas en memoria (normalmente 4096 bytes, el tamaño de una página).
 
 Esto significa que, en memoria, las secciones tienen padding y offsets distintos a los que tendría el archivo original en disco. Si dumpeamos "tal cual" lo que hay en memoria, obtenemos una imagen que no es binariamente idéntica al archivo original, aunque contenga el mismo código.
 
@@ -179,20 +179,58 @@ INFO    : volatility.debug    : Determining profile based on KDBG search...
      Image local date and time : 2023-04-13 03:07:08 -0700
 ```
 
-Which MITRE ATT&CK technique ID was used by the ransomware to perform privilege escalation?
+Usando `Win7SP1x64`, y con el PID ya identificado, obtenemos el ejecutable:
 
-*****
+```bash
+┌──(kali㉿kali)-[~/Documents/nueva_era_sherlocks/lockbit]
+└─$ python2 ~/blue-labs/volatility/vol.py -f Lockbit.vmem --profile=Win7SP1x64 procdump --pid=900 --dump-dir=_procdump
+Volatility Foundation Volatility Framework 2.6.1
+Process(V)         ImageBase          Name                 Result
+------------------ ------------------ -------------------- ------
+0xfffffa8018fccb00 0x0000000000400000 mal.exe              OK: executable.900.exe
+```
 
-Submit Task
-Task 5
+![](../assets/images/sherlock-lockbit/3.png)
 
-Hint
-What is the SHA256 hash of the ransom note dropped by the malware?
+----------
 
-****************************************************************
+**5\. Which MITRE ATT&CK technique ID was used by the ransomware to perform privilege escalation?**
 
-Submit Task
-Task 6
+En esta página de virustotal vamos a la sección de `Behavior -> MITRE ATT&CK Tactics and Techniques`
 
-Hint
-What is the name of the registry key edited by the ransomware during the attack to apply persistence on the infected system?
+![](../assets/images/sherlock-lockbit/4.png)
+
+------------
+
+**6\. What is the SHA256 hash of the ransom note dropped by the malware?**
+
+En la sección de `Files Dropped` en virustotal  podemos ver `Restore-My-Files.txt`:
+
+![](../assets/images/sherlock-lockbit/5.png)
+
+Podemos confirmar su presencia con el plugin `mftparser` de `Vol2`:
+
+```bash
+┌──(kali㉿kali)-[~/Documents/nueva_era_sherlocks/lockbit]
+└─$ python2 ~/blue-labs/volatility/vol.py -f Lockbit.vmem --profile=Win7SP1x64 mftparser | grep -i "restore"
+Volatility Foundation Volatility Framework 2.6.1
+<SNIP>
+2023-04-13 10:06:54 UTC+0000 2023-04-13 10:06:54 UTC+0000   2023-04-13 10:06:54 UTC+0000   2023-04-13 10:06:54 UTC+0000   ProgramData\VMware\VMware VGAuth\MSGCAT~1\messages\ko\Restore-My-Files.txt
+2023-04-13 10:06:54 UTC+0000 2023-04-13 10:06:54 UTC+0000   2023-04-13 10:06:54 UTC+0000   2023-04-13 10:06:54 UTC+0000   ProgramData\VMware\VMware VGAuth\MSGCAT~1\messages\ja\Restore-My-Files.txt
+2023-04-13 10:06:54 UTC+0000 2023-04-13 10:06:54 UTC+0000   2023-04-13 10:06:54 UTC+0000   2023-04-13 10:06:54 UTC+0000   ProgramData\VMware\VMware VGAuth\MSGCAT~1\messages\zh_TW\Restore-My-Files.txt
+2023-04-13 10:06:54 UTC+0000 2023-04-13 10:06:54 UTC+0000   2023-04-13 10:06:54 UTC+0000   2023-04-13 10:06:54 UTC+0000   ProgramData\VMware\VMWARE~1\en-US\Restore-My-Files.txt
+```
+
+---------
+
+**7\. What is the name of the registry key edited by the ransomware during the attack to apply persistence on the infected system?**
+
+Esto es un comportamiento típico, se editan las claves:
+
+```bash
+
+```
+
+Buscando en el reporte de VirusTotal confirmamos esto:
+
+![](../assets/images/sherlock-lockbit/6.png)
