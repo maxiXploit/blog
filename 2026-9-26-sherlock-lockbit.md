@@ -13,7 +13,7 @@ Submit Task
 Task 1
 
 Hint
-What is the name of the ransomware family responsible for the attack?
+**2\. What is the name of the ransomware family responsible for the attack?**
 
 *******
 
