@@ -140,6 +140,24 @@ WARNING  volatility3.framework.layers.vmware: No metadata file found alongside V
 
 **4\. What is the TLSH (Trend Micro Locality Sensitive Hash) of the ransomware?**
 
+Si intentamos poner el hash del ejecutable que extrajimos con ´volatility3´ veremos que no es la respuesta correcta, esto se debe a cómo volatility maneja la reconstrucción del PE.
+
+Cuando Windows carga un ejecutable (.exe/.dll) en memoria, no lo mapea igual que como está en disco. Hay dos conceptos clave en el header de un PE:
+
+FileAlignment: cómo están alineadas las secciones en el archivo en disco (normalmente 512 bytes).
+SectionAlignment: cómo están alineadas esas mismas secciones una vez cargadas en memoria (normalmente 4096 bytes, el tamaño de una página).
+
+Esto significa que, en memoria, las secciones tienen padding y offsets distintos a los que tendría el archivo original en disco. Si dumpeamos "tal cual" lo que hay en memoria, obtenemos una imagen que no es binariamente idéntica al archivo original, aunque contenga el mismo código.
+
+El plugin `dumpfiles` de Vol3 extrae los `MemoryMappedFile`/`ImageSectionObject` tal como están en memoria: respeta el `SectionAlignment`, no el `FileAlignment`. Es decir, nos da el layout de memoria, no el layout de disco. El resultado es un archivo con la estructura "correcta" en cuanto a contenido, pero con un byte-a-byte diferente al binario original (gaps de padding distintos, offsets de sección distintos, etc.).
+
+Como TLSH es un hash de similitud (fuzzy hash) que trabaja sobre la distribución de bytes del archivo, esos cambios estructurales, aunque el código "lógico" sea el mismo, son suficientes para generarnos un TLSH completamente distinto al que tiene VirusTotal (que fue calculado sobre el binario original en disco).
+
+Volatility2 tiene el plugin `procdump` (para dumpear el ejecutable de un proceso), y a diferencia de `dumpfiles` en Vol3, este plugin hace una reconstrucción activa: recorre las secciones tal como están en memoria y las realinea al formato de disco, ajustando los offsets según el `FileAlignment` original del header PE. Básicamente reconstruye el PE para que quede estructuralmente equivalente al binario que existía en disco antes de ejecutarse.
+
+Esa reconstrucción es la que hace que el TLSH coincida con el reportado en VirusTotal, porque ahora sí se está comparando "manzanas con manzanas": binario reconstruido vs binario original en disco.
+
+Empezamos obteniendo el `profile` correcto para volatility2(esto es obligatorio a diferencia de Vol3 que auto-detecta):
 
 ```bash
 ┌──(.venv)─(kali㉿kali)-[~/Documents/nueva_era_sherlocks/lockbit]
