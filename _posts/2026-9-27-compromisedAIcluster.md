@@ -52,21 +52,25 @@ Ahora que ya conocemos la versión del servicio, Ray 2.8.0, podemos buscar las v
 
 Primero filtramos por los `POST` a este enpoint con `http.request.method == "POST" && http.request.uri contains "/api/jobs"`
 
-Una vez ahí, pododemos ver el flujo HTTP para confirmar el intento de ejecución de comandos:
+![](../assets/images/sherlock-compromisedaicluster/3.png)
 
-
+Solo por conteo, 104.28.245.2 es la candidata: 7 vs 4. Además su actividad se extiende más en el tiempo (de 15:59:46 hasta 16:08:58), mientras que la otra IP se concentra entre 15:58 y 16:01.
 
 ---------
 
-What is the timestamp of the first recorded interaction between the attacker’s IP address and the victim machine?
+**5\. What is the timestamp of the first recorded interaction between the attacker’s IP address and the victim machine?**
 
-YYYY-MM-DD HH:MM:SS UTC
+Filtramos por la IP y ordenamos por la columna de tiempo:
 
-Submit Task
-Task 6
+![](../assets/images/sherlock-compromisedaicluster/4.png)
 
-Hint
-What is the first job submission ID that was created due to the attacker's actions?
+-----------
+
+**6\. What is the first job submission ID that was created due to the attacker's actions?**
+
+
+
+------
 
 *********_****************
 
