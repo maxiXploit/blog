@@ -1,7 +1,7 @@
 ---
 layout: single
 title: Sherlock - Compromised_AI_cluster
-excerpt: Laboratorio en el que analizamos una captura de red para inverstigar un ataque de RCE.
+excerpt: Laboratorio en el que analizamos una captura de red para inverstigar un ataque de RCE
 date: 2026-9-28
 classes: wide
 header:
@@ -38,7 +38,6 @@ tags:
    - network-forensics
 ---
 
----------------
 
 **Sherlock Scenario: An engineer in the software development team has noticed an unusual spike in traffic to one of the organization’s critical Ray AI cluster APIs. The traffic pattern does not match typical usage and raises concerns about possible unauthorized access or a potential security breach. The Ray server, responsible for artificial intelligence and machine learning tasks, has been exposed to the external network, and the sudden surge in requests suggests that an attacker may be attempting to exploit vulnerabilities within the AI cluster.**
 
