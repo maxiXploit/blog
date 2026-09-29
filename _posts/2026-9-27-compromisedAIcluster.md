@@ -56,6 +56,10 @@ Primero filtramos por los `POST` a este enpoint con `http.request.method == "POS
 
 Solo por conteo, 104.28.245.2 es la candidata: 7 vs 4. Además su actividad se extiende más en el tiempo (de 15:59:46 hasta 16:08:58), mientras que la otra IP se concentra entre 15:58 y 16:01.
 
+Aunque podríamos afirmar que se trata del mismo atacante, ya que ambas IP comparten el mismo `User-Agent: python-requests/2.31.0`, el mismo hash de paquete: `"working_dir": "gcs://_ray_pkg_bf19252c1fb036e5.zip"` y el mismo rango ASN(ese /16 es de Cloudflare)
+
+![](../assets/images/sherlock-compromisedaicluster/31.png)
+
 ---------
 
 **5\. What is the timestamp of the first recorded interaction between the attacker’s IP address and the victim machine?**
@@ -68,71 +72,74 @@ Filtramos por la IP y ordenamos por la columna de tiempo:
 
 **6\. What is the first job submission ID that was created due to the attacker's actions?**
 
+Aplicamos el siguiente filtro en wireshak, como ya vimos, parece ser que se trata del mismo atacante:
 
+![](../assets/images/sherlock-compromisedaicluster/5.png)
 
 ------
 
-*********_****************
+**7\. What is the CVE number of the vulnerabilities exploited in this attack?**
 
-Submit Task
-Task 7
+Como ya mencionamos anteriormente, se trata del `CVE-2023-48022`
 
-Hint
-What is the CVE number of the vulnerabilities exploited in this attack?
+------------
 
-***-****-*****
+**8\. Analyzing the attacker’s command execution can reveal their intentions. What was the command?**
 
-Submit Task
-Task 8
+Revisando el flujo HTTP del paquete identificado en la pregunta 6:
 
-Hint
-Analyzing the attacker’s command execution can reveal their intentions. What was the command?
+![](../assets/images/sherlock-compromisedaicluster/6.png)
 
-******
+--------
 
-Submit Task
-Task 9
+**9\. Review the network traffic logs to find where the reverse shell was initiated. What IP address and port were used to establish the unauthorized access?(Answer Format: IP:Port)**
 
-Hint
-Review the network traffic logs to find where the reverse shell was initiated. What IP address and port were used to establish the unauthorized access?(Answer Format: IP:Port)
+Revisando los POST:
 
-**.***.**.***:****
+![](../assets/images/sherlock-compromisedaicluster/7.png)
 
-Submit Task
-Task 10
+-----------
 
-Hint
-Once inside the network, the attacker started their shell from a specific directory. What is the full path from which these commands were run after the reverse shell was obtained?
+**10\. Once inside the network, the attacker started their shell from a specific directory. What is the full path from which these commands were run after the reverse shell was obtained?**
 
-/***/***/*******_****-**-**_**-**-**_******_*****/*******_*********/*******_***_*****/_***_***_****************
+Ahora con la IP ya identificada podemos filtar por la misma y en el panel de bytes:
 
-Submit Task
-Task 11
+![](../assets/images/sherlock-compromisedaicluster/8.png)
 
-Hint
-The attacker was able to exfiltrate some secrets from the victim's machine. What is the job submission ID that was created as a result?
+Es el formato `usuario@host:directorio#`, que es el prompt estándar de bash (la variable PS1 en la mayoría de distros Linux). Reconstruyendo el ASCII de la captura:
 
-*********_****************
+```bash
+]0;root@ip-172-31-30-230: /tmp/ray/session_2024-04-12_11-13-55_403523_1/runtime_resources/working_dir_files/_ray_pkg_bf19252c1fb036e5
+root@ip-172-31-30-230:/tmp/ray/session_2024-04-12_11-13-55_403523_1/runtime_resources/working_dir_files/_ray_pkg_bf19252c1fb036e5#
+```
 
-Submit Task
-Task 12
+El `]i;...` al inicio es una secuencia de escape ANSI que cambia el título de la ventana de terminal, bash la manda junto con cada prompt.
 
-Hint
-In order to successfully exfiltrate data, the attacker switched to a different IP address. What is the new IP address being used for this malicious activity?
+--------
 
-***.**.***.*
+**11\. The attacker was able to exfiltrate some secrets from the victim's machine. What is the job submission ID that was created as a result?**
 
-Submit Task
-Task 13
+Continuando explorando los POST, vemos lo siguiente:
 
-Hint
-According to the investigation of the data leak, what is the content of this secret file?
+![](../assets/images/sherlock-compromisedaicluster/9.png)
 
-***, *** *** **.
+-----------
 
-Submit Task
-Task 14
+**12\. In order to successfully exfiltrate data, the attacker switched to a different IP address. What is the new IP address being used for this malicious activity?**
 
-Hint
+Como ya vimos anteriormente, tenemos 2 IP en el mismo rango:
+
+![](../assets/images/sherlock-compromisedaicluster/10.png)
+
+---------------
+
+**13\. According to the investigation of the data leak, what is the content of this secret file?**
+
+Con el filtro `frame contains "raysubmit_7WZE36LAkVxbNc1x"` empezamos a buscar entre los paquetes:
+
+![](../assets/images/sherlock-compromisedaicluster/11.png)
+
+----------------
+
 The attacker deployed a tool to brute-force open ports on your network. Analyze the traffic to determine how many packets were generated by this brute-force attempt.
 

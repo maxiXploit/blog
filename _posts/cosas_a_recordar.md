@@ -28,4 +28,6 @@ Script para detección automática de comportamientos anómalos en los eventos d
 
 -------------
 
+Identificar si se trata de un mismo atacante analizando los metadatos de la conexión: El "package hash" en Ray, o cuando se ve una IP, buscar su ASN nos dice qué tipo de infraestructura es, no quién es la persona. Por ejemplo:
 
+Con herramientas online como bgp.he.net o ipinfo.io, metes la IP y te dice el ASN y a quién pertenece. Es un paso estándar en threat intel: antes de asumir "son dos atacantes", siempre vale la pena mirar si las IPs comparten ASN, hosting o cualquier otro indicador de infraestructura compartida.
