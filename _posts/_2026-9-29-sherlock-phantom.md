@@ -1,12 +1,40 @@
+---
+layout: single
+title: Sherlock - Phantom
+excerpt: Laboratorio para analizar el protocolode VoIP.
+date: 2026-9-29
+classes: wide
+header:
+   teaser: ../assets/images/logoletsdefend.png
+   teaser_home_page: true
+   icon: ../assets/images/hackthebox.webp
+categories:
+   - hackthebox
+   - soc
+   - blue team
+   - dfir
+tags:
+---
 
 **Sherlock Scenario: A Linux server in your organization has been exhibiting suspicious behavior. Network monitoring detected unusual outbound connections to an unknown IP address, and system administrators noticed that several standard diagnostic commands were returning incomplete information. A memory dump was captured from the compromised server before isolation. Your task is to analyze this memory dump to uncover evidence of a sophisticated rootkit infection, map its capabilities, and document all indicators of compromise.**
 
-What is the name of the hidden kernel module?
+Para este lab se nos da los siguientes ficheros:
 
-***********
+```bash
+┌──(kali㉿kali)-[~/Documents/nueva_era_sherlocks/phantom/phantom]
+└─$ ls
+dump_srv.mem  Ubuntu_6.8.0-87-generic.json
+```
 
-Submit Task
-Task 2
+-----------
+
+**1\. What is the name of the hidden kernel module?**
+
+
+
+
+-----------
+
 What kernel taint flags are set for the rootkit module? (comma-separated, alphabetical order)
 
 ***_******,********_******
