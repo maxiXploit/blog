@@ -169,7 +169,23 @@ Cuando un servidor RTSP responde `401 Unauthorized`, incluye la cabecera `WWW-Au
 ## Con tshark
 
 ```bash
-tshark -r CCTV.pcap -Y "frame.number == 54449" -O rtsp
+┌──(kali㉿kali)-[~/Documents/nueva_era_sherlocks/nosignal]
+└─$ tshark -r CCTV.pcap -Y "frame.number == 54449" -O rtsp
+
+Frame 54449: Packet, 229 bytes on wire (1832 bits), 229 bytes captured (1832 bits)
+Ethernet II, Src: MotorolaSolu_11:50:12 (00:18:85:11:50:12), Dst: PCSSystemtec_66:77:88 (08:00:27:66:77:88)
+Internet Protocol Version 4, Src: 192.168.50.12, Dst: 192.168.50.200
+Transmission Control Protocol, Src Port: 554, Dst Port: 56765, Seq: 1, Ack: 126, Len: 175
+Real Time Streaming Protocol
+    Response: RTSP/1.0 401 Unauthorized\r\n
+        Status: 401
+        [URL: rtsp://192.168.50.12:554/Streaming/Channels/101]
+        Response to frame: 54447
+    CSeq: 1
+    Server: Hikvision-IP-Camera/5.5.82\r\n
+    WWW-Authenticate: Digest realm="IP Camera(CAM2)", nonce="98ab01a7f0", qop="auth"\r\n
+    Content-length: 0
+    \r\n
 ```
 
 | Esquema | Cómo se ve | Implicación |
@@ -181,21 +197,28 @@ tshark -r CCTV.pcap -Y "frame.number == 54449" -O rtsp
 
 **9\. Which username and password were used during the successful authentication by the attacker?**
 
+Con el siguiente comando vemos las diferentes credenciales que elatacante utilizó hasta lograr autenticarse:
 
-username:password
+```bash
+┌──(kali㉿kali)-[~/Documents/nueva_era_sherlocks/nosignal]
+└─$ tshark -r CCTV.pcap -Y "http.authorization" -T fields -e xml.cdata
+admin,12345
+admin,password
+admin,camera
+admin,hikvision
+root,root
+service,service
+admin,admin
+```
 
-Submit Task
-Task 10
+-----------
 
-Hint
-At what frame number does the attacker transition from reconnaissance to exploitation activity?
+**10\. At what frame number does the attacker transition from reconnaissance to exploitation activity?**
 
-number, such as 3, 17, or 4567
 
-Submit Task
-Task 11
 
-Hint
+-----------
+
 Which protocol carries the video stream packets?
 
 ***
