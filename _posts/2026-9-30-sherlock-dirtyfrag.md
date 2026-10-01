@@ -185,10 +185,11 @@ Leyendo el `/etc/shadow`:
 svc_monitor:!:20590:0:99999:7:::
 ```
 
-
 ----------
 
 **11\. What is the exact octal permission value of the hidden backdoor binary?**
+
+Primero buscamos todos los binarios con el setuid activado, que permite que un archivo se ejecute con los permisos de su propietario:
 
 ```bash
 ┌──(kali㉿kali)-[/mnt/dirtyfrag]
@@ -209,11 +210,15 @@ svc_monitor:!:20590:0:99999:7:::
      2894   1364 -rwsr-sr-x   1 kali     kali      1396520 May 17 13:36 /mnt/dirtyfrag/var/tmp/.syshelper
 ```
 
+El archivo `/mnt/dirtyfrag/var/tmp/.syshelper` es el primero que salta a la vista, está oculto a ´ls´ normal y dentro de una ruta temporal, revisándolo:
+
 ```bash
 ┌──(root㉿kali)-[/mnt/dirtyfrag]
 └─# file var/tmp/.syshelper                    
 var/tmp/.syshelper: setuid, setgid ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=33a5554034feb2af38e8c75872058883b2988bc5, for GNU/Linux 3.2.0, stripped
 ```
+
+Es un ELF dinámico, stripped de 1.39 MB, sin símbolos, lo que dificulta el análisis
 
 ```bash
 ┌──(root㉿kali)-[/mnt/dirtyfrag]
