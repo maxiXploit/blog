@@ -88,11 +88,19 @@ Aplicando el siguiente filtro:
 
 **4\. Which open port exposed the camera video streaming service during reconnaissance, and what is the name of that service?**
 
-El protocolo RTSP (Real Time Streaming Protocol o Protocolo de Transmisión en Tiempo Real) es un protocolo de red de la capa de aplicación diseñado para controlar la transmisión de datos multimedia en tiempo real, como audio y video.
+La respuesta es: `554`, `RTSP`
 
-Es un protocolo fuera de banda (out of band). Utiliza una conexión (por defecto el puerto TCP 554) para los mensajes de control y otros puertos independientes (usualmente mediante RTP/UDP) para enviar el flujo real de video y audio
+### ¿Qué es RTSP?
 
-`554`, `RTSP`
+**RTSP (Real Time Streaming Protocol)** es un protocolo de capa de aplicación, definido en la **RFC 2326** (v1.0) y actualizado en la **RFC 7826** (v2.0). Funciona como un "control remoto" para flujos multimedia: **no transporta el video o audio**, solo controla la sesión. El contenido viaja por **RTP/RTCP**.
+
+Características:
+
+- **Basado en texto**, con sintaxis muy parecida a HTTP (líneas de petición, cabeceras, códigos de estado como `200 OK`, `401 Unauthorized`, `404 Not Found`).
+- **Con estado (stateful)**, a diferencia de HTTP. El servidor mantiene una sesión identificada por la cabecera `Session`.
+- Puerto por defecto **554** (TCP/UDP), con **8554** como alternativo frecuente.
+- Cada petición lleva un `CSeq` (número de secuencia) que se repite en la respuesta para correlacionarlas.
+- Muy común en **cámaras IP, sistemas CCTV y servidores de streaming**, y por eso aparece seguido en contextos de seguridad.
 
 ---------------------
 
@@ -107,7 +115,27 @@ Con la IP y el protocolo ya identificados, filtramos para ver la conversación:
 54449 696.999937 192.168.50.12 554 192.168.50.200 56765 RTSP 229 Reply: RTSP/1.0 401 Unauthorized
 ```
 
-Se usa el protocolo `DESCRIBE`, son 
+Se usa el protocolo `DESCRIBE`, los que tenemos disponibles son:
+
+## Métodos (RFC 2326)
+
+| Método | Función |
+|---|---|
+| **OPTIONS** | Pregunta al servidor qué métodos soporta (`Public:` en la respuesta). |
+| **DESCRIBE** | Obtiene la descripción del recurso multimedia (normalmente en formato SDP). |
+| **ANNOUNCE** | Cliente→servidor: informa de una nueva descripción. Servidor→cliente: avisa de cambios en la descripción. |
+| **SETUP** | Establece el transporte para un stream (puertos RTP/RTCP, TCP interleaved, etc.) y crea la sesión. |
+| **PLAY** | Inicia o reanuda la transmisión de datos. |
+| **PAUSE** | Detiene temporalmente el flujo sin destruir la sesión. |
+| **RECORD** | Inicia la grabación de un stream hacia el servidor. |
+| **TEARDOWN** | Termina la sesión y libera los recursos. |
+| **GET_PARAMETER** | Consulta el valor de un parámetro. También se usa como *keep-alive*. |
+| **SET_PARAMETER** | Modifica el valor de un parámetro. |
+| **REDIRECT** | El servidor indica al cliente que debe conectarse a otro servidor. |
+
+En RTSP 2.0 se eliminó `RECORD` y se agregó `PLAY_NOTIFY`, pero en la práctica casi todo lo que verás sigue usando 1.0.
+
+`DESCRIBE` solicita la **descripción de la presentación**: qué streams contiene (video, audio), qué códecs usa y cómo acceder a cada uno. La respuesta suele venir en **SDP (Session Description Protocol)**.
 
 ---------
 
@@ -134,15 +162,24 @@ Con lo que ya vimos en la pregunta 5, la respuesta del servidor fue la siguiente
 
 -------
 
-What authentication mechanism was requested by the camera server?
+**8\. What authentication mechanism was requested by the camera server?**
 
-******
+Cuando un servidor RTSP responde `401 Unauthorized`, incluye la cabecera `WWW-Authenticate`, que le indica al cliente qué esquema de autenticación debe usar.
 
-Submit Task
-Task 9
+## Con tshark
 
-Hint
-Which username and password were used during the successful authentication by the attacker?
+```bash
+tshark -r CCTV.pcap -Y "frame.number == 54449" -O rtsp
+```
+
+| Esquema | Cómo se ve | Implicación |
+|---|---|---|
+| **Basic** | `Basic realm="..."` | Solo trae el `realm`. El cliente enviará `usuario:contraseña` en base64, que es trivial de decodificar. |
+| **Digest** | `Digest realm="...", nonce="..."` | Trae `realm` y un `nonce` generado por el servidor. El cliente envía un hash (MD5 normalmente) y la contraseña no viaja en claro. |
+
+-------------
+
+**9\. Which username and password were used during the successful authentication by the attacker?**
 
 
 username:password
