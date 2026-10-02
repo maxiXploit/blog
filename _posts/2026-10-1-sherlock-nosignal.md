@@ -215,42 +215,121 @@ admin,admin
 
 **10\. At what frame number does the attacker transition from reconnaissance to exploitation activity?**
 
+Aquí tenemos que identificar el momento en el que el atacante deja realizar acciones de reconocimiento y empieza a intentar acceder al sistema, en este caso sería el momento en el que empieza a acceder al sistema probando contraseñas:
 
+```bash
+
+```
 
 -----------
 
-Which protocol carries the video stream packets?
+**11\. Which protocol carries the video stream packets?**
 
-***
+La respuesta es **RTP (Real-time Transport Protocol)**. Es la pieza que complementa a RTSP.
 
-Submit Task
-Task 12
+## Separación de planos
 
-Hint
-What RTP payload type is used in the video stream and which video codec is used by the CCTV stream?
+| Plano | Protocolo | Función |
+|---|---|---|
+| **Control** | RTSP | Negocia y controla la sesión (`DESCRIBE`, `SETUP`, `PLAY`...) |
+| **Datos** | **RTP** | Transporta los paquetes de video/audio |
+| **Retroalimentación** | RTCP | Estadísticas de calidad (pérdida, jitter) y sincronización |
 
-**, ****
+RTSP dice *qué* se transmite y *cuándo*, y RTP es el que lleva los datos. Por eso las cabeceras `Transport` del `SETUP` son tan importantes: ahí se acuerda cómo viajará el RTP.
 
-Submit Task
-Task 13
+### RTP (RFC 3550)
 
-Hint
-Which RTP SSRC identifiers appear in the second camera, and which one indicates the resumed stream after the interruption?
+Corre normalmente sobre **UDP**, porque en streaming en tiempo real prima la baja latencia sobre la fiabilidad (un paquete tardío es inútil). No garantiza entrega ni orden, pero aporta los campos necesarios para que el receptor reordene y sincronice.
 
-SSRC, SSRC
+Cabecera mínima de 12 bytes:
 
-Submit Task
-Task 14
+| Campo | Para qué sirve |
+|---|---|
+| **V** (2 bits) | Versión, siempre 2 |
+| **P, X, CC** | Padding, extensión, número de CSRC |
+| **M** (marker) | Marca eventos relevantes (en video, el último paquete de un frame) |
+| **PT** (payload type) | Identifica el códec. Los valores 96-127 son dinámicos y se mapean en el SDP |
+| **Sequence number** | Detecta pérdida y reordena paquetes |
+| **Timestamp** | Instante de muestreo (reloj de 90 kHz para video) |
+| **SSRC** | Identificador único de cada stream |
 
-Hint
-What was the duration of the video stream interruption before it resumed?
+Aquí se conecta con el `DESCRIBE` que vimos: en el SDP aparecía `a=rtpmap:96 H264/90000`, que significa que los paquetes con PT 96 llevan **H.264** con reloj de 90 kHz. El video H.264 se empaqueta según la RFC 6184: un NAL unit por paquete, o fragmentado en varios (**FU-A**) cuando excede la MTU.
 
-**.****
+### RTP junto a RTCP
 
-Submit Task
-Task 15
+Por convención, RTP usa un puerto par y RTCP el siguiente impar (por ejemplo, 5000 y 5001). Esto lo veríamos en el `SETUP`:
 
-Hint
+```
+Transport: RTP/AVP;unicast;client_port=5000-5001;server_port=6970-6971
+```
+
+### Dos formas de transporte:
+
+1. **UDP**: RTP en puertos propios, como arriba. Wireshark solo lo decodifica automáticamente si capturó el `SETUP` y vio el puerto negociado; si no, lo muestra como UDP genérico.
+2. **TCP interleaved**: el RTP viaja dentro de la misma conexión TCP del RTSP (puerto 554), con un prefijo `$` + canal + longitud. Se pide con `Transport: RTP/AVP/TCP;interleaved=0-1`. Es común cuando hay firewalls o NAT.
+
+--------------
+
+**12\. What RTP payload type is used in the video stream and which video codec is used by the CCTV stream?
+
+La respuesta suele venir en SDP (Session Description Protocol), que funciona como un «manual de instrucciones» o acuerdo previo entre dos o más dispositivos (endpoints)
+
+Solicitando la información:
+
+```bash
+
+```
+
+El campo **Payload Type (PT)** de la cabecera RTP tiene 7 bits y se divide en dos rangos:
+
+| Rango | Tipo | Ejemplos |
+|---|---|---|
+| **0-95** | Estático: el significado está fijado por estándar (RFC 3551) | 0 = PCMU, 8 = PCMA, 26 = JPEG, 33 = MPEG-TS |
+| **96-127** | **Dinámico**: no significa nada por sí mismo | El significado se negocia por sesión |
+
+H.264 se creó después de que se cerrara la lista estática, así que no tiene un número fijo. Cada sesión elige uno del rango dinámico (muy comúnmente 96) y lo declara en el SDP. Por eso Wireshark solo te muestra `DynamicRTP-Type-96`: el paquete RTP no contiene el nombre del códec.
+
+Esto se lee así:
+- m=video 0 RTP/AVP 96 anuncia que el video usará el PT 96.
+- a=rtpmap:96 H264/90000 dice que el PT 96 es H.264 con reloj de 90 kHz.
+- a=fmtp:96 ... da parámetros del códec (perfil, modo de empaquetado y los SPS/PPS en base64).
+
+La respuesta es `96, h264`
+
+--------------
+
+**13\. Which RTP SSRC identifiers appear in the second camera, and which one indicates the resumed stream after the interruption?**
+
+
+El SSRC es un identificador de 32 bits que cada fuente RTP elige al azar al iniciar un stream. Si el flujo se corta y la sesión se reinicia (un TEARDOWN y un nuevo SETUP/PLAY, un reinicio de la cámara o una reconexión), lo normal es que aparezca un SSRC nuevo, con seq y timestamp también nuevos. Por eso el SSRC posterior a la pausa suele ser el del "stream reanudado".
+
+Aplicando el siguiente filtro:
+
+```bash
+tshark -r CCTV.pcap -T fields -e rtp.ssrc | sort -u
+```
+
+El primer SSRC corresponde a la primera cámara, el segundo a la segunda cámara antes de interrumpirse la conexión por lo que el tercer SSRC es de la segunda cámara una vez reanudada la conexión.
+
+----------
+
+**14\. What was the duration of the video stream interruption before it resumed?**
+
+```bash
+tshark -r CCTV.pcap -Y "rtp" -T fields -e frame.time_utc_epoch > rtp_times.txt
+awk 'NR>1 {print $1-prev} {prev=$1}' rtp_times.txt | sort -nr | head -1
+
+tshark -r CCTV.pcap -Y "rtp && ip.src==CAM2" -T fields \
+  -e frame.number -e frame.time_epoch -e rtp.ssrc | \
+awk 'NR>1 && $3!=prev {
+  printf "SSRC %s -> %s | último frame viejo: %s | primer frame nuevo: %s | gap = %.3f s\n",
+         prev, $3, lastf, $1, $2-last
+} {prev=$3; last=$2; lastf=$1}'
+```
+
+
+----------------------
+
 Which frame marks the first RTP packet of the resumed stream after the interruption event?
 
 number, such as 3, 17, or 4567
