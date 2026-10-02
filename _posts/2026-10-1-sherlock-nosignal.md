@@ -325,6 +325,10 @@ awk 'NR>1 && $3!=prev {
   printf "SSRC %s -> %s | último frame viejo: %s | primer frame nuevo: %s | gap = %.3f s\n",
          prev, $3, lastf, $1, $2-last
 } {prev=$3; last=$2; lastf=$1}'
+
+tshark -r CCTV.pcap -Y "rtp.ssrc==0xAAAAAAAA || rtp.ssrc==0xBBBBBBBB" \
+  -T fields -e frame.number -e frame.time_delta_displayed -e rtp.ssrc | \
+sort -k2 -n -r | head -3
 ```
 
 
