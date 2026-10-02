@@ -346,6 +346,45 @@ tshark -r CCTV.pcap -Y "rtp.ssrc==0xa6251f2d" -T fields -e frame.number -e frame
 # Confirmar que ambos vienen de la misma IP
 tshark -r CCTV.pcap -Y "rtp.ssrc==0x1e8fa396 || rtp.ssrc==0xa6251f2d" -T fields -e ip.src -e rtp.ssrc | sort -u
 
+-----------------------
+
+┌──(kali㉿kali)-[~/Documents/nueva_era_sherlocks/nosignal]
+└─$ tshark -r CCTV.pcap -Y "rtp.ssrc==0x1e8fa396" -T fields -e frame.number -e frame.time_epoch | tail -1
+
+54397   1773282692.206144000
+                                                                                                                                                                                            
+┌──(kali㉿kali)-[~/Documents/nueva_era_sherlocks/nosignal]
+└─$ tshark -r CCTV.pcap -Y "rtp.ssrc==0xa6251f2d" -T fields -e frame.number -e frame.time_epoch | head -1
+
+108664  1773283402.558782000
+                                                                                                                                                                                            
+┌──(kali㉿kali)-[~/Documents/nueva_era_sherlocks/nosignal]
+└─$ tshark -r CCTV.pcap -Y "rtp.ssrc==0x1e8fa396 || rtp.ssrc==0xa6251f2d" -T fields -e ip.src -e rtp.ssrc | sort -u
+
+192.168.50.11   0x1e8fa396
+192.168.50.12   0xa6251f2d
+                                                                                                                                                                                            
+┌──(kali㉿kali)-[~/Documents/nueva_era_sherlocks/nosignal]
+└─$ tshark -r CCTV.pcap -T fields -e rtp.ssrc | sort -u
+
+
+0x1de257b2
+0x1e8fa396
+0xa6251f2d
+                                                                                                                                                                                            
+┌──(kali㉿kali)-[~/Documents/nueva_era_sherlocks/nosignal]
+└─$ tshark -r CCTV.pcap -Y "rtp.ssrc==0x1e8fa396 || rtp.ssrc==0xa6251f2d || rtp.ssrc==0x1de257b2" -T fields -e ip.src -e rtp.ssrc | sort -u
+192.168.50.11   0x1e8fa396
+192.168.50.12   0x1de257b2
+192.168.50.12   0xa6251f2d
+                                                                                                                                                                                            
+┌──(kali㉿kali)-[~/Documents/nueva_era_sherlocks/nosignal]
+└─$ tshark -r CCTV.pcap -Y "rtp.ssrc==0x1de257b2 || rtp.ssrc==0xa6251f2d" -T fields -e frame.number -e frame.time_delta_displayed -e rtp.ssrc | sort -k2 -n -r | head -3
+
+108664  8.975462000     0xa6251f2d
+70693   0.157264000     0x1de257b2
+96641   0.153986000     0x1de257b2
+
 ```
 
 
