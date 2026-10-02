@@ -337,6 +337,15 @@ sort -k2 -n -r | head -3
 12977   0.152923000     0x1e8fa396
 6499    0.152316000     0x1e8fa396
 
+# Último paquete del SSRC viejo
+tshark -r CCTV.pcap -Y "rtp.ssrc==0x1e8fa396" -T fields -e frame.number -e frame.time_epoch | tail -1
+
+# Primer paquete del SSRC nuevo
+tshark -r CCTV.pcap -Y "rtp.ssrc==0xa6251f2d" -T fields -e frame.number -e frame.time_epoch | head -1
+
+# Confirmar que ambos vienen de la misma IP
+tshark -r CCTV.pcap -Y "rtp.ssrc==0x1e8fa396 || rtp.ssrc==0xa6251f2d" -T fields -e ip.src -e rtp.ssrc | sort -u
+
 ```
 
 
