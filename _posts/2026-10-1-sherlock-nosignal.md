@@ -329,6 +329,14 @@ awk 'NR>1 && $3!=prev {
 tshark -r CCTV.pcap -Y "rtp.ssrc==0xAAAAAAAA || rtp.ssrc==0xBBBBBBBB" \
   -T fields -e frame.number -e frame.time_delta_displayed -e rtp.ssrc | \
 sort -k2 -n -r | head -3
+
+┌──(kali㉿kali)-[~/Documents/nueva_era_sherlocks/nosignal]
+└─$ tshark -r CCTV.pcap -Y "rtp.ssrc==0x1e8fa396 || rtp.ssrc==0xa6251f2d" -T fields -e frame.number -e frame.time_delta_displayed -e rtp.ssrc | sort -k2 -n -r | head -3
+
+108664  710.352638000   0xa6251f2d
+12977   0.152923000     0x1e8fa396
+6499    0.152316000     0x1e8fa396
+
 ```
 
 
