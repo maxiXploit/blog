@@ -27,8 +27,22 @@ Con esto pasamos rápido a las preguntas.
 
 ---------------
 
+Primero veamos los eventos que tenemos para este lab, asì nos daremos una guia visual de qué es lo que tenemos:
 
-Which file gave access to the attacker?
+```bash
+┌──(kali㉿kali)-[~/Documents/nueva_era_sherlocks/sysmon]
+└─$ jq '.Event | .System.EventID' events_sysmon.jsonl | sort | uniq -c | sort -rn
+    259 1
+    248 11
+    175 13
+     40 22
+     20 3
+      6 5
+      6 12
+      3 8
+```
+
+**1\. Which file gave access to the attacker?**
 
 ***.***
 
