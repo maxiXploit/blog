@@ -44,8 +44,7 @@ Primero veamos los eventos que tenemos para este lab, asì nos daremos una guia 
 
 **1\. Which file gave access to the attacker?**
 
-***.***
-
+Para empezar la investigación 
 Submit Task
 Task 1
 
