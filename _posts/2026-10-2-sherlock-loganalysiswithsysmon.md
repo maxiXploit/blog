@@ -1,4 +1,28 @@
 
+   - sysmon
+   - windows
+   - dfir
+   - threat-hunting
+   - incident-response
+   - mitre-attack
+   - uac-bypass
+   - fodhelper
+   - registry-forensics
+   - process-tree-analysis
+   - event-log-analysis
+   - powershell
+   - masquerading
+   - shellcode
+   - reflective-code-loading
+   - credential-dumping
+   - mimikatz
+   - pass-the-hash
+   - lateral-movement
+   - indicator-removal
+   - htb-sherlocks
+   - log-analysis-jq
+---
+
 Para este lab se nos dan los siguientes ficheros:
 
 ```bash
