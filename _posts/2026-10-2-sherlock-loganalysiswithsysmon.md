@@ -1,4 +1,19 @@
-
+---
+layout: single
+title: Sherlock - Log_Analysis_With_Sysmon
+excerpt: Análisis de logs sysmon para un ataque bastante interesante
+date: 2026-10-2
+classes: wide
+header:
+   teaser: ../assets/images/logoletsdefend.png
+   teaser_home_page: true
+   icon: ../assets/images/hackthebox.webp
+categories:
+   - hackthebox
+   - soc
+   - blue team
+   - dfir
+tags:
    - sysmon
    - windows
    - dfir
@@ -26,6 +41,9 @@
 Para este lab se nos dan los siguientes ficheros:
 
 ```bash
+┌──(kali㉿kali)-[~/Documents/nueva_era_sherlocks/sysmon]
+└─$ ls
+Sysmon_chall.zip  Sysmon.evtx
 ```
 
 El `.evtx` lo voy a parsear con `chainsaw` para analizar los logs con `jq`:
@@ -75,8 +93,29 @@ El evento **8 (3) CreateRemoteThread** es una altísima señal, casi siempre iny
 Con el `CreateRemoteThread (Event ID 8)`, un `StartModule` puede indicar código inyectado que no pertenece a ninguna DLL:
 
 ```bash
-jq '.Event | select(.System.EventID == 8) | .EventData | {UtcTime, SourceImage, TargetImage, StartModule, StartFunction}' events_sysmon.jsonl | sort | uniq -c | sort -rn
-
+┌──(kali㉿kali)-[~/Documents/nueva_era_sherlocks/sysmon]
+└─$ jq '.Event | select(.System.EventID == 8) | .EventData | {UtcTime, SourceImage, TargetImage, StartModule, StartFunction}' events_sysmon.jsonl                            
+{
+  "UtcTime": "2024-03-13 15:53:31.640",
+  "SourceImage": "<unknown process>",
+  "TargetImage": "C:\\Windows\\System32\\CompatTelRunner.exe",
+  "StartModule": "C:\\Windows\\System32\\KERNELBASE.dll",
+  "StartFunction": "CtrlRoutine"
+}
+{
+  "UtcTime": "2024-03-13 19:04:16.436",
+  "SourceImage": "C:\\Tools\\Cmder\\vendor\\clink\\clink_x64.exe",
+  "TargetImage": "C:\\Windows\\System32\\cmd.exe",
+  "StartModule": "-",
+  "StartFunction": "-"
+}
+{
+  "UtcTime": "2024-03-13 19:04:16.436",
+  "SourceImage": "C:\\Tools\\Cmder\\vendor\\clink\\clink_x64.exe",
+  "TargetImage": "C:\\Windows\\System32\\cmd.exe",
+  "StartModule": "-",
+  "StartFunction": "-"
+}
 
 ```
 
@@ -125,8 +164,15 @@ Tenemos lo siguiente:
 ### Ahora, revisando los eventos **Registry Events (Event IDs 12–14)**
 
 ```bash
-jq '.Event | select(.System.EventID == 8) | .EventData | {UtcTime, SourceImage, TargetImage, StartModule, StartFunction}' events_sysmon.jsonl | sort | uniq -c | sort -rn
-
+┌──(kali㉿kali)-[~/Documents/nueva_era_sherlocks/sysmon]
+└─$ jq '.Event | select(.System.EventID == 12) | "\(.System.EventID) \(.EventData.EventType) \(.EventData.Image) \(.EventData.TargetObject) \(.EventData.User)"' events_sysmon.jsonl 
+"12 DeleteValue C:\\Windows\\system32\\LogonUI.exe HKU\\.DEFAULT\\Keyboard Layout\\Preload\\1 NT AUTHORITY\\SYSTEM"
+"12 DeleteValue C:\\Windows\\system32\\LogonUI.exe HKU\\.DEFAULT\\Keyboard Layout\\Preload\\1 NT AUTHORITY\\SYSTEM"
+"12 DeleteValue C:\\Windows\\system32\\LogonUI.exe HKU\\.DEFAULT\\Keyboard Layout\\Preload\\1 NT AUTHORITY\\SYSTEM"
+"12 DeleteValue C:\\Windows\\system32\\LogonUI.exe HKU\\.DEFAULT\\Keyboard Layout\\Preload\\1 NT AUTHORITY\\SYSTEM"
+"12 DeleteValue C:\\Windows\\SysWOW64\\OneDriveSetup.exe HKU\\S-1-5-21-1167190901-2776902035-4218795297-500\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\\OneDriveSetup DOMAIN\\ADMINISTRATOR"                                                                                                                                                                                    
+"12 DeleteValue C:\\Users\\Gabr\\Desktop\\IDM.exe HKU\\S-1-5-21-2646171184-2005568563-1470246713-1001_Classes\\ms-settings\\shell\\open\\command\\DelegateExecute DESKTOP-0V6VB41\\Gabr"
+                                                        
 ```
 
 Tenemos:
@@ -153,7 +199,6 @@ Con esto podemos segir la actividad de este evento sospechoso, y para confirmar 
 ```bash
 #GUID="EDF674A6-F930-65F1-4C02-000000001200"
 jq --arg g "$guid" 'select(.Event.EventData.ProcessGuid == $g)' events_sysmon.jsonl 
-
 ```
 
 Esto ya nos dice cosas interesantes:
@@ -177,9 +222,13 @@ Aquí está en el Desktop de un usuario, se trata de una técnica llamada  `masq
 Es el único del grupo que toca una clave no relacionada con su función. Un gestor de descargas no tiene motivo para tocar ms-settings.
 
 ```bash
-
-jq --arg g "$guid" 'select(.Event.EventData.ProcessGuid == $g and .System.EventID == 12) | .EventData | {EventType, Image, TargetObject}' events_sysmon.jsonl 
-
+┌──(kali㉿kali)-[~/Documents/nueva_era_sherlocks/sysmon]
+└─$ jq --arg g "$guid" 'select(.Event.EventData.ProcessGuid == $g and .Event.System.EventID == 12) | .Event.EventData | {EventType, Image, TargetObject}' events_sysmon.jsonl 
+{
+  "EventType": "DeleteValue",
+  "Image": "C:\\Users\\Gabr\\Desktop\\IDM.exe",
+  "TargetObject": "HKU\\S-1-5-21-2646171184-2005568563-1470246713-1001_Classes\\ms-settings\\shell\\open\\command\\DelegateExecute"
+}
 ```
 
 **La clave ms-settings\shell\open\command es la técnica clásica de bypass de UAC (T1548.002)**
@@ -336,5 +385,11 @@ Filtramos por fichero creados después de los eventos ya registrados:
 
 ```bash
 jq '.Event | select(.System.EventID == 11 and .System.TimeCreated_attributes.SystemTime > "2024-03-13T19:09:12") | "\(.System.EventID) \(.EventData.TargetFilename) \(.EventData.User)"' events_sysmon.jsonl 
-```
 
+                                                                                                                                                                                            
+┌──(kali㉿kali)-[~/Documents/nueva_era_sherlocks/sysmon]
+└─$ jq '.Event | select(.System.EventID == 11 and .System.TimeCreated_attributes.SystemTime > "2024-03-13T19:09:12") | "\(.System.EventID) \(.EventData.TargetFilename) \(.EventData.User)"' events_sysmon.jsonl
+<SNIP>
+"11 C:\\Users\\Gabr\\Downloads\\012e382049b88808e2d0b26e016dc189f608deea9b6cc993ce24a57c99dd93d1.exe DESKTOP-0V6VB41\\Gabr"
+<SNIP>
+```
